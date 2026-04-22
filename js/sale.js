@@ -2230,9 +2230,17 @@ function initPayment() {
                 baseNames[baseCode] = item.name;
             }
 
+            let liveProducts = [];
+            try {
+                liveProducts = JSON.parse(localStorage.getItem('hasu_products') || '[]');
+                if (!Array.isArray(liveProducts) || liveProducts.length === 0) liveProducts = products;
+            } catch (e) { liveProducts = products; }
+
             for (const bCode in baseDemand) {
-                const bIdx = products.findIndex(p => p.code === bCode);
-                const stock = bIdx >= 0 ? (products[bIdx].stock || 0) : 0;
+                const bIdx = liveProducts.findIndex(p => p.code === bCode);
+                // Safe check if it's a custom service item missing from DB
+                if (bCode && bIdx === -1 && liveProducts.length > 0) continue;
+                const stock = bIdx >= 0 ? (liveProducts[bIdx].stock || 0) : 0;
                 if (baseDemand[bCode] > stock + 0.001) {
                     exceedingBaseCode = bCode;
                     requiredBase = baseDemand[bCode];
@@ -2280,7 +2288,11 @@ function initPayment() {
             snap.paidAmount = typeof getTotalPaid === 'function' ? getTotalPaid() : 0;
             if (snap.paidAmount === 0) {
                 const payInp = document.getElementById('payAmountInput');
-                snap.paidAmount = payInp ? parseInt((payInp.value || '0').replace(/[,.]/g, '')) : 0;
+                if (payInp && payInp.value.trim() === '') {
+                    snap.paidAmount = snap.grandTotal;
+                } else if (payInp) {
+                    snap.paidAmount = parseInt((payInp.value || '0').replace(/[,.]/g, ''));
+                }
             }
             snap.debt = snap.paidAmount > 0 ? Math.max(0, snap.grandTotal - snap.paidAmount) : snap.grandTotal;
             snap.change = snap.paidAmount > snap.grandTotal ? snap.paidAmount - snap.grandTotal : 0;
@@ -3856,14 +3868,14 @@ function showReturnDetail(order) {
     const rows = order.cart.map((item, i) => {
         const ep = (item.customPrice !== null && item.customPrice !== undefined) ? item.customPrice : item.price;
         const lineTotal = ep * item.qty;
-        return `<tr style="border-bottom:1px solid #eee">
-            <td style="padding:6px 8px;font-size:13px">${item.name}</td>
+        const isRet = order.returnedIndices && order.returnedIndices.includes(i);
+        return `<tr style="border-bottom:1px solid #eee;${isRet ? 'opacity:0.5' : ''}">
+            <td style="padding:6px 8px;font-size:13px">${item.name} ${isRet ? '<span style="color:#e53935;font-size:10px;margin-left:4px">(Đã trả)</span>' : ''}</td>
             <td style="padding:6px 8px;text-align:center;font-size:13px">${item.qty}</td>
             <td style="padding:6px 8px;text-align:right;font-size:13px">${fmt(ep)}đ</td>
             <td style="padding:6px 8px;text-align:right;font-size:13px">${fmt(lineTotal)}đ</td>
             <td style="padding:6px 8px;text-align:center">
-                <input type="checkbox" class="ret-chk" data-idx="${i}" checked
-                       style="width:16px;height:16px;cursor:pointer">
+                ${isRet ? '<span style="color:#e53935;font-size:18px;font-weight:bold">-</span>' : `<input type="checkbox" class="ret-chk" data-idx="${i}" checked style="width:16px;height:16px;cursor:pointer">`}
             </td>
         </tr>`;
     }).join('');
@@ -3908,6 +3920,15 @@ function showReturnDetail(order) {
         if (checked.length === 0) { showToast('Chưa chọn mặt hàng nào để trả', 'error'); return; }
 
         const returnItems = checked.map(i => order.cart[i]);
+
+        order.returnedIndices = order.returnedIndices || [];
+        order.returnedIndices.push(...checked);
+        let allOrders = JSON.parse(localStorage.getItem('hasu_completedOrders') || '[]');
+        let orderIdx = allOrders.findIndex(o => o.id === order.id);
+        if (orderIdx > -1) {
+            allOrders[orderIdx] = order;
+            try { localStorage.setItem('hasu_completedOrders', JSON.stringify(allOrders)); } catch (e) { }
+        }
 
         // --- ADDED: Ghi đè vào Lịch sử và Sổ Quỹ ---
         let returnTotal = 0;
@@ -5652,11 +5673,15 @@ function changeCopies(d) {
 function doPrint() {
     const copies = window._printCopies || 1;
     document.getElementById('printOptionsModal')?.remove();
+
+    // Print heavily relies on activeTab cart data. We MUST fetch and render it BEFORE clearing the order!
     if (typeof printInvoice === 'function') {
-        for (let i = 0; i < copies; i++) setTimeout(() => printInvoice(), i * 900);
+        for (let i = 0; i < copies; i++) {
+            printInvoice();
+        }
     }
 
-    // Complete the order immediately so the UX isn't hanging on the print window
+    // Complete the order immediately after print jobs are dispatched
     completeOrder();
 }
 function skipPrint() {

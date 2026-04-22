@@ -1866,13 +1866,17 @@
     function renderActivities() {
       const list = document.getElementById('activityList');
       let hist = [];
-      try { hist = JSON.parse(localStorage.getItem('hasu_sale_history') || '[]').slice(0, 2); } catch (e) { }
+      try {
+        let r = JSON.parse(localStorage.getItem('hasu_sale_history') || '[]');
+        let s = JSON.parse(localStorage.getItem('hasu_completedOrders') || '[]');
+        hist = [...r, ...s].sort((a, b) => new Date(b.time || b.timestamp) - new Date(a.time || a.timestamp)).slice(0, 5);
+      } catch (e) { }
 
       let html = '';
       hist.forEach((h, idx) => {
         let actDays = (idx * 2 + 1);
         let actionStr = h.type === 'return' ? 'nhận khách trả hàng' : 'bán đơn hàng';
-        let amountStr = Math.abs(h.total || 0).toLocaleString('vi-VN');
+        let amountStr = Math.abs(h.total || h.grandTotal || h.finalTotal || 0).toLocaleString('vi-VN');
         let iconCls = h.type === 'return' ? 'fa-rotate-left' : 'fa-bag-shopping';
 
         html += `<div class="activity-item">
