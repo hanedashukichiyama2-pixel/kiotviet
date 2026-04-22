@@ -1718,6 +1718,12 @@
     </div>
 
     <script>
+        if (window.trustedTypes && trustedTypes.createPolicy) {
+            if (!trustedTypes.defaultPolicy) {
+                trustedTypes.createPolicy('default', { createHTML: (string) => string });
+            }
+        }
+
         const TABS = [
             { id: 'cuoingay', label: 'Cuối ngày', icon: 'fa-solid fa-calendar-check' },
             { id: 'banhang', label: 'Bán hàng', icon: 'fa-solid fa-chart-line' },
