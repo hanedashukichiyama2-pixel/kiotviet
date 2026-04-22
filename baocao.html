@@ -2167,10 +2167,14 @@
         /* ===== REAL DATA LOADER ===== */
         function loadRealData() {
             try {
-                let invStr = localStorage.getItem('hasu_sale_history') || localStorage.getItem('hasu_completedOrders') || '[]';
-                if (invStr === 'undefined' || invStr === 'null') { invStr = '[]'; }
-                let inv = [];
-                try { inv = JSON.parse(invStr); } catch (ex) { inv = []; }
+                let salesStr = localStorage.getItem('hasu_completedOrders') || '[]';
+                let returnsStr = localStorage.getItem('hasu_sale_history') || '[]';
+                if (salesStr === 'undefined' || salesStr === 'null') { salesStr = '[]'; }
+                if (returnsStr === 'undefined' || returnsStr === 'null') { returnsStr = '[]'; }
+                let sales = [], returns = [];
+                try { sales = JSON.parse(salesStr); } catch (ex) { sales = []; }
+                try { returns = JSON.parse(returnsStr); } catch (ex) { returns = []; }
+                let inv = [...sales, ...returns];
                 if (!Array.isArray(inv)) inv = [];
 
                 const timeFilter = document.querySelector('input[name="timeFilter"]:checked');
@@ -2198,7 +2202,7 @@
                 }
 
                 inv = inv.filter(o => {
-                    const tStr = String(o.time || '');
+                    const tStr = String(o.timestamp || o.time || '');
                     const od = new Date(tStr.replace(' ', 'T'));
                     if (isNaN(od)) return true;
                     return od >= startD && od <= endD;
@@ -2222,7 +2226,7 @@
 
                     _invoices.push({
                         code: o.id || o.code,
-                        time: (function (t) { t = String(t || ''); const d = new Date(t.replace(' ', 'T')); return (isNaN(d) ? t : String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0') + ' ' + String(d.getDate()).padStart(2, '0') + '/' + String(d.getMonth() + 1).padStart(2, '0')); })(o.time),
+                        time: (function (t) { t = String(t || ''); const d = new Date(t.replace(' ', 'T')); return (isNaN(d) ? t : String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0') + ' ' + String(d.getDate()).padStart(2, '0') + '/' + String(d.getMonth() + 1).padStart(2, '0')); })(o.timestamp || o.time),
                         customer: o.cxName || o.customerName || 'Khách lẻ',
                         total: r,
                         method: mth
@@ -2267,7 +2271,7 @@
 
                 const prodMap = {};
                 inv.forEach(o => {
-                    const tStr = String(o.time || '');
+                    const tStr = String(o.timestamp || o.time || '');
                     let d = new Date(tStr.replace(' ', 'T'));
                     if (!isNaN(d)) {
                         let k = String(d.getDate()).padStart(2, '0') + '/' + String(d.getMonth() + 1).padStart(2, '0');
