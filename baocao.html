@@ -1,0 +1,2531 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Hasu - Báo cáo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --blue: #004aad;
+            --blue-dark: #003a8c;
+            --blue-darker: #002d6e;
+            --yellow: #ffca08;
+            --yellow-dark: #e6b600;
+            --blue-light: #e8f0fb
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            font-size: 13px;
+            background: #f5f5f5;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column
+        }
+
+        /* HEADER */
+        .kv-header {
+            background: #fff;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            border-bottom: 3px solid var(--yellow);
+            justify-content: space-between;
+            flex-shrink: 0
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 8px
+        }
+
+        .kv-logo {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            color: #333
+        }
+
+        .kv-logo img {
+            width: 42px;
+            height: 42px;
+            object-fit: contain
+        }
+
+        .kv-logo span {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--blue);
+            letter-spacing: .3px
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 14px
+        }
+
+        .hdr-icon {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #555;
+            font-size: 13px;
+            cursor: pointer;
+            text-decoration: none
+        }
+
+        .hdr-icon:hover {
+            color: var(--blue)
+        }
+
+        .hdr-divider {
+            width: 1px;
+            height: 20px;
+            background: #ddd
+        }
+
+        .lang-btn,
+        .shop-btn {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #444;
+            font-size: 13px;
+            cursor: pointer
+        }
+
+        .shop-btn {
+            font-weight: 500
+        }
+
+        .hdr-bell,
+        .hdr-gear,
+        .hdr-avatar {
+            font-size: 16px;
+            color: #555;
+            cursor: pointer
+        }
+
+        /* NAVBAR */
+        .kv-navbar {
+            background: var(--blue);
+            height: 44px;
+            display: flex;
+            align-items: center;
+            padding: 0 0 0 8px;
+            flex-shrink: 0
+        }
+
+        .nav-tabs {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            height: 44px
+        }
+
+        .nav-item {
+            position: relative;
+            height: 44px;
+            display: flex;
+            align-items: center
+        }
+
+        .nav-tab {
+            height: 44px;
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            color: rgba(255, 255, 255, .9);
+            font-size: 13.5px;
+            cursor: pointer;
+            text-decoration: none;
+            white-space: nowrap;
+            transition: background .15s;
+            border: none;
+            background: transparent;
+            font-family: inherit
+        }
+
+        .nav-tab:hover {
+            background: rgba(0, 0, 0, .15)
+        }
+
+        .nav-tab.active {
+            background: var(--blue-dark);
+            color: #fff;
+            font-weight: 500
+        }
+
+        .nav-dropdown {
+            position: absolute;
+            top: 44px;
+            left: 0;
+            background: #fff;
+            border-radius: 0 0 6px 6px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, .15);
+            z-index: 600;
+            display: none;
+            padding: 14px 0;
+            min-width: 180px
+        }
+
+        .nav-item:hover .nav-dropdown {
+            display: flex
+        }
+
+        .nav-dd-col {
+            padding: 0 18px;
+            min-width: 160px
+        }
+
+        .nav-dd-col+.nav-dd-col {
+            border-left: 1px solid #f0f0f0
+        }
+
+        .nav-dd-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: #333;
+            padding: 0 0 8px;
+            margin-bottom: 2px
+        }
+
+        .nav-dd-link {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 0;
+            font-size: 13px;
+            color: #555;
+            text-decoration: none;
+            white-space: nowrap;
+            cursor: pointer
+        }
+
+        .nav-dd-link:hover {
+            color: var(--blue)
+        }
+
+        .nav-dd-badge {
+            font-size: 10px;
+            background: #ff7043;
+            color: #fff;
+            border-radius: 8px;
+            padding: 1px 6px;
+            font-weight: 500
+        }
+
+        .btn-go-sale {
+            background: var(--yellow);
+            border: none;
+            padding: 0 20px;
+            height: 44px;
+            font-weight: 700;
+            color: #333;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-family: inherit;
+            transition: background .15s
+        }
+
+        .btn-go-sale:hover {
+            background: var(--yellow-dark)
+        }
+
+        /* SUB TABS */
+        .sub-tabs {
+            display: flex;
+            background: #fff;
+            border-bottom: 2px solid #e0e0e0;
+            padding: 0 16px;
+            flex-shrink: 0;
+            overflow-x: auto
+        }
+
+        .sub-tab {
+            padding: 10px 18px;
+            font-size: 13px;
+            color: #777;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+            font-weight: 500;
+            white-space: nowrap;
+            transition: all .15s
+        }
+
+        .sub-tab:hover {
+            color: var(--blue)
+        }
+
+        .sub-tab.active {
+            color: var(--blue);
+            border-bottom-color: var(--blue)
+        }
+
+        /* LAYOUT */
+        .page-body {
+            display: flex;
+            flex: 1;
+            overflow: hidden
+        }
+
+        .sidebar {
+            width: 200px;
+            background: #fff;
+            border-right: 1px solid #e0e0e0;
+            padding: 12px;
+            overflow-y: auto;
+            flex-shrink: 0
+        }
+
+        .sb-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px
+        }
+
+        .filter-sec {
+            margin-bottom: 12px
+        }
+
+        .f-label {
+            display: block;
+            font-size: 11px;
+            font-weight: 600;
+            color: #888;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+            letter-spacing: .3px
+        }
+
+        .filter-select {
+            width: 100%;
+            padding: 6px 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 12.5px;
+            color: #333;
+            background: #fff;
+            outline: none
+        }
+
+        .filter-select:focus {
+            border-color: var(--blue)
+        }
+
+        .f-radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px
+        }
+
+        .f-radio-group label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 12px;
+            color: #555;
+            cursor: pointer
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: auto;
+            padding: 16px 20px;
+            gap: 16px
+        }
+
+        /* STAT CARDS */
+        .stat-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap
+        }
+
+        .stat-card {
+            flex: 1;
+            min-width: 140px;
+            background: #fff;
+            border-radius: 8px;
+            padding: 14px 16px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, .06);
+            border-left: 4px solid var(--blue)
+        }
+
+        .stat-card.green {
+            border-left-color: #43a047
+        }
+
+        .stat-card.red {
+            border-left-color: #e53935
+        }
+
+        .stat-card.orange {
+            border-left-color: #f57c00
+        }
+
+        .stat-card.purple {
+            border-left-color: #7b1fa2
+        }
+
+        .sc-label {
+            font-size: 11.5px;
+            color: #888;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: .2px
+        }
+
+        .sc-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: #333
+        }
+
+        .sc-value.blue {
+            color: var(--blue)
+        }
+
+        .sc-value.green {
+            color: #43a047
+        }
+
+        .sc-value.red {
+            color: #e53935
+        }
+
+        /* CHART */
+        .chart-card {
+            background: #fff;
+            border-radius: 8px;
+            padding: 16px 20px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, .06)
+        }
+
+        .chart-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px
+        }
+
+        .chart-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333
+        }
+
+        .chart-tools {
+            display: flex;
+            gap: 6px
+        }
+
+        .chart-btn {
+            padding: 5px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: #fff;
+            font-size: 12px;
+            cursor: pointer;
+            color: #555;
+            font-family: inherit
+        }
+
+        .chart-btn.active {
+            background: var(--blue);
+            color: #fff;
+            border-color: var(--blue)
+        }
+
+        .chart-area {
+            position: relative;
+            height: 200px;
+            display: flex;
+            align-items: flex-end;
+            gap: 6px;
+            padding: 0 4px
+        }
+
+        .chart-bar {
+            flex: 1;
+            background: linear-gradient(180deg, #1976d2, #42a5f5);
+            border-radius: 4px 4px 0 0;
+            min-width: 20px;
+            position: relative;
+            transition: height .4s ease
+        }
+
+        .chart-bar:hover {
+            opacity: .85
+        }
+
+        .chart-bar .bar-val {
+            position: absolute;
+            top: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 10px;
+            color: #555;
+            white-space: nowrap
+        }
+
+        .chart-bar .bar-lbl {
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 10px;
+            color: #888;
+            white-space: nowrap
+        }
+
+        .chart-bar.red-bar {
+            background: linear-gradient(180deg, #e53935, #ef5350)
+        }
+
+        .chart-bar.green-bar {
+            background: linear-gradient(180deg, #43a047, #66bb6a)
+        }
+
+        .chart-bar.orange-bar {
+            background: linear-gradient(180deg, #f57c00, #ff9800)
+        }
+
+        .chart-legend {
+            display: flex;
+            gap: 16px;
+            margin-top: 28px;
+            justify-content: center
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 11.5px;
+            color: #666
+        }
+
+        .legend-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 2px
+        }
+
+        /* TABLE */
+        .table-card {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, .06);
+            overflow: hidden
+        }
+
+        .table-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            border-bottom: 1px solid #eee
+        }
+
+        .table-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333
+        }
+
+        .table-actions {
+            display: flex;
+            gap: 6px
+        }
+
+        .tbl-btn {
+            padding: 5px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: #fff;
+            font-size: 12px;
+            cursor: pointer;
+            color: #555;
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            gap: 4px
+        }
+
+        .tbl-btn:hover {
+            border-color: var(--blue);
+            color: var(--blue)
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12.5px
+        }
+
+        th {
+            background: #f5f7fa;
+            padding: 8px 12px;
+            text-align: left;
+            font-weight: 600;
+            color: #555;
+            border-bottom: 2px solid #e0e0e0;
+            white-space: nowrap
+        }
+
+        td {
+            padding: 8px 12px;
+            border-bottom: 1px solid #eee;
+            color: #444
+        }
+
+        tr:hover {
+            background: #f8fafd
+        }
+
+        .right {
+            text-align: right
+        }
+
+        .center {
+            text-align: center
+        }
+
+        .tbl-code {
+            color: var(--blue);
+            font-weight: 500
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 500
+        }
+
+        .badge-success {
+            background: #e8f5e9;
+            color: #2e7d32
+        }
+
+        .badge-danger {
+            background: #fce4ec;
+            color: #c62828
+        }
+
+        .badge-info {
+            background: #e3f2fd;
+            color: #1565c0
+        }
+
+        /* EMPTY */
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            color: #aaa;
+            gap: 10px
+        }
+
+        .empty-icon {
+            width: 60px;
+            height: 60px;
+            background: #e8f4fc;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #90caf9;
+            font-size: 24px
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f0f0f0
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 3px
+        }
+
+        /* DELIVERY DROPDOWN */
+        .hdr-delivery-wrap {
+            position: relative
+        }
+
+        .hdr-delivery-btn {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #555;
+            font-size: 13px;
+            cursor: pointer;
+            text-decoration: none;
+            padding: 4px 10px;
+            background: #eef2ff;
+            border-radius: 20px;
+            position: relative;
+            user-select: none;
+            transition: background .15s
+        }
+
+        .hdr-delivery-btn:hover {
+            background: #dde6ff;
+            color: #1a56db
+        }
+
+        .hdr-delivery-dot {
+            width: 8px;
+            height: 8px;
+            background: #1a56db;
+            border-radius: 50%;
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            border: 2px solid #fff
+        }
+
+        .delivery-dropdown {
+            display: none;
+            position: absolute;
+            top: calc(100% + 10px);
+            left: -10px;
+            width: 310px;
+            background: #fff;
+            border-radius: 14px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, .18);
+            z-index: 2000;
+            overflow: hidden
+        }
+
+        .delivery-dropdown.show {
+            display: block
+        }
+
+        .dd-banner {
+            background: linear-gradient(135deg, #1e4db7, #0d3580);
+            min-height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden
+        }
+
+        .dd-banner-art {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 20px;
+            position: relative;
+            z-index: 1
+        }
+
+        .dd-truck-icon {
+            font-size: 64px;
+            color: #fff;
+            opacity: .95;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, .3))
+        }
+
+        .dd-pkg-icons {
+            display: flex;
+            flex-direction: column;
+            gap: 6px
+        }
+
+        .dd-pkg-icons i {
+            font-size: 22px;
+            color: rgba(255, 255, 255, .8);
+            transform: rotate(-10deg)
+        }
+
+        .dd-banner-badge {
+            position: absolute;
+            bottom: 14px;
+            left: 14px;
+            background: rgba(0, 10, 40, .85);
+            border-radius: 10px;
+            padding: 6px 10px;
+            color: #fff;
+            z-index: 2;
+            min-width: 80px;
+            text-align: left
+        }
+
+        .dd-badge-top {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: .5px;
+            opacity: .85
+        }
+
+        .dd-badge-val {
+            font-size: 26px;
+            font-weight: 900;
+            line-height: 1;
+            display: flex;
+            align-items: flex-start;
+            gap: 1px
+        }
+
+        .dd-badge-val sup {
+            font-size: 14px;
+            margin-top: 2px;
+            font-weight: 700
+        }
+
+        .dd-content {
+            padding: 18px 18px 16px
+        }
+
+        .dd-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 14px;
+            line-height: 1.4
+        }
+
+        .dd-benefits {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 9px
+        }
+
+        .dd-benefits li {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            font-size: 13.5px;
+            color: #444
+        }
+
+        .dd-benefits li i {
+            color: #1a56db;
+            font-size: 16px;
+            flex-shrink: 0
+        }
+
+        .dd-slide-dots {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            margin-bottom: 16px
+        }
+
+        .dd-slide-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #1a56db;
+            transition: all .2s
+        }
+
+        .dd-slide-dot.off {
+            background: #ddd;
+            width: 7px
+        }
+
+        .dd-btn-primary {
+            width: 100%;
+            background: #1a56db;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            padding: 13px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 9px;
+            font-family: inherit;
+            transition: background .15s
+        }
+
+        .dd-btn-primary:hover {
+            background: #1348c0
+        }
+
+        .dd-btn-outline {
+            width: 100%;
+            background: #fff;
+            color: #333;
+            border: 1.5px solid #ddd;
+            border-radius: 10px;
+            padding: 12px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all .15s
+        }
+
+        .dd-btn-outline:hover {
+            border-color: #1a56db;
+            color: #1a56db
+        }
+
+
+        /* COLOR PALETTE PICKER */
+        .hdr-palette-wrap {
+            position: relative
+        }
+
+        .hdr-palette-btn {
+            width: 34px;
+            height: 34px;
+            border: none;
+            background: #f0f0f0;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: #555;
+            transition: background .15s;
+            flex-shrink: 0
+        }
+
+        .hdr-palette-btn:hover {
+            background: #e0e0e0;
+            color: #333
+        }
+
+        .palette-dropdown {
+            display: none;
+            position: absolute;
+            top: calc(100% + 10px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: #fff;
+            border-radius: 14px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, .2);
+            z-index: 2000;
+            padding: 16px;
+            width: 176px
+        }
+
+        .palette-dropdown.show {
+            display: block
+        }
+
+        .palette-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px
+        }
+
+        .palette-color {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            transition: transform .15s;
+            outline: none
+        }
+
+        .palette-color:hover {
+            transform: scale(1.1)
+        }
+
+        .palette-color.active::after {
+            content: "\2713";
+            font-size: 22px;
+            font-weight: 900;
+            color: #fff
+        }
+
+
+        /* ===== HEADER DROPDOWNS ===== */
+        .hdr-icon-wrap {
+            position: relative;
+            display: flex;
+            align-items: center
+        }
+
+        .hdr-icon-btn {
+            width: 32px;
+            height: 32px;
+            background: transparent;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: #666;
+            transition: background .15s;
+            flex-shrink: 0
+        }
+
+        .hdr-icon-btn:hover {
+            background: #f0f0f0;
+            color: #333
+        }
+
+        /* Shared dropdown panel */
+        .hdr-dd-panel {
+            display: none;
+            position: absolute;
+            top: calc(100% + 10px);
+            right: 0;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, .16);
+            z-index: 3000;
+            min-width: 220px;
+            overflow: hidden
+        }
+
+        .hdr-dd-panel.show {
+            display: block
+        }
+
+        .hdr-dd-panel.arrow-center {
+            left: 50%;
+            transform: translateX(-50%)
+        }
+
+        .hdr-dd-head {
+            padding: 12px 16px 8px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            border-bottom: 1px solid #f0f0f0
+        }
+
+        .hdr-dd-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 16px;
+            font-size: 13px;
+            color: #333;
+            cursor: pointer;
+            transition: background .12s
+        }
+
+        .hdr-dd-item:hover {
+            background: #f5f7ff
+        }
+
+        .hdr-dd-item i {
+            width: 18px;
+            text-align: center;
+            color: #888;
+            font-size: 14px
+        }
+
+        .hdr-dd-item.hdr-dd-highlight {
+            color: var(--blue, #004aad)
+        }
+
+        .hdr-dd-item.hdr-dd-highlight i {
+            color: var(--blue, #004aad)
+        }
+
+        .hdr-dd-item.hdr-dd-active i.check-icon {
+            color: var(--blue, #004aad)
+        }
+
+        .hdr-dd-sep {
+            height: 1px;
+            background: #f0f0f0;
+            margin: 4px 0
+        }
+
+        .hdr-dd-item .dd-item-sub {
+            font-size: 11px;
+            color: #999;
+            display: block;
+            margin-top: 1px
+        }
+
+        .hdr-dd-item .dd-item-right {
+            margin-left: auto;
+            font-size: 11px;
+            color: #aaa
+        }
+
+        /* Lang wrap */
+        .hdr-lang-wrap {
+            position: relative;
+            display: flex;
+            align-items: center
+        }
+
+        .lang-btn {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 13px;
+            color: #333;
+            padding: 4px 6px;
+            border-radius: 6px;
+            transition: background .15s
+        }
+
+        .lang-btn:hover {
+            background: #f0f0f0
+        }
+
+        /* Shop wrap */
+        .hdr-shop-wrap {
+            position: relative;
+            display: flex;
+            align-items: center
+        }
+
+        .shop-btn {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 13px;
+            color: #333;
+            font-weight: 500;
+            padding: 4px 6px;
+            border-radius: 6px;
+            transition: background .15s
+        }
+
+        .shop-btn:hover {
+            background: #f0f0f0
+        }
+
+        /* Bell wrap */
+        .hdr-bell-wrap {
+            position: relative;
+            display: flex;
+            align-items: center
+        }
+
+        .hdr-bell-btn {
+            width: 32px;
+            height: 32px;
+            background: transparent;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 17px;
+            color: #666;
+            position: relative;
+            transition: background .15s
+        }
+
+        .hdr-bell-btn:hover {
+            background: #f0f0f0
+        }
+
+        .hdr-bell-dot {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 8px;
+            height: 8px;
+            background: #e53935;
+            border-radius: 50%;
+            border: 2px solid #fff
+        }
+
+        /* Gear wrap */
+        .hdr-gear-wrap {
+            position: relative;
+            display: flex;
+            align-items: center
+        }
+
+        .hdr-gear-btn {
+            width: 32px;
+            height: 32px;
+            background: transparent;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: #666;
+            transition: background .15s
+        }
+
+        .hdr-gear-btn:hover {
+            background: #f0f0f0
+        }
+
+        /* Avatar wrap */
+        .hdr-avatar-wrap {
+            position: relative;
+            display: flex;
+            align-items: center
+        }
+
+        .hdr-avatar-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #e3f2fd;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--blue, #004aad);
+            font-size: 15px;
+            transition: opacity .15s
+        }
+
+        .hdr-avatar-btn:hover {
+            opacity: .8
+        }
+
+        /* Notif panel */
+        .notif-panel {
+            min-width: 300px
+        }
+
+        .notif-panel .hdr-dd-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center
+        }
+
+        .notif-panel .hdr-dd-head a {
+            font-size: 11px;
+            color: var(--blue, #004aad);
+            font-weight: 400;
+            text-transform: none
+        }
+
+        .notif-empty {
+            padding: 32px 16px;
+            text-align: center;
+            color: #aaa;
+            font-size: 13px
+        }
+
+        .notif-empty i {
+            font-size: 32px;
+            display: block;
+            margin-bottom: 10px;
+            color: #ddd
+        }
+
+        /* Branch panel */
+        .branch-panel {
+            min-width: 260px
+        }
+
+        .branch-search {
+            padding: 8px 12px;
+            border-bottom: 1px solid #f0f0f0
+        }
+
+        .branch-search input {
+            width: 100%;
+            padding: 6px 10px;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 12px;
+            outline: none;
+            box-sizing: border-box
+        }
+
+        .branch-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 16px;
+            font-size: 13px;
+            color: #333;
+            cursor: pointer
+        }
+
+        .branch-item:hover {
+            background: #f5f7ff
+        }
+
+        .branch-item i {
+            color: var(--blue, #004aad);
+            font-size: 14px
+        }
+
+        .branch-item .bi-name {
+            flex: 1
+        }
+
+        .branch-item .bi-active {
+            width: 8px;
+            height: 8px;
+            background: #4caf50;
+            border-radius: 50%;
+            flex-shrink: 0
+        }
+
+        .branch-add {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            font-size: 13px;
+            color: var(--blue, #004aad);
+            cursor: pointer;
+            border-top: 1px solid #f0f0f0
+        }
+
+        .branch-add:hover {
+            background: #f5f7ff
+        }
+
+        /* Chat panel */
+        .chat-panel {
+            min-width: 280px
+        }
+
+        .chat-panel-body {
+            padding: 16px
+        }
+
+        .chat-contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 16px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background .12s
+        }
+
+        .chat-contact-item:hover {
+            background: #f5f7ff
+        }
+
+        .chat-icon-circle {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0
+        }
+
+        .chat-contact-item .ci-name {
+            font-size: 13px;
+            font-weight: 500;
+            color: #333
+        }
+
+        .chat-contact-item .ci-sub {
+            font-size: 11px;
+            color: #999
+        }
+    </style>
+</head>
+
+<body>
+    <!-- HEADER -->
+    <header class="kv-header">
+        <div class="header-left"><a href="login.html" class="kv-logo"><img src="logo.png"
+                    alt="Hasu"><span>Hasu</span></a></div>
+        <div class="header-right">
+            <div class="hdr-delivery-wrap">
+                <div class="hdr-delivery-btn" onclick="toggleDelivery(event)">
+                    <i class="fa-solid fa-motorcycle"></i>
+                    <span>Giao hàng</span>
+                    <span class="hdr-delivery-dot"></span>
+                </div>
+                <div class="delivery-dropdown" id="deliveryDropdown">
+                    <div class="dd-banner">
+                        <div class="dd-banner-art">
+                            <i class="fa-solid fa-truck-fast dd-truck-icon"></i>
+                            <div class="dd-pkg-icons">
+                                <i class="fa-solid fa-box"></i>
+                                <i class="fa-solid fa-box-open"></i>
+                                <i class="fa-solid fa-cube"></i>
+                            </div>
+                        </div>
+                        <div class="dd-banner-badge">
+                            <div class="dd-badge-top">TẶNG BẠN</div>
+                            <div class="dd-badge-val">50<sup>K</sup></div>
+                        </div>
+                    </div>
+                    <div class="dd-content">
+                        <div class="dd-title">An tâm giao vận, đẩy bật kinh doanh</div>
+                        <ul class="dd-benefits">
+                            <li><i class="fa-regular fa-circle-check"></i> Cước phí tốt</li>
+                            <li><i class="fa-regular fa-circle-check"></i> Đa dạng đối tác vận chuyển</li>
+                            <li><i class="fa-regular fa-circle-check"></i> Hơn 10.000 chủ gian hàng tin dùng</li>
+                            <li><i class="fa-regular fa-circle-check"></i> Tặng 50K cho tài khoản mới</li>
+                        </ul>
+                        <div class="dd-slide-dots">
+                            <div class="dd-slide-dot"></div>
+                            <div class="dd-slide-dot off"></div>
+                            <div class="dd-slide-dot off"></div>
+                        </div>
+                        <button class="dd-btn-primary" onclick="alert('Tạo đơn giao hàng')">Tạo đơn giao với
+                            Hasu</button>
+                        <button class="dd-btn-outline" onclick="alert('Tư vấn giao hàng')">Tôi muốn nhận tư vấn</button>
+                    </div>
+                </div>
+            </div>
+            <div class="hdr-palette-wrap">
+                <button class="hdr-palette-btn" onclick="togglePalette(event)" title="Doi mau giao dien">
+                    <i class="fa-solid fa-palette"></i>
+                </button>
+                <div class="palette-dropdown" id="paletteDropdown">
+                    <div class="palette-grid" id="paletteGrid"></div>
+                </div>
+            </div>
+            <div class="hdr-icon-wrap" id="helpWrap">
+                <button class="hdr-icon-btn" onclick="toggleHdrDD('helpPanel','helpWrap',event)" title="Tro giup">
+                    <i class="fa-regular fa-circle-question"></i>
+                </button>
+                <div class="hdr-dd-panel" id="helpPanel">
+                    <div class="hdr-dd-head">Hỗ trợ & Hướng dẫn</div>
+                    <div class="hdr-dd-item" onclick="alert('Hướng dẫn sử dụng')"><i
+                            class="fa-regular fa-book-open"></i> Hướng dẫn sử dụng</div>
+                    <div class="hdr-dd-item" onclick="alert('Phím tắt')"><i class="fa-regular fa-keyboard"></i> Phím tắt
+                        <span class="dd-item-right">Ctrl+?</span>
+                    </div>
+                    <div class="hdr-dd-item" onclick="alert('Câu hỏi thường gặp')"><i
+                            class="fa-regular fa-circle-question"></i> Câu hỏi thường gặp</div>
+                    <div class="hdr-dd-item" onclick="alert('Cộng đồng')"><i class="fa-regular fa-comments"></i> Cộng
+                        đồng Hasu</div>
+                    <div class="hdr-dd-sep"></div>
+                    <div class="hdr-dd-item hdr-dd-highlight" onclick="alert('Liên hệ hỗ trợ')"><i
+                            class="fa-solid fa-headset"></i> Liên hệ hỗ trợ</div>
+                </div>
+            </div>
+            <div class="hdr-icon-wrap" id="chatWrap">
+                <button class="hdr-icon-btn" onclick="toggleHdrDD('chatPanel','chatWrap',event)"
+                    title="Ho tro truc tuyen">
+                    <i class="fa-regular fa-comment-dots"></i>
+                </button>
+                <div class="hdr-dd-panel chat-panel" id="chatPanel">
+                    <div class="hdr-dd-head">Hỗ trợ trực tuyến</div>
+                    <div class="chat-contact-item" onclick="alert('Chat hỗ trợ kỹ thuật')">
+                        <div class="chat-icon-circle" style="background:#e3f2fd;color:#1976d2"><i
+                                class="fa-solid fa-headset"></i></div>
+                        <div>
+                            <div class="ci-name">Hỗ trợ kỹ thuật</div>
+                            <div class="ci-sub">Thời gian 8:00 - 22:00</div>
+                        </div>
+                    </div>
+                    <div class="chat-contact-item" onclick="alert('Tư vấn kinh doanh')">
+                        <div class="chat-icon-circle" style="background:#e8f5e9;color:#388e3c"><i
+                                class="fa-solid fa-chart-line"></i></div>
+                        <div>
+                            <div class="ci-name">Tư vấn kinh doanh</div>
+                            <div class="ci-sub">Thứ 2 - Thứ 6</div>
+                        </div>
+                    </div>
+                    <div class="hdr-dd-sep"></div>
+                    <div class="hdr-dd-item hdr-dd-highlight" onclick="alert('Hotline: 1900 6522')"><i
+                            class="fa-solid fa-phone"></i> Hotline: 1900 6522</div>
+                </div>
+            </div>
+            <div class="hdr-divider"></div>
+            <div class="hdr-lang-wrap" id="langWrap">
+                <div class="lang-btn" onclick="toggleHdrDD('langPanel','langWrap',event)"><img
+                        src="https://flagcdn.com/16x12/vn.png" alt="VN"> Tiếng Việt <i class="fa-solid fa-chevron-down"
+                        style="font-size:9px;color:#aaa;margin-left:3px"></i></div>
+                <div class="hdr-dd-panel" id="langPanel" style="min-width:180px">
+                    <div class="hdr-dd-item hdr-dd-active" id="langVN" onclick="selectLang('vi')">
+                        <img src="https://flagcdn.com/16x12/vn.png" alt="VN">
+                        Tiếng Việt
+                        <i class="fa-solid fa-check check-icon" style="margin-left:auto;color:var(--blue,#004aad)"></i>
+                    </div>
+                    <div class="hdr-dd-item" id="langEN" onclick="selectLang('en')">
+                        <img src="https://flagcdn.com/16x12/gb.png" alt="EN">
+                        English
+                        <i class="fa-solid fa-check check-icon" style="margin-left:auto;display:none"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="hdr-divider"></div>
+            <div class="hdr-shop-wrap" id="shopWrap">
+                <div class="shop-btn" onclick="toggleHdrDD('shopPanel','shopWrap',event)">BHS Bình Than <i
+                        class="fa-solid fa-chevron-down" style="font-size:9px;color:#aaa;margin-left:3px"></i></div>
+                <div class="hdr-dd-panel branch-panel" id="shopPanel">
+                    <div class="branch-search"><input type="text" placeholder="Tìm chi nhánh..."
+                            oninput="filterBranch(this.value)"></div>
+                    <div id="branchList">
+                        <div class="branch-item" onclick="selectBranch('BHS Bình Than',this)">
+                            <i class="fa-solid fa-store"></i>
+                            <span class="bi-name">BHS Bình Than</span>
+                            <span class="bi-active"></span>
+                        </div>
+                        <div class="branch-item" onclick="selectBranch('BHS Đà Nẵng',this)">
+                            <i class="fa-regular fa-store"></i>
+                            <span class="bi-name">BHS Đà Nẵng</span>
+                        </div>
+                        <div class="branch-item" onclick="selectBranch('BHS Hà Nội',this)">
+                            <i class="fa-regular fa-store"></i>
+                            <span class="bi-name">BHS Hà Nội</span>
+                        </div>
+                    </div>
+                    <div class="hdr-dd-sep"></div>
+                    <div class="branch-add" onclick="alert('Thêm chi nhánh mới')">
+                        <i class="fa-solid fa-plus"></i> Thêm chi nhánh mới
+                    </div>
+                </div>
+            </div>
+            <div class="hdr-divider"></div>
+            <div class="hdr-bell-wrap" id="bellWrap">
+                <button class="hdr-bell-btn" onclick="toggleHdrDD('bellPanel','bellWrap',event)">
+                    <i class="fa-regular fa-bell"></i>
+                    <span class="hdr-bell-dot"></span>
+                </button>
+                <div class="hdr-dd-panel notif-panel" id="bellPanel">
+                    <div class="hdr-dd-head">Thông báo <a href="#" onclick="return false">Đánh dấu đã đọc</a></div>
+                    <div class="notif-empty">
+                        <i class="fa-regular fa-bell-slash"></i>
+                        Chưa có thông báo mới
+                    </div>
+                </div>
+            </div>
+            <div class="hdr-gear-wrap" id="gearWrap">
+                <button class="hdr-gear-btn" onclick="toggleHdrDD('gearPanel','gearWrap',event)">
+                    <i class="fa-solid fa-gear"></i>
+                </button>
+                <div class="hdr-dd-panel" id="gearPanel">
+                    <div class="hdr-dd-head">Cài đặt</div>
+                    <div class="hdr-dd-item" onclick="alert('Cài đặt chung')"><i class="fa-solid fa-sliders"></i> Cài
+                        đặt chung</div>
+                    <div class="hdr-dd-item" onclick="alert('Quản lý người dùng')"><i
+                            class="fa-solid fa-users-gear"></i> Quản lý người dùng</div>
+                    <div class="hdr-dd-item" onclick="alert('Phân quyền')"><i class="fa-solid fa-shield-halved"></i>
+                        Phân quyền</div>
+                    <div class="hdr-dd-item" onclick="alert('Tích hợp')"><i class="fa-solid fa-plug"></i> Tích hợp ứng
+                        dụng</div>
+                    <div class="hdr-dd-sep"></div>
+                    <div class="hdr-dd-item" onclick="alert('In ấn')"><i class="fa-solid fa-print"></i> Mẫu in</div>
+                </div>
+            </div>
+            <div class="hdr-avatar-wrap" id="avatarWrap">
+                <button class="hdr-avatar-btn" onclick="toggleHdrDD('avatarPanel','avatarWrap',event)">
+                    <i class="fa-regular fa-circle-user"></i>
+                </button>
+                <div class="hdr-dd-panel" id="avatarPanel">
+                    <div style="padding:14px 16px;border-bottom:1px solid #f0f0f0">
+                        <div style="font-weight:600;font-size:14px;color:#222">Tester</div>
+                        <div style="font-size:12px;color:#888;margin-top:2px">tester@hasu.vn</div>
+                    </div>
+                    <div class="hdr-dd-item" onclick="alert('Thông tin tài khoản')"><i class="fa-regular fa-user"></i>
+                        Thông tin tài khoản</div>
+                    <div class="hdr-dd-item" onclick="alert('Đổi mật khẩu')"><i class="fa-solid fa-key"></i> Đổi mật
+                        khẩu</div>
+                    <div class="hdr-dd-item" onclick="alert('Lịch sử đăng nhập')"><i
+                            class="fa-solid fa-clock-rotate-left"></i> Lịch sử đăng nhập</div>
+                    <div class="hdr-dd-sep"></div>
+                    <div class="hdr-dd-item" style="color:#e53935" onclick="window.location='login.html'"><i
+                            class="fa-solid fa-right-from-bracket" style="color:#e53935"></i> Đăng xuất</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- NAVBAR -->
+    <nav class="kv-navbar">
+        <div class="nav-tabs">
+            <div class="nav-item"><a href="tongquan.html" class="nav-tab">Tổng quan</a></div>
+            <div class="nav-item">
+                <a href="hanghoa.html" class="nav-tab">Hàng hóa</a>
+                <div class="nav-dropdown">
+                    <div class="nav-dd-col">
+                        <div class="nav-dd-title">Hàng hóa</div>
+                        <a href="hanghoa.html" class="nav-dd-link">Danh sách hàng hóa</a>
+                        <a href="thietlapgia.html" class="nav-dd-link">Thiết lập giá</a>
+                    </div>
+                    <div class="nav-dd-col">
+                        <div class="nav-dd-title">Kho hàng</div>
+                        <a href="chuyenhang.html" class="nav-dd-link">Chuyển hàng</a>
+                        <a href="kiemkho.html" class="nav-dd-link">Kiểm kho</a>
+                        <a href="xuathuy.html" class="nav-dd-link">Xuất hủy</a>
+                        <a href="#" class="nav-dd-link">Xuất dùng nội bộ <span class="nav-dd-badge">Sắp ra
+                                mắt</span></a>
+                    </div>
+                    <div class="nav-dd-col">
+                        <div class="nav-dd-title">Nhập hàng</div>
+                        <a href="nhacungcap.html" class="nav-dd-link">Nhà cung cấp</a>
+                        <a href="dathangnhap.html" class="nav-dd-link">Đặt hàng nhập</a>
+                        <a href="nhaphang.html" class="nav-dd-link">Nhập hàng</a>
+                        <a href="trahangnhap.html" class="nav-dd-link">Trả hàng nhập</a>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-item">
+                <a href="donhang.html" class="nav-tab">Đơn hàng</a>
+                <div class="nav-dropdown">
+                    <div class="nav-dd-col">
+                        <a href="donhang.html" class="nav-dd-link">Đặt hàng</a>
+                        <a href="hoadon.html" class="nav-dd-link">Hóa đơn</a>
+                        <a href="trahang.html" class="nav-dd-link">Trả hàng</a>
+                        <div style="height: 1px; background: #f0f0f0; margin: 6px 0;"></div>
+                        <a href="doitacgiaohang.html" class="nav-dd-link">Đối tác giao hàng</a>
+                        <a href="vandon.html" class="nav-dd-link">Vận đơn</a>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-item">
+                <a href="khachhang.html" class="nav-tab">Khách hàng</a>
+                <div class="nav-dropdown">
+                    <div class="nav-dd-col">
+                        <a href="khachhang.html" class="nav-dd-link">Khách hàng</a>
+                        <a href="khuyenmai.html" class="nav-dd-link">Khuyến mãi</a>
+                        <a href="voucher.html" class="nav-dd-link">Voucher</a>
+                        <a href="coupon.html" class="nav-dd-link">Coupon</a>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-item">
+                <a href="nhanvien.html" class="nav-tab">Nhân viên</a>
+                <div class="nav-dropdown">
+                    <div class="nav-dd-col">
+                        <a href="nhanvien.html" class="nav-dd-link">Danh sách nhân viên</a>
+                        <a href="lichlamviec.html" class="nav-dd-link">Lịch làm việc</a>
+                        <a href="bangchamcong.html" class="nav-dd-link">Bảng chấm công</a>
+                        <a href="bangluong.html" class="nav-dd-link">Bảng lương</a>
+                        <a href="banghoahong.html" class="nav-dd-link">Bảng hoa hồng</a>
+                        <a href="thietlapnhanvien.html" class="nav-dd-link">Thiết lập nhân viên</a>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-item"><a href="cashflow.html" class="nav-tab">Sổ quỹ</a></div>
+            <div class="nav-item">
+                <a href="baocao.html" class="nav-tab active">Phân tích</a>
+                <div class="nav-dropdown">
+                    <div class="nav-dd-col">
+                        <div class="nav-dd-title">Báo cáo</div>
+                        <a href="baocao.html" class="nav-dd-link">Cuối ngày</a>
+                        <a href="baocao.html" class="nav-dd-link">Bán hàng</a>
+                        <a href="baocao.html" class="nav-dd-link">Đặt hàng</a>
+                        <a href="baocao.html" class="nav-dd-link">Hàng hóa</a>
+                        <a href="baocao.html" class="nav-dd-link">Khách hàng</a>
+                    </div>
+                    <div class="nav-dd-col" style="padding-top:24px">
+                        <a href="baocao.html" class="nav-dd-link">Nhà cung cấp</a>
+                        <a href="baocao.html" class="nav-dd-link">Nhân viên</a>
+                        <a href="baocao.html" class="nav-dd-link">Kênh bán hàng</a>
+                        <a href="baocao.html" class="nav-dd-link">Tài chính</a>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-item"><a href="banonline.html" class="nav-tab">Bán online</a>
+                <div class="nav-dropdown">
+                    <div class="nav-dd-col"><a href="banonline.html" class="nav-dd-link">Bán online</a><a
+                            href="websitebanhang.html" class="nav-dd-link">Website bán hàng</a></div>
+                </div>
+            </div>
+            <div class="nav-item"><a href="thueketoan.html" class="nav-tab">Thuế & Kế toán <span
+                        style="background: #e53935; color: #fff; font-size: 10px; padding: 1px 5px; border-radius: 8px; margin-left: 6px; font-weight: 600; vertical-align: middle;">Mới</span></a>
+            </div>
+        </div>
+        <button class="btn-go-sale" onclick="window.location.href='sale.html'"><i class="fa-solid fa-cart-shopping"></i>
+            <strong>Bán hàng</strong></button>
+    </nav>
+
+    <!-- SUB TABS -->
+    <div class="sub-tabs" id="subTabs"></div>
+
+    <!-- BODY -->
+    <div class="page-body">
+        <aside class="sidebar">
+            <div class="sb-title">Bộ lọc</div>
+            <div class="filter-sec">
+                <span class="f-label">Thời gian</span>
+                <div class="f-radio-group">
+                    <label><input type="radio" name="timeFilter" value="today" onchange="loadRealData();renderReport()">
+                        Hôm
+                        nay</label>
+                    <label><input type="radio" name="timeFilter" value="yesterday"
+                            onchange="loadRealData();renderReport()"> Hôm
+                        qua</label>
+                    <label><input type="radio" name="timeFilter" value="week" onchange="loadRealData();renderReport()">
+                        Tuần
+                        này</label>
+                    <label><input type="radio" name="timeFilter" value="month" checked
+                            onchange="loadRealData();renderReport()"> Tháng
+                        này</label>
+                    <label><input type="radio" name="timeFilter" value="quarter"
+                            onchange="loadRealData();renderReport()"> Quý
+                        này</label>
+                </div>
+            </div>
+            <div class="filter-sec">
+                <span class="f-label">Chi nhánh</span>
+                <select class="filter-select" onchange="loadRealData();renderReport()">
+                    <option>Tất cả chi nhánh</option>
+                    <option>BHS Bình Than</option>
+                </select>
+            </div>
+            <div class="filter-sec" id="extraFilters"></div>
+        </aside>
+        <div class="main-content" id="reportContent"></div>
+    </div>
+
+    <script>
+        const TABS = [
+            { id: 'cuoingay', label: 'Cuối ngày', icon: 'fa-solid fa-calendar-check' },
+            { id: 'banhang', label: 'Bán hàng', icon: 'fa-solid fa-chart-line' },
+            { id: 'dathang', label: 'Đặt hàng', icon: 'fa-solid fa-clipboard-list' },
+            { id: 'hanghoa', label: 'Hàng hóa', icon: 'fa-solid fa-boxes-stacked' },
+            { id: 'khachhang', label: 'Khách hàng', icon: 'fa-solid fa-users' },
+            { id: 'nhanvien', label: 'Nhân viên', icon: 'fa-solid fa-user-tie' },
+            { id: 'nhacungcap', label: 'Nhà cung cấp', icon: 'fa-solid fa-truck-field' },
+            { id: 'kenhban', label: 'Kênh bán hàng', icon: 'fa-solid fa-store' },
+            { id: 'taichinh', label: 'Tài chính', icon: 'fa-solid fa-coins' }
+        ];
+
+        let currentTab = 'cuoingay';
+        const fmt = n => n.toLocaleString('vi-VN');
+
+        /* ===== SAMPLE DATA ===== */
+        const D = {
+            cuoingay: { revenue: 2850000, orders: 15, returns: 1, returnVal: 45000, netRevenue: 2805000, cash: 1800000, bank: 1050000, avgOrder: 190000, payments: [{ name: 'Tiền mặt', amount: 1800000, pct: 63 }, { name: 'Chuyển khoản', amount: 1050000, pct: 37 }], _invoices: [{ code: 'HD00015', time: '14:30 15/03', customer: 'Khách lẻ', total: 190000, method: 'Tiền mặt' }] },
+            banhang: {
+                summary: { revenue: 12500000, orders: 68, returns: 5, returnVal: 380000, netRevenue: 12120000, discount: 250000, profit: 3200000 },
+                daily: [
+                    { date: '01/03', rev: 380000 }, { date: '02/03', rev: 520000 }, { date: '03/03', rev: 410000 }, { date: '04/03', rev: 680000 },
+                    { date: '05/03', rev: 890000 }, { date: '06/03', rev: 750000 }, { date: '07/03', rev: 1200000 }, { date: '08/03', rev: 950000 }
+                ],
+                top: [
+                    { name: 'Gạo ST25 5kg', qty: 45, revenue: 5625000, profit: 1125000 },
+                    { name: 'Sữa Vinamilk 1L', qty: 80, revenue: 2560000, profit: 640000 },
+                    { name: 'Mì gói Hảo Hảo', qty: 200, revenue: 1000000, profit: 300000 },
+                    { name: 'Nước suối Aqua 500ml', qty: 150, revenue: 1050000, profit: 210000 },
+                    { name: 'Cà phê Nescafé 3in1', qty: 30, revenue: 1650000, profit: 495000 }
+                ]
+            },
+            dathang: {
+                total: 18, done: 12, shipping: 3, draft: 2, cancelled: 1,
+                rows: [
+                    { code: 'DH001', customer: 'Công ty ABC', total: 1500000, status: 'Phiếu tạm', channel: 'Zalo' },
+                    { code: 'DH002', customer: 'Nguyễn Văn H', total: 500000, status: 'Đang giao', channel: 'Website' },
+                    { code: 'DH003', customer: 'Trần Văn I', total: 275000, status: 'Hoàn thành', channel: 'Trực tiếp' },
+                    { code: 'DH004', customer: 'Lê Thị J', total: 350000, status: 'Đã hủy', channel: 'Zalo' },
+                    { code: 'DH005', customer: 'Phạm Văn K', total: 890000, status: 'Hoàn thành', channel: 'Mini App' }
+                ]
+            },
+            hanghoa: {
+                totalProducts: 156, belowMin: 8, aboveMax: 3, outOfStock: 2,
+                inventory: [
+                    { code: 'SP001', name: 'Gạo ST25 5kg', stock: 45, sold: 120, value: 5625000 },
+                    { code: 'SP002', name: 'Sữa Vinamilk 1L', stock: 80, sold: 200, value: 2560000 },
+                    { code: 'SP003', name: 'Mì gói Hảo Hảo', stock: 500, sold: 800, value: 2500000 },
+                    { code: 'SP004', name: 'Nước suối Aqua 500ml', stock: 200, sold: 450, value: 1400000 },
+                    { code: 'SP005', name: 'Cà phê Nescafé 3in1', stock: 60, sold: 90, value: 3300000 }
+                ]
+            },
+            khachhang: {
+                totalCustomers: 10, newThisMonth: 3, activeCustomers: 9, totalDebt: 9150000,
+                top: [
+                    { code: 'KH000009', name: 'Công ty XYZ', totalBuy: 120000000, debt: 5000000, orders: 65 },
+                    { code: 'KH000003', name: 'Công ty ABC', totalBuy: 85000000, debt: 2500000, orders: 45 },
+                    { code: 'KH000006', name: 'Hoàng Văn E', totalBuy: 35000000, debt: 1000000, orders: 28 },
+                    { code: 'KH000002', name: 'Trần Thị B', totalBuy: 22000000, debt: 0, orders: 18 },
+                    { code: 'KH000001', name: 'Nguyễn Văn A', totalBuy: 15000000, debt: 500000, orders: 12 }
+                ]
+            },
+            nhanvien: {
+                totalStaff: 3, activeStaff: 3,
+                rows: [
+                    { code: 'NV001', name: 'Admin', role: 'Quản lý', orders: 45, revenue: 8500000, returns: 2, returnVal: 80000, avgOrder: 188889 },
+                    { code: 'NV002', name: 'Nhân viên 1', role: 'Bán hàng', orders: 15, revenue: 2800000, returns: 2, returnVal: 70000, avgOrder: 186667 },
+                    { code: 'NV003', name: 'Nhân viên 2', role: 'Bán hàng', orders: 8, revenue: 1200000, returns: 1, returnVal: 230000, avgOrder: 150000 }
+                ]
+            },
+            nhacungcap: {
+                totalNCC: 5, totalImport: 25000000, totalDebt: 8500000,
+                rows: [
+                    { name: 'NCC Gạo Miền Tây', imports: 12, total: 18000000, debt: 3000000, lastImport: '06/03/2026' },
+                    { name: 'NCC Sữa Vinamilk', imports: 8, total: 8500000, debt: 2000000, lastImport: '05/03/2026' },
+                    { name: 'NCC Mì Acecook', imports: 5, total: 5000000, debt: 1500000, lastImport: '03/03/2026' },
+                    { name: 'NCC Nước giải khát', imports: 10, total: 6200000, debt: 1000000, lastImport: '07/03/2026' },
+                    { name: 'NCC Hóa mỹ phẩm', imports: 6, total: 4800000, debt: 1000000, lastImport: '04/03/2026' }
+                ]
+            },
+            kenhban: {
+                channels: [
+                    { name: 'Tại quầy', orders: 35, revenue: 6500000, pct: 52 },
+                    { name: 'Zalo', orders: 15, revenue: 2800000, pct: 22 },
+                    { name: 'Website', orders: 10, revenue: 1800000, pct: 14 },
+                    { name: 'Mini App', orders: 5, revenue: 1100000, pct: 9 },
+                    { name: 'Trực tiếp', orders: 3, revenue: 300000, pct: 3 }
+                ]
+            },
+            taichinh: {
+                revenue: 12500000, cogs: 8200000, grossProfit: 4300000, expenses: 1200000, netProfit: 3100000,
+                expenses_detail: [
+                    { name: 'Lương nhân viên', amount: 800000 },
+                    { name: 'Điện nước', amount: 200000 },
+                    { name: 'Voucher/Khuyến mãi', amount: 120000 },
+                    { name: 'Chi phí khác', amount: 80000 }
+                ]
+            }
+        };
+
+        /* ===== RENDER SUB TABS ===== */
+        function renderSubTabs() {
+            document.getElementById('subTabs').innerHTML = TABS.map(t =>
+                `<div class="sub-tab ${t.id === currentTab ? 'active' : ''}" onclick="switchTab('${t.id}')"><i class="${t.icon}" style="margin-right:5px"></i>${t.label}</div>`
+            ).join('');
+        }
+
+        function switchTab(id) {
+            currentTab = id;
+            renderSubTabs();
+            renderExtraFilters();
+            renderReport();
+        }
+
+        function renderExtraFilters() {
+            const ef = document.getElementById('extraFilters');
+            if (currentTab === 'banhang') ef.innerHTML = `<span class="f-label">Nhóm theo</span><select class="filter-select"><option>Theo ngày</option><option>Theo tuần</option><option>Theo tháng</option></select>`;
+            else if (currentTab === 'hanghoa') ef.innerHTML = `<span class="f-label">Mối quan tâm</span><select class="filter-select"><option>Bán hàng</option><option>Lợi nhuận</option><option>Giá trị kho</option><option>Xuất nhập tồn</option></select>`;
+            else if (currentTab === 'khachhang') ef.innerHTML = `<span class="f-label">Nhóm KH</span><select class="filter-select"><option>Tất cả</option><option>Khách VIP</option><option>Khách sỉ</option><option>Khách lẻ</option><option>Đại lý</option></select>`;
+            else if (currentTab === 'nhanvien') ef.innerHTML = `<span class="f-label">Chức vụ</span><select class="filter-select"><option>Tất cả</option><option>Quản lý</option><option>Bán hàng</option><option>Kho</option></select>`;
+            else if (currentTab === 'kenhban') ef.innerHTML = `<span class="f-label">Kênh bán</span><select class="filter-select"><option>Tất cả</option><option>Tại quầy</option><option>Zalo</option><option>Website</option><option>Mini App</option></select>`;
+            else ef.innerHTML = '';
+        }
+
+        /* ===== RENDER REPORT ===== */
+        function renderReport() {
+            const c = document.getElementById('reportContent');
+            switch (currentTab) {
+                case 'cuoingay': c.innerHTML = renderCuoiNgay(); break;
+                case 'banhang': c.innerHTML = renderBanHang(); break;
+                case 'dathang': c.innerHTML = renderDatHang(); break;
+                case 'hanghoa': c.innerHTML = renderHangHoa(); break;
+                case 'khachhang': c.innerHTML = renderKhachHang(); break;
+                case 'nhanvien': c.innerHTML = renderNhanVien(); break;
+                case 'nhacungcap': c.innerHTML = renderNhaCungCap(); break;
+                case 'kenhban': c.innerHTML = renderKenhBan(); break;
+                case 'taichinh': c.innerHTML = renderTaiChinh(); break;
+            }
+        }
+
+        /* --- Cuối ngày --- */
+        function renderCuoiNgay() {
+            const d = D.cuoingay;
+            const pmts = d.payments || [];
+            const colors = ['var(--blue)', '#43a047', '#f57c00', '#7b1fa2', '#e53935', '#00acc1'];
+
+            let conic = '', pctCum = 0;
+            const validPmts = pmts.filter(p => p.amount > 0);
+            if (validPmts.length === 0) {
+                conic = '#eee 0% 100%';
+            } else {
+                validPmts.forEach((p, i) => {
+                    const c = colors[i % colors.length];
+                    conic += `${c} ${pctCum}% ${pctCum + p.pct}%,`;
+                    pctCum += p.pct;
+                });
+                conic = conic.slice(0, -1);
+            }
+
+            return `
+      <div class="stat-row">
+        <div class="stat-card"><div class="sc-label">Doanh thu</div><div class="sc-value blue">${fmt(d.revenue)}</div></div>
+        <div class="stat-card green"><div class="sc-label">Doanh thu thuần</div><div class="sc-value green">${fmt(d.netRevenue)}</div></div>
+        <div class="stat-card"><div class="sc-label">Số hóa đơn</div><div class="sc-value">${d.orders}</div></div>
+        <div class="stat-card red"><div class="sc-label">Trả hàng</div><div class="sc-value red">${d.returns} (${fmt(d.returnVal)})</div></div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-card"><div class="sc-label">Tiền mặt thu</div><div class="sc-value">${fmt(d.cash)}</div></div>
+        <div class="stat-card"><div class="sc-label">Chuyển khoản (Khác)</div><div class="sc-value">${fmt(d.revenue - d.cash)}</div></div>
+        <div class="stat-card orange"><div class="sc-label">Trung bình / đơn</div><div class="sc-value">${fmt(d.avgOrder)}</div></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-header"><div class="chart-title">Phân bổ doanh thu theo phương thức thanh toán</div></div>
+        <div style="display:flex;align-items:center;gap:40px;padding:20px 0">
+          <div style="width:160px;height:160px;border-radius:50%;background:conic-gradient(${conic});position:relative;flex-shrink:0">
+            <div style="position:absolute;inset:25%;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#333">${fmt(d.revenue)}</div>
+          </div>
+          <div>
+            ${validPmts.map((p, i) => `<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><div class="legend-dot" style="background:${colors[i % colors.length]}"></div><span style="font-size:13px">${p.name}: <strong>${fmt(p.amount)}</strong> (${p.pct}%)</span></div>`).join('')}
+            ${validPmts.length === 0 ? `<span style="font-size:13px;color:#999">Chưa có dữ liệu thanh toán</span>` : ''}
+          </div>
+        </div>
+      </div>
+      <div class="table-card">
+        <div class="table-header"><div class="table-title">Chi tiết hóa đơn trong ngày</div>
+          <div class="table-actions"><button class="tbl-btn"><i class="fa-solid fa-file-export"></i> Xuất file</button></div>
+        </div>
+        <table><thead><tr><th>Mã HĐ</th><th>Thời gian</th><th>Khách hàng</th><th class="right">Tổng tiền</th><th class="center">Thanh toán</th></tr></thead>
+        <tbody>
+          ${(d._invoices || []).map(r => `<tr><td class="tbl-code">${r.code}</td><td>${r.time}</td><td>${r.customer}</td><td class="right">${fmt(r.total)}</td><td class="center">${r.method}</td></tr>`).join('')}</tbody></table>
+      </div>`;
+        }
+
+        /* --- Bán hàng --- */
+        function renderBanHang() {
+            const d = D.banhang;
+            const maxRev = Math.max(...d.daily.map(x => x.rev));
+            return `
+      <div class="stat-row">
+        <div class="stat-card"><div class="sc-label">Doanh thu</div><div class="sc-value blue">${fmt(d.summary.revenue)}</div></div>
+        <div class="stat-card green"><div class="sc-label">Doanh thu thuần</div><div class="sc-value green">${fmt(d.summary.netRevenue)}</div></div>
+        <div class="stat-card"><div class="sc-label">Số hóa đơn</div><div class="sc-value">${d.summary.orders}</div></div>
+        <div class="stat-card red"><div class="sc-label">Trả hàng</div><div class="sc-value red">${fmt(d.summary.returnVal)}</div></div>
+        <div class="stat-card purple"><div class="sc-label">Lợi nhuận</div><div class="sc-value">${fmt(d.summary.profit)}</div></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-header"><div class="chart-title">Doanh thu theo ngày</div>
+          <div class="chart-tools"><button class="chart-btn active"><i class="fa-solid fa-chart-column"></i></button><button class="chart-btn"><i class="fa-solid fa-chart-line"></i></button></div>
+        </div>
+        <div class="chart-area">${d.daily.map(x => `<div class="chart-bar" style="height:${(x.rev / maxRev * 100)}%"><span class="bar-val">${fmt(x.rev)}</span><span class="bar-lbl">${x.date}</span></div>`).join('')}</div>
+        <div class="chart-legend"><div class="legend-item"><div class="legend-dot" style="background:#42a5f5"></div>Doanh thu</div></div>
+      </div>
+      <div class="table-card">
+        <div class="table-header"><div class="table-title">Top hàng bán chạy</div>
+          <div class="table-actions"><button class="tbl-btn"><i class="fa-solid fa-file-export"></i> Xuất file</button></div>
+        </div>
+        <table><thead><tr><th>#</th><th>Sản phẩm</th><th class="right">SL bán</th><th class="right">Doanh thu</th><th class="right">Lợi nhuận</th></tr></thead>
+        <tbody>${d.top.map((r, i) => `<tr><td>${i + 1}</td><td style="font-weight:500">${r.name}</td><td class="right">${r.qty}</td><td class="right">${fmt(r.revenue)}</td><td class="right" style="color:#43a047;font-weight:600">${fmt(r.profit)}</td></tr>`).join('')}</tbody></table>
+      </div>`;
+        }
+
+        /* --- Đặt hàng --- */
+        function renderDatHang() {
+            const d = D.dathang;
+            const statusBadge = s => {
+                const m = { 'Hoàn thành': 'badge-success', 'Đã hủy': 'badge-danger', 'Phiếu tạm': 'badge-info', 'Đang giao': 'badge-info' };
+                return `<span class="badge ${m[s] || ''}">${s}</span>`;
+            };
+            return `
+      <div class="stat-row">
+        <div class="stat-card"><div class="sc-label">Tổng đơn</div><div class="sc-value blue">${d.total}</div></div>
+        <div class="stat-card green"><div class="sc-label">Hoàn thành</div><div class="sc-value green">${d.done}</div></div>
+        <div class="stat-card orange"><div class="sc-label">Đang giao</div><div class="sc-value">${d.shipping}</div></div>
+        <div class="stat-card"><div class="sc-label">Phiếu tạm</div><div class="sc-value">${d.draft}</div></div>
+        <div class="stat-card red"><div class="sc-label">Đã hủy</div><div class="sc-value red">${d.cancelled}</div></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-header"><div class="chart-title">Tỷ lệ trạng thái đơn hàng</div></div>
+        <div style="display:flex;align-items:center;gap:40px;padding:20px 0">
+          <div style="width:160px;height:160px;border-radius:50%;background:conic-gradient(#43a047 0% ${d.done / d.total * 100}%,#f57c00 ${d.done / d.total * 100}% ${(d.done + d.shipping) / d.total * 100}%,var(--blue) ${(d.done + d.shipping) / d.total * 100}% ${(d.done + d.shipping + d.draft) / d.total * 100}%,#e53935 ${(d.done + d.shipping + d.draft) / d.total * 100}% 100%);position:relative;flex-shrink:0">
+            <div style="position:absolute;inset:25%;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700">${d.total}</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <div class="legend-item"><div class="legend-dot" style="background:#43a047"></div>Hoàn thành: ${d.done}</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#f57c00"></div>Đang giao: ${d.shipping}</div>
+            <div class="legend-item"><div class="legend-dot" style="background:var(--blue)"></div>Phiếu tạm: ${d.draft}</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#e53935"></div>Đã hủy: ${d.cancelled}</div>
+          </div>
+        </div>
+      </div>
+      <div class="table-card">
+        <div class="table-header"><div class="table-title">Danh sách đặt hàng</div>
+          <div class="table-actions"><button class="tbl-btn"><i class="fa-solid fa-file-export"></i> Xuất file</button></div>
+        </div>
+        <table><thead><tr><th>Mã đơn</th><th>Khách hàng</th><th class="right">Tổng tiền</th><th class="center">Kênh bán</th><th class="center">Trạng thái</th></tr></thead>
+        <tbody>${d.rows.map(r => `<tr><td class="tbl-code">${r.code}</td><td>${r.customer}</td><td class="right">${fmt(r.total)}</td><td class="center"><span class="badge badge-info">${r.channel}</span></td><td class="center">${statusBadge(r.status)}</td></tr>`).join('')}</tbody></table>
+      </div>`;
+        }
+
+        /* --- Hàng hóa --- */
+        function renderHangHoa() {
+            const d = D.hanghoa;
+            return `
+      <div class="stat-row">
+        <div class="stat-card"><div class="sc-label">Tổng sản phẩm</div><div class="sc-value blue">${d.totalProducts}</div></div>
+        <div class="stat-card orange"><div class="sc-label">Dưới định mức</div><div class="sc-value" style="color:#f57c00">${d.belowMin}</div></div>
+        <div class="stat-card red"><div class="sc-label">Hết hàng</div><div class="sc-value red">${d.outOfStock}</div></div>
+        <div class="stat-card"><div class="sc-label">Vượt định mức</div><div class="sc-value">${d.aboveMax}</div></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-header"><div class="chart-title">Top sản phẩm bán chạy theo số lượng</div></div>
+        <div class="chart-area" style="height:180px">${d.inventory.map(x => `<div class="chart-bar green-bar" style="height:${(x.sold / 800 * 100)}%"><span class="bar-val">${x.sold}</span><span class="bar-lbl">${x.name.substring(0, 10)}...</span></div>`).join('')}</div>
+        <div class="chart-legend" style="margin-top:28px"><div class="legend-item"><div class="legend-dot" style="background:#66bb6a"></div>Số lượng bán</div></div>
+      </div>
+      <div class="table-card">
+        <div class="table-header"><div class="table-title">Báo cáo tồn kho</div>
+          <div class="table-actions"><button class="tbl-btn"><i class="fa-solid fa-file-export"></i> Xuất file</button></div>
+        </div>
+        <table><thead><tr><th>Mã SP</th><th>Tên sản phẩm</th><th class="right">Tồn kho</th><th class="right">Đã bán</th><th class="right">Giá trị kho</th></tr></thead>
+        <tbody>${d.inventory.map(r => `<tr><td class="tbl-code">${r.code}</td><td style="font-weight:500">${r.name}</td><td class="right">${r.stock}</td><td class="right">${r.sold}</td><td class="right" style="font-weight:600">${fmt(r.value)}</td></tr>`).join('')}</tbody></table>
+      </div>`;
+        }
+
+        /* --- Khách hàng --- */
+        function renderKhachHang() {
+            const d = D.khachhang;
+            return `
+      <div class="stat-row">
+        <div class="stat-card"><div class="sc-label">Tổng khách hàng</div><div class="sc-value blue">${d.totalCustomers}</div></div>
+        <div class="stat-card green"><div class="sc-label">Mới trong tháng</div><div class="sc-value green">${d.newThisMonth}</div></div>
+        <div class="stat-card"><div class="sc-label">Đang hoạt động</div><div class="sc-value">${d.activeCustomers}</div></div>
+        <div class="stat-card red"><div class="sc-label">Tổng nợ</div><div class="sc-value red">${fmt(d.totalDebt)}</div></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-header"><div class="chart-title">Top 5 khách mua nhiều nhất</div></div>
+        <div class="chart-area" style="height:180px">${d.top.map(x => { const maxB = d.top[0].totalBuy; return `<div class="chart-bar" style="height:${(x.totalBuy / maxB * 100)}%"><span class="bar-val">${fmt(x.totalBuy)}</span><span class="bar-lbl">${x.name.substring(0, 10)}${x.name.length > 10 ? '...' : ''}</span></div>` }).join('')}</div>
+        <div class="chart-legend" style="margin-top:28px"><div class="legend-item"><div class="legend-dot" style="background:#42a5f5"></div>Tổng mua</div></div>
+      </div>
+      <div class="table-card">
+        <div class="table-header"><div class="table-title">Chi tiết khách hàng</div>
+          <div class="table-actions"><button class="tbl-btn"><i class="fa-solid fa-file-export"></i> Xuất file</button></div>
+        </div>
+        <table><thead><tr><th>Mã KH</th><th>Tên khách hàng</th><th class="right">Tổng mua</th><th class="right">Nợ hiện tại</th><th class="right">Số đơn</th></tr></thead>
+        <tbody>${d.top.map(r => `<tr><td class="tbl-code">${r.code}</td><td style="font-weight:500">${r.name}</td><td class="right">${fmt(r.totalBuy)}</td><td class="right ${r.debt > 0 ? 'red' : ''}" style="${r.debt > 0 ? 'color:#e53935;font-weight:600' : ''}">${fmt(r.debt)}</td><td class="right">${r.orders}</td></tr>`).join('')}</tbody></table>
+      </div>`;
+        }
+
+        /* --- Nhân viên --- */
+        function renderNhanVien() {
+            const d = D.nhanvien;
+            return `
+      <div class="stat-row">
+        <div class="stat-card"><div class="sc-label">Tổng nhân viên</div><div class="sc-value blue">${d.totalStaff}</div></div>
+        <div class="stat-card green"><div class="sc-label">Đang hoạt động</div><div class="sc-value green">${d.activeStaff}</div></div>
+        <div class="stat-card"><div class="sc-label">Tổng hóa đơn</div><div class="sc-value">${d.rows.reduce((s, r) => s + r.orders, 0)}</div></div>
+        <div class="stat-card orange"><div class="sc-label">Tổng doanh thu</div><div class="sc-value" style="color:#f57c00">${fmt(d.rows.reduce((s, r) => s + r.revenue, 0))}</div></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-header"><div class="chart-title"><i class="fa-solid fa-user-tie" style="color:var(--blue);margin-right:6px"></i>Hiệu suất nhân viên tháng này</div>
+          <button class="chart-action" onclick="alert('Xuất báo cáo nhân viên')"><i class="fa-solid fa-file-export"></i> Xuất file</button>
+        </div>
+        <table class="report-tbl">
+          <thead><tr><th>Mã NV</th><th>Tên nhân viên</th><th>Chức vụ</th><th class="right">Số hóa đơn</th><th class="right">Doanh thu</th><th class="right">Trả hàng</th><th class="right">Giá trị HĐ TB</th></tr></thead>
+          <tbody>
+            ${d.rows.map(r => `<tr>
+              <td style="color:var(--blue);font-weight:500">${r.code}</td>
+              <td><strong>${r.name}</strong></td>
+              <td><span style="background:#e8f0fb;color:var(--blue);padding:2px 8px;border-radius:8px;font-size:11px">${r.role}</span></td>
+              <td class="right">${r.orders}</td>
+              <td class="right" style="font-weight:600">${fmt(r.revenue)}</td>
+              <td class="right" style="color:#e53935">${r.returns} (${fmt(r.returnVal)})</td>
+              <td class="right">${fmt(r.avgOrder)}</td>
+            </tr>`).join('')}
+          </tbody>
+        </table>
+      </div>
+      <div class="chart-card">
+        <div class="chart-header"><div class="chart-title"><i class="fa-solid fa-chart-bar" style="color:var(--blue);margin-right:6px"></i>Doanh thu theo nhân viên</div></div>
+        <div style="display:flex;gap:20px;align-items:flex-end;height:160px;padding:10px 0">
+          ${d.rows.map(r => {
+                const maxRev = Math.max(...d.rows.map(x => x.revenue));
+                return `<div style="flex:1;display:flex;flex-direction:column;align-items:center">
+              <div style="font-size:10px;color:#555;margin-bottom:4px">${fmt(r.revenue)}</div>
+              <div style="width:100%;height:${Math.round(r.revenue / maxRev * 120)}px;background:var(--blue);border-radius:4px 4px 0 0;opacity:0.8"></div>
+              <div style="font-size:11px;color:#666;margin-top:6px;text-align:center">${r.name}</div>
+            </div>`;
+            }).join('')}
+        </div>
+      </div>`;
+        }
+
+        /* --- Nhà cung cấp --- */
+        function renderNhaCungCap() {
+            const d = D.nhacungcap;
+            return `
+      <div class="stat-row">
+        <div class="stat-card"><div class="sc-label">Tổng NCC</div><div class="sc-value blue">${d.totalNCC}</div></div>
+        <div class="stat-card green"><div class="sc-label">Tổng nhập hàng</div><div class="sc-value green">${fmt(d.totalImport)}</div></div>
+        <div class="stat-card red"><div class="sc-label">Tổng nợ NCC</div><div class="sc-value red">${fmt(d.totalDebt)}</div></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-header"><div class="chart-title">Giá trị nhập hàng theo NCC</div></div>
+        <div class="chart-area" style="height:180px">${d.rows.map(x => `<div class="chart-bar orange-bar" style="height:${(x.total / 18000000 * 100)}%"><span class="bar-val">${fmt(x.total)}</span><span class="bar-lbl">${x.name.replace('NCC ', '').substring(0, 10)}</span></div>`).join('')}</div>
+        <div class="chart-legend" style="margin-top:28px"><div class="legend-item"><div class="legend-dot" style="background:#ff9800"></div>Giá trị nhập</div></div>
+      </div>
+      <div class="table-card">
+        <div class="table-header"><div class="table-title">Danh sách nhà cung cấp</div>
+          <div class="table-actions"><button class="tbl-btn"><i class="fa-solid fa-file-export"></i> Xuất file</button></div>
+        </div>
+        <table><thead><tr><th>Nhà cung cấp</th><th class="right">Số lần nhập</th><th class="right">Tổng giá trị</th><th class="right">Nợ NCC</th><th class="center">Nhập gần nhất</th></tr></thead>
+        <tbody>${d.rows.map(r => `<tr><td style="font-weight:500">${r.name}</td><td class="right">${r.imports}</td><td class="right">${fmt(r.total)}</td><td class="right" style="color:#e53935;font-weight:600">${fmt(r.debt)}</td><td class="center">${r.lastImport}</td></tr>`).join('')}</tbody></table>
+      </div>`;
+        }
+
+        /* --- Kênh bán hàng --- */
+        function renderKenhBan() {
+            const d = D.kenhban;
+            const maxOrd = Math.max(...d.channels.map(x => x.orders));
+            const totalRev = d.channels.reduce((s, x) => s + x.revenue, 0);
+            const totalOrd = d.channels.reduce((s, x) => s + x.orders, 0);
+            const colors = ['#1976d2', '#43a047', '#f57c00', '#7b1fa2', '#e53935'];
+            let conic = '', pctCum = 0;
+            d.channels.forEach((ch, i) => { conic += `${colors[i]} ${pctCum}% ${pctCum + ch.pct}%,`; pctCum += ch.pct; });
+            return `
+      <div class="stat-row">
+        <div class="stat-card"><div class="sc-label">Tổng doanh thu</div><div class="sc-value blue">${fmt(totalRev)}</div></div>
+        <div class="stat-card green"><div class="sc-label">Tổng đơn hàng</div><div class="sc-value green">${totalOrd}</div></div>
+      </div>
+      <div style="display:flex;gap:16px">
+        <div class="chart-card" style="flex:1">
+          <div class="chart-header"><div class="chart-title">Số đơn hàng theo kênh</div></div>
+          <div class="chart-area" style="height:180px">${d.channels.map((x, i) => `<div class="chart-bar" style="height:${(x.orders / maxOrd * 100)}%;background:${colors[i]}"><span class="bar-val">${x.orders}</span><span class="bar-lbl">${x.name}</span></div>`).join('')}</div>
+        </div>
+        <div class="chart-card" style="flex:1">
+          <div class="chart-header"><div class="chart-title">Tỷ trọng doanh thu</div></div>
+          <div style="display:flex;align-items:center;gap:30px;padding:20px 0">
+            <div style="width:150px;height:150px;border-radius:50%;background:conic-gradient(${conic.slice(0, -1)});position:relative;flex-shrink:0">
+              <div style="position:absolute;inset:28%;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700">${fmt(totalRev)}</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:5px">${d.channels.map((ch, i) => `<div class="legend-item"><div class="legend-dot" style="background:${colors[i]}"></div>${ch.name}: ${ch.pct}%</div>`).join('')}</div>
+          </div>
+        </div>
+      </div>
+      <div class="table-card">
+        <div class="table-header"><div class="table-title">Chi tiết theo kênh bán</div>
+          <div class="table-actions"><button class="tbl-btn"><i class="fa-solid fa-file-export"></i> Xuất file</button></div>
+        </div>
+        <table><thead><tr><th>Kênh bán hàng</th><th class="right">Số đơn</th><th class="right">Doanh thu</th><th class="right">Tỷ trọng</th></tr></thead>
+        <tbody>${d.channels.map(r => `<tr><td style="font-weight:500">${r.name}</td><td class="right">${r.orders}</td><td class="right" style="font-weight:600">${fmt(r.revenue)}</td><td class="right">${r.pct}%</td></tr>`).join('')}
+        <tr style="font-weight:700;background:#f5f7fa"><td>Tổng cộng</td><td class="right">${totalOrd}</td><td class="right">${fmt(totalRev)}</td><td class="right">100%</td></tr>
+        </tbody></table>
+      </div>`;
+        }
+
+        /* --- Tài chính --- */
+        function renderTaiChinh() {
+            const d = D.taichinh;
+            const margin = ((d.netProfit / d.revenue) * 100).toFixed(1);
+            return `
+      <div class="stat-row">
+        <div class="stat-card"><div class="sc-label">Doanh thu</div><div class="sc-value blue">${fmt(d.revenue)}</div></div>
+        <div class="stat-card red"><div class="sc-label">Giá vốn</div><div class="sc-value red">${fmt(d.cogs)}</div></div>
+        <div class="stat-card green"><div class="sc-label">Lợi nhuận gộp</div><div class="sc-value green">${fmt(d.grossProfit)}</div></div>
+        <div class="stat-card orange"><div class="sc-label">Chi phí</div><div class="sc-value" style="color:#f57c00">${fmt(d.expenses)}</div></div>
+        <div class="stat-card purple"><div class="sc-label">Lợi nhuận ròng</div><div class="sc-value" style="color:#7b1fa2;font-size:22px">${fmt(d.netProfit)}</div></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-header"><div class="chart-title">Cơ cấu tài chính</div></div>
+        <div style="display:flex;gap:30px;padding:20px 0;align-items:center;justify-content:center">
+          <div style="display:flex;flex-direction:column;gap:8px;min-width:300px">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:#e3f2fd;border-radius:6px"><span>Doanh thu</span><strong style="color:var(--blue)">${fmt(d.revenue)}</strong></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:#fce4ec;border-radius:6px"><span>(-) Giá vốn hàng bán</span><strong style="color:#e53935">${fmt(d.cogs)}</strong></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:#e8f5e9;border-radius:6px;border:2px solid #a5d6a7"><span>(=) Lợi nhuận gộp</span><strong style="color:#43a047">${fmt(d.grossProfit)}</strong></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:#fff3e0;border-radius:6px"><span>(-) Chi phí hoạt động</span><strong style="color:#f57c00">${fmt(d.expenses)}</strong></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:linear-gradient(135deg,#7b1fa2,#9c27b0);border-radius:6px;color:#fff"><span style="font-weight:600">(=) LỢI NHUẬN RÒNG</span><strong style="font-size:16px">${fmt(d.netProfit)}</strong></div>
+            <div style="text-align:center;font-size:12px;color:#888;margin-top:4px">Biên lợi nhuận: <strong style="color:#7b1fa2">${margin}%</strong></div>
+          </div>
+        </div>
+      </div>
+      <div class="table-card">
+        <div class="table-header"><div class="table-title">Chi tiết chi phí</div>
+          <div class="table-actions"><button class="tbl-btn"><i class="fa-solid fa-file-export"></i> Xuất file</button></div>
+        </div>
+        <table><thead><tr><th>Khoản chi</th><th class="right">Số tiền</th><th class="right">Tỷ trọng</th></tr></thead>
+        <tbody>${d.expenses_detail.map(r => `<tr><td style="font-weight:500">${r.name}</td><td class="right" style="font-weight:600">${fmt(r.amount)}</td><td class="right">${((r.amount / d.expenses) * 100).toFixed(1)}%</td></tr>`).join('')}
+        <tr style="font-weight:700;background:#f5f7fa"><td>Tổng chi phí</td><td class="right">${fmt(d.expenses)}</td><td class="right">100%</td></tr>
+        </tbody></table>
+      </div>`;
+        }
+
+        /* ===== REAL DATA LOADER ===== */
+        function loadRealData() {
+            try {
+                let invStr = localStorage.getItem('hasu_sale_history') || localStorage.getItem('hasu_completedOrders') || '[]';
+                if (invStr === 'undefined' || invStr === 'null') { invStr = '[]'; }
+                let inv = [];
+                try { inv = JSON.parse(invStr); } catch (ex) { inv = []; }
+                if (!Array.isArray(inv)) inv = [];
+
+                const timeFilter = document.querySelector('input[name="timeFilter"]:checked');
+                const tf = timeFilter ? timeFilter.value : 'month';
+
+                const now = new Date();
+                const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                let startD, endD = new Date();
+
+                if (tf === 'today') {
+                    startD = new Date(today);
+                } else if (tf === 'yesterday') {
+                    startD = new Date(today); startD.setDate(startD.getDate() - 1);
+                    endD = new Date(startD); endD.setHours(23, 59, 59, 999);
+                } else if (tf === 'week') {
+                    startD = new Date(today);
+                    let day = startD.getDay(); let diff = startD.getDate() - day + (day === 0 ? -6 : 1);
+                    startD.setDate(diff);
+                } else if (tf === 'month') {
+                    startD = new Date(now.getFullYear(), now.getMonth(), 1);
+                } else if (tf === 'quarter') {
+                    startD = new Date(now.getFullYear(), Math.floor(now.getMonth() / 3) * 3, 1);
+                } else {
+                    startD = new Date(0);
+                }
+
+                inv = inv.filter(o => {
+                    const tStr = String(o.time || '');
+                    const od = new Date(tStr.replace(' ', 'T'));
+                    if (isNaN(od)) return true;
+                    return od >= startD && od <= endD;
+                });
+
+                // Aggregate 'Cuối ngày'
+                let rev = 0, cash = 0, bank = 0;
+                let _invoices = [];
+                let pmtMap = {};
+
+                inv.forEach(o => {
+                    const r = o.total || o.grandTotal || o.subtotal || o.finalTotal || 0;
+                    rev += r;
+
+                    let mth = o.paymentMethod || o.method || ((o.payments && o.payments[0]) ? o.payments[0].method : 'Tiền mặt');
+                    if (!pmtMap[mth]) pmtMap[mth] = 0;
+                    pmtMap[mth] += r;
+
+                    if (mth === 'Tiền mặt') cash += r;
+                    else bank += r;
+
+                    _invoices.push({
+                        code: o.id || o.code,
+                        time: (function (t) { t = String(t || ''); const d = new Date(t.replace(' ', 'T')); return (isNaN(d) ? t : String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0') + ' ' + String(d.getDate()).padStart(2, '0') + '/' + String(d.getMonth() + 1).padStart(2, '0')); })(o.time),
+                        customer: o.cxName || o.customerName || 'Khách lẻ',
+                        total: r,
+                        method: mth
+                    });
+                });
+
+                const pmtArr = [];
+                for (let k in pmtMap) {
+                    pmtArr.push({ name: k, amount: pmtMap[k], pct: rev > 0 ? Math.round((pmtMap[k] / rev) * 100) : 0 });
+                }
+
+                D.cuoingay.revenue = rev;
+                D.cuoingay.netRevenue = rev;
+                D.cuoingay.orders = inv.length;
+                D.cuoingay.cash = cash;
+                D.cuoingay.bank = bank;
+                D.cuoingay.payments = pmtArr;
+                D.cuoingay.returns = 0;
+                D.cuoingay.returnVal = 0;
+                D.cuoingay.avgOrder = inv.length > 0 ? Math.floor(rev / inv.length) : 0;
+                D.cuoingay._invoices = _invoices.reverse().slice(0, 15);
+
+                // Aggregate 'Bán hàng' Daily Chart
+                const dailyMap = {};
+                for (let i = 6; i >= 0; i--) {
+                    let d = new Date(); d.setDate(d.getDate() - i);
+                    let k = String(d.getDate()).padStart(2, '0') + '/' + String(d.getMonth() + 1).padStart(2, '0');
+                    dailyMap[k] = 0;
+                }
+
+                // Load product catalog for cost prices
+                const productCatalog = {};
+                try {
+                    const pStr = localStorage.getItem('hasu_products');
+                    if (pStr) {
+                        JSON.parse(pStr).forEach(p => {
+                            if (p.code) productCatalog[p.code] = p.cost || 0;
+                            if (p.name) productCatalog['name_' + p.name] = p.cost || 0;
+                        });
+                    }
+                } catch (e3) { }
+
+                const prodMap = {};
+                inv.forEach(o => {
+                    const tStr = String(o.time || '');
+                    let d = new Date(tStr.replace(' ', 'T'));
+                    if (!isNaN(d)) {
+                        let k = String(d.getDate()).padStart(2, '0') + '/' + String(d.getMonth() + 1).padStart(2, '0');
+                        if (k in dailyMap) dailyMap[k] += (o.total || o.grandTotal || o.subtotal || o.finalTotal || 0);
+                    }
+                    (o.items || o.cart || []).forEach(it => {
+                        const name = it.name || it.productName || 'SP';
+                        const code = it.code || '';
+                        const qty = it.qty || it.quantity || 1;
+                        const price = it.price || 0;
+                        const itemRevenue = price * qty;
+                        const cost = productCatalog[code] || productCatalog['name_' + name] || 0;
+                        const itemProfit = itemRevenue - (cost * qty);
+
+                        if (!prodMap[name]) prodMap[name] = { name, qty: 0, revenue: 0, profit: 0 };
+                        prodMap[name].qty += qty;
+                        prodMap[name].revenue += itemRevenue;
+                        prodMap[name].profit += itemProfit;
+                    });
+                });
+
+                D.banhang.daily = Object.entries(dailyMap).map(([date, rv]) => ({ date: date, rev: rv }));
+                D.banhang.summary.revenue = rev;
+
+                // BACKGROUND SYNC: Report latest GMV to Central SuperAdmin Tracker
+                try {
+                    const shopOwner = localStorage.getItem('hasu_userName') || 'Shop';
+                    const shopEmail = localStorage.getItem('hasu_userEmail');
+                    if (shopEmail) {
+                        const sp = JSON.parse(localStorage.getItem('hasu_products') || '[]');
+                        const kh = JSON.parse(localStorage.getItem('hasu_customers') || '[]');
+                        fetch('api_shops.php', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                shop: shopOwner, user: shopOwner, email: shopEmail,
+                                role: 'Admin', gmv: rev,
+                                products: sp, customers: kh
+                            })
+                        }).catch(e => console.log('Offline API Sync skipped'));
+                    }
+                } catch (eSync) { }
+
+                D.banhang.summary.netRevenue = rev;
+                D.banhang.summary.orders = inv.length;
+                D.banhang.summary.profit = Object.values(prodMap).reduce((s, p) => s + p.profit, 0);
+                D.banhang.top = Object.values(prodMap).sort((a, b) => b.revenue - a.revenue).slice(0, 5);
+
+                // -- Khách hàng: tính nợ và tổng mua từ localStorage --
+                try {
+                    const customers = JSON.parse(localStorage.getItem('hasu_customers') || '[]');
+                    if (customers.length > 0) {
+                        // Tính tổng mua từ completedOrders cho từng khách
+                        const allOrders = JSON.parse(localStorage.getItem('hasu_completedOrders') || '[]');
+                        const cxBuyMap = {};
+                        const cxOrderMap = {};
+                        allOrders.forEach(o => {
+                            const cxName = (o.customer && o.customer.name) || o.cxName || o.customerName || 'Khách lẻ';
+                            const cxId = (o.customer && o.customer.id) || o.cxCode || cxName;
+                            if (!cxBuyMap[cxId]) { cxBuyMap[cxId] = 0; cxOrderMap[cxId] = 0; }
+                            cxBuyMap[cxId] += o.total || o.grandTotal || o.subtotal || o.finalTotal || 0;
+                            cxOrderMap[cxId] += 1;
+                        });
+
+                        const now = new Date();
+                        const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+                        const newThisMonth = customers.filter(c => {
+                            if (!c.joinDate && !c.createdAt) return false;
+                            const d = new Date(c.joinDate || c.createdAt);
+                            return !isNaN(d) && d >= monthStart;
+                        }).length;
+                        const totalDebt = customers.reduce((s, c) => s + (c.debt || 0), 0);
+
+                        D.khachhang.totalCustomers = customers.length;
+                        D.khachhang.newThisMonth = newThisMonth;
+                        D.khachhang.activeCustomers = customers.filter(c => (c.totalBuy || 0) > 0 || cxBuyMap[c.id] > 0).length || customers.length;
+                        D.khachhang.totalDebt = totalDebt;
+
+                        const top5 = customers.map(c => ({
+                            code: c.code || c.id || '',
+                            name: c.name || 'Khách lẻ',
+                            totalBuy: (c.totalBuy || 0) + (cxBuyMap[c.id] || 0),
+                            debt: c.debt || 0,
+                            orders: (c.totalOrders || 0) + (cxOrderMap[c.id] || 0)
+                        })).sort((a, b) => b.totalBuy - a.totalBuy).slice(0, 5);
+
+                        if (top5.length > 0) D.khachhang.top = top5;
+                    }
+                } catch (e2) { console.warn('khachhang load error:', e2); }
+
+            } catch (e) { console.warn('baocao loadRealData:', e); }
+        }
+
+        /* ===== INIT ===== */
+        document.addEventListener('DOMContentLoaded', () => {
+            loadRealData();
+            renderSubTabs();
+            renderExtraFilters();
+            renderReport();
+        });
+    </script>
+
+    <script>
+        function closeAllHdrDD() {
+            document.querySelectorAll('.hdr-dd-panel').forEach(function (p) { p.classList.remove('show'); });
+            var dd1 = document.getElementById('deliveryDropdown'); if (dd1) dd1.classList.remove('show');
+            var dd2 = document.getElementById('paletteDropdown'); if (dd2) dd2.classList.remove('show');
+        }
+        function toggleDelivery(e) {
+            e.stopPropagation();
+            const dd = document.getElementById('deliveryDropdown');
+            const wasOpen = dd && dd.classList.contains('show');
+            closeAllHdrDD();
+            if (dd && !wasOpen) dd.classList.add('show');
+        }
+        document.addEventListener('click', function (e) {
+            const dd = document.getElementById('deliveryDropdown');
+            if (dd && dd.classList.contains('show')) {
+                const wrap = dd.closest('.hdr-delivery-wrap');
+                if (!wrap || !wrap.contains(e.target)) dd.classList.remove('show');
+            }
+        });
+    </script>
+
+    <script>
+        (function () {
+            var COLORS = [
+                '#004aad', '#546e7a', '#2e7d32',
+                '#7b1fa2', '#c62828', '#607d8b',
+                '#00796b', '#e65100', '#ad1457'
+            ];
+            var cur = localStorage.getItem('hasuNavColor') || '#004aad';
+            function shade(hex, pct) {
+                var R = parseInt(hex.slice(1, 3), 16), G = parseInt(hex.slice(3, 5), 16), B = parseInt(hex.slice(5, 7), 16);
+                R = Math.min(255, Math.max(0, Math.round(R * (100 + pct) / 100)));
+                G = Math.min(255, Math.max(0, Math.round(G * (100 + pct) / 100)));
+                B = Math.min(255, Math.max(0, Math.round(B * (100 + pct) / 100)));
+                return '#' + R.toString(16).padStart(2, '0') + G.toString(16).padStart(2, '0') + B.toString(16).padStart(2, '0');
+            }
+            function hexRgba(hex, a) {
+                return 'rgba(' + parseInt(hex.slice(1, 3), 16) + ',' + parseInt(hex.slice(3, 5), 16) + ',' + parseInt(hex.slice(5, 7), 16) + ',' + a + ')';
+            }
+            function applyColor(c) {
+                var r = document.documentElement;
+                r.style.setProperty('--blue', c);
+                r.style.setProperty('--blue-dark', shade(c, -12));
+                r.style.setProperty('--blue-darker', shade(c, -24));
+                r.style.setProperty('--blue-light', hexRgba(c, 0.1));
+                localStorage.setItem('hasuNavColor', c);
+                cur = c;
+            }
+            function renderGrid() {
+                var g = document.getElementById('paletteGrid');
+                if (!g) return;
+                g.innerHTML = COLORS.map(function (c) {
+                    return '<button class="palette-color' + (c === cur ? ' active' : '') + '" style="background:' + c + '" data-color="' + c + '"></button>';
+                }).join('');
+                g.querySelectorAll('.palette-color').forEach(function (btn) {
+                    btn.addEventListener('click', function () { applyColor(this.dataset.color); renderGrid(); });
+                });
+            }
+            window.togglePalette = function (e) {
+                e.stopPropagation();
+                var dd = document.getElementById('paletteDropdown');
+                var wasOpen = dd && dd.classList.contains('show');
+                closeAllHdrDD();
+                if (dd && !wasOpen) { renderGrid(); dd.classList.add('show'); }
+            };
+            document.addEventListener('click', function (e) {
+                var dd = document.getElementById('paletteDropdown');
+                if (dd && dd.classList.contains('show')) {
+                    var w = dd.closest('.hdr-palette-wrap');
+                    if (!w || !w.contains(e.target)) dd.classList.remove('show');
+                }
+            });
+            document.addEventListener('DOMContentLoaded', function () {
+                if (cur !== '#004aad') applyColor(cur);
+            });
+        })();
+    </script>
+
+    <script>
+        function toggleHdrDD(panelId, wrapId, e) {
+            if (e) e.stopPropagation();
+            var panel = document.getElementById(panelId);
+            var isOpen = panel && panel.classList.contains('show');
+            closeAllHdrDD();
+            if (!isOpen && panel) panel.classList.add('show');
+        }
+        document.addEventListener('click', function (e) {
+            var isInside = e.target.closest('.hdr-icon-wrap, .hdr-lang-wrap, .hdr-shop-wrap, .hdr-bell-wrap, .hdr-gear-wrap, .hdr-avatar-wrap');
+            if (!isInside) {
+                document.querySelectorAll('.hdr-dd-panel').forEach(function (p) { p.classList.remove('show'); });
+            }
+        });
+        function selectLang(lang) {
+            document.getElementById('langPanel').classList.remove('show');
+            if (lang === 'vi') {
+                document.querySelector('.lang-btn').innerHTML = '<img src="https://flagcdn.com/16x12/vn.png" alt="VN"> Ti\u1ebfng Vi\u1ec7t <i class="fa-solid fa-chevron-down" style="font-size:9px;color:#aaa;margin-left:3px"></i>';
+                document.getElementById('langVN').querySelector('.check-icon').style.display = '';
+                document.getElementById('langEN').querySelector('.check-icon').style.display = 'none';
+            } else {
+                document.querySelector('.lang-btn').innerHTML = '<img src="https://flagcdn.com/16x12/gb.png" alt="EN"> English <i class="fa-solid fa-chevron-down" style="font-size:9px;color:#aaa;margin-left:3px"></i>';
+                document.getElementById('langVN').querySelector('.check-icon').style.display = 'none';
+                document.getElementById('langEN').querySelector('.check-icon').style.display = '';
+            }
+        }
+        function selectBranch(name, el) {
+            document.querySelector('.shop-btn').innerHTML = name + ' <i class="fa-solid fa-chevron-down" style="font-size:9px;color:#aaa;margin-left:3px"></i>';
+            document.querySelectorAll('.branch-item .bi-active').forEach(function (d) { d.remove(); });
+            var dot = document.createElement('span');
+            dot.className = 'bi-active';
+            el.appendChild(dot);
+            document.getElementById('shopPanel').classList.remove('show');
+        }
+        function filterBranch(q) {
+            q = q.toLowerCase();
+            document.querySelectorAll('#branchList .branch-item').forEach(function (item) {
+                var name = item.querySelector('.bi-name').textContent.toLowerCase();
+                item.style.display = name.includes(q) ? '' : 'none';
+            });
+        }
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var uName = localStorage.getItem('hasu_userName');
+            var uEmail = localStorage.getItem('hasu_userEmail');
+            if (!uName) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            var isAdmin = (uEmail === 'admin@hasu.vn' || uEmail === 'tester@hasu.vn');
+
+            function applyReplacements() {
+                var walk = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+                    acceptNode: function (node) {
+                        if (['SCRIPT', 'STYLE', 'NOSCRIPT'].includes(node.parentNode.nodeName)) return NodeFilter.FILTER_REJECT;
+                        return NodeFilter.FILTER_ACCEPT;
+                    }
+                }, false);
+                var n;
+                while (n = walk.nextNode()) {
+                    if (n.nodeValue.includes('Tester')) {
+                        n.nodeValue = n.nodeValue.replace(/Tester/g, uName);
+                    }
+                    if (uEmail && n.nodeValue.includes('tester@hasu.vn')) {
+                        n.nodeValue = n.nodeValue.replace(/tester@hasu\.vn/g, uEmail);
+                    }
+                }
+            }
+
+            applyReplacements();
+            setTimeout(applyReplacements, 150);
+        });
+    </script>
+
+</body>
+
+</html>

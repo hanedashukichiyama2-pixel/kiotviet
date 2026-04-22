@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sổ Tay Chuyên Sâu - Hasu Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #004aad;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1f2937;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --accent: #2563eb;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: #0f172a;
+            padding: 16px 40px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo img {
+            height: 32px;
+            border-radius: 8px;
+        }
+
+        .head-links a {
+            color: #94a3b8;
+            text-decoration: none;
+            font-weight: 500;
+            margin-left: 24px;
+            transition: 0.2s;
+        }
+
+        .head-links a:hover {
+            color: white;
+        }
+
+        .layout {
+            display: flex;
+            max-width: 1300px;
+            margin: 40px auto;
+            gap: 40px;
+            padding: 0 20px;
+        }
+
+        .sidebar {
+            width: 280px;
+            flex-shrink: 0;
+        }
+
+        .nav-box {
+            position: sticky;
+            top: 90px;
+            background: white;
+            padding: 12px;
+            border-radius: 16px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border);
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            margin-bottom: 4px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            border-radius: 10px;
+            transition: 0.2s;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            background: #eff6ff;
+            color: var(--accent);
+        }
+
+        .main {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .hero {
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 36px;
+            font-weight: 900;
+            color: #0f172a;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border);
+        }
+
+        .card h2 {
+            font-size: 24px;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .card h2 i {
+            color: var(--accent);
+            background: #eff6ff;
+            padding: 10px;
+            border-radius: 12px;
+            font-size: 20px;
+        }
+
+        .card h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 32px 0 16px;
+            color: #1e293b;
+        }
+
+        .card p {
+            margin-bottom: 20px;
+            font-size: 15px;
+            color: #334155;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin: 24px 0;
+        }
+
+        .media-wrap {
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+            background: #f8fafc;
+        }
+
+        .media-wrap img,
+        .media-wrap video {
+            width: 100%;
+            display: block;
+        }
+
+        .caption {
+            padding: 12px 16px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border);
+            background: white;
+            text-align: center;
+        }
+
+        @media (max-width: 900px) {
+            .layout {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+            }
+
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo"><img src="../logo.png" alt="Hasu Logo"> Hasu Platform Docs</div>
+        <div class="head-links"><a href="/">Cửa hàng (Storefront)</a><a href="/admin.html">Trang nội bộ (Admin)</a>
+        </div>
+    </header>
+
+    <div class="layout">
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <div class="nav-box">
+                <a href="#intro" class="nav-item active"><i class="fa-solid fa-flag"></i> Tổng quan</a>
+                <a href="#store" class="nav-item"><i class="fa-solid fa-store"></i> 1. Trải nghiệm Storefront</a>
+                <a href="#order" class="nav-item"><i class="fa-solid fa-boxes-packing"></i> 2. Quản lý Đơn hàng</a>
+                <a href="#inventory" class="nav-item"><i class="fa-solid fa-warehouse"></i> 3. Quản lý Kho - Hàng</a>
+                <a href="#crm" class="nav-item"><i class="fa-solid fa-users"></i> 4. Khách hàng & Đối Tác</a>
+                <a href="#report" class="nav-item"><i class="fa-solid fa-chart-pie"></i> 5. Báo cáo Tối ưu</a>
+            </div>
+        </div>
+
+        <!-- MAIN -->
+        <div class="main">
+            <div class="hero" id="intro">
+                <h1>Sổ Tay Quản Trị Hệ Thống Toàn Diện</h1>
+                <p>Tài liệu đính kèm minh họa ảnh thực tế 100% giúp người mới bắt đầu làm quen với hệ sinh thái Hasu
+                    nhanh chóng và hiệu quả.</p>
+            </div>
+
+            <div class="card" id="store">
+                <h2><i class="fa-solid fa-laptop"></i> 1. Cửa hàng trực tuyến (Storefront)</h2>
+                <p>Khách hàng truy cập Cửa hàng Online với giao diện cực kỳ hiện đại. Các chức năng Xem siêu tốc và
+                    Bookmark sản phẩm đều hoạt động mượt mà không cần tải lại trang.</p>
+
+                <div class="grid-2">
+                    <div class="media-wrap">
+                        <img src="/assets/docs/quick_view_modal_1776239457045.png" alt="Quick View">
+                        <div class="caption">Modal popup Xem Nhanh cực kì trực quan.</div>
+                    </div>
+                    <div class="media-wrap">
+                        <img src="/assets/docs/wishlist_toast_1776239502924.png" alt="Wishlist">
+                        <div class="caption">Giao diện thông báo khi bấm nút Yêu Thích.</div>
+                    </div>
+                </div>
+
+                <div class="media-wrap" style="margin-top:24px">
+                    <img src="/assets/docs/video_storefront.webp" alt="Video thao tác">
+                    <div class="caption">Video demo luồng thao tác từ Khách mua hàng thực tế.</div>
+                </div>
+            </div>
+
+            <div class="card" id="order">
+                <h2><i class="fa-solid fa-receipt"></i> 2. Bán Hàng & Đơn Hàng (Orders)</h2>
+                <p>Mỗi khi trên Storefront phát sinh yêu cầu giỏ hàng, thông tin tự động kết nối API đẩy vào kho Đơn
+                    Hàng tổng của Admin.</p>
+
+                <h3>Bảng Đơn Hàng Đồng Bước</h3>
+                <p>Màn hình <code>donhang.html</code> liệt kê tình trạng đơn (Đang xử lý, Giao hàng) vô cùng chính xác.
+                </p>
+                <div class="media-wrap">
+                    <img src="/assets/docs/donhang_page_1776236901971.png" alt="Đơn Hàng">
+                    <div class="caption">Quản trị Đơn Hàng: In phiếu, tạo vận đơn, duyệt trạng thái.</div>
+                </div>
+
+                <h3>Tích hợp Kênh Bán Online (Sàn TMĐT)</h3>
+                <p>Theo dõi luồng thông tin đổ từ Shopee/Lazada vào máy chủ nội bộ thông qua
+                    <code>banonline.html</code>.
+                </p>
+                <div class="media-wrap">
+                    <img src="/assets/docs/banonline_page_1776237489351.png" alt="Bán Online">
+                    <div class="caption">Luồng đối soát và xác nhận đơn chéo Kênh TMĐT.</div>
+                </div>
+            </div>
+
+            <div class="card" id="inventory">
+                <h2><i class="fa-solid fa-barcode"></i> 3. Quản Lý Kho Bãi & Nhập Hàng</h2>
+                <p>Hasu cho phép quản lý vòng đời sản phẩm chi tiết. Lên thẻ kho, in nhãn mã vạch, theo dõi định mức là
+                    điều dễ dàng.</p>
+
+                <div class="grid-2">
+                    <div>
+                        <h3>Cấu Hình Hàng Hóa</h3>
+                        <div class="media-wrap">
+                            <img src="/assets/docs/hanghoa_page_1776236844068.png" alt="Hàng hóa">
+                            <div class="caption">Phân chia nhóm và khởi tạo Mã Vạch.</div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3>Máy quét Kiểm Kho</h3>
+                        <div class="media-wrap">
+                            <img src="/assets/docs/kiemkho_page_1776237530991.png" alt="Kiểm kho">
+                            <div class="caption">Sử dụng Cân điện tử & máy scan để đối soát tồn.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="media-wrap" style="margin-top:24px">
+                    <img src="/assets/docs/video_orders.webp" alt="Video">
+                    <div class="caption">Video demo: Thao tác tìm phiếu Đơn hàng và đối chiếu Nhập Kho.</div>
+                </div>
+            </div>
+
+            <div class="card" id="crm">
+                <h2><i class="fa-solid fa-users-gear"></i> 4. Quản trị Khách Hàng & Nguồn Cung</h2>
+                <p>Mạng lưới kinh doanh của bạn hoàn chỉnh nhờ hệ thống đánh giá Khách Hàng tự động và lưu lược sử Nhập
+                    Xuất Đối Tác tinh gọn.</p>
+                <div class="grid-2">
+                    <div class="media-wrap">
+                        <img src="/assets/docs/khachhang_page_verified_1776237561564.png" alt="CRM Khách">
+                        <div class="caption">Mục Quản Lý Tín Nhiệm (Dành cho Member/Khách hạng thẻ).</div>
+                    </div>
+                    <div class="media-wrap">
+                        <img src="/assets/docs/nhacungcap_page_1776237600620.png" alt="CRM Đối Tác">
+                        <div class="caption">Lưu vết nhập hàng và Công Nợ Nhà Cung Cấp.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" id="report">
+                <h2><i class="fa-solid fa-chart-line"></i> 5. Báo cáo Chỉ Số Tài Chính</h2>
+                <p>Để tối đa hóa lợi nhuận, Module <code>baocao.html</code> phác họa sơ đồ Tài chính tự động.</p>
+                <div class="media-wrap">
+                    <img src="/assets/docs/baocao_page_1776237383891.png" alt="Báo Cáo">
+                    <div class="caption">Thống kê Doanh Thu và Lợi Nhuận Gộp tự sinh.</div>
+                </div>
+
+                <h3 style="margin-top:30px">Phân Quyền Vận Hành (Vai Trò)</h3>
+                <p>Tính năng chấm công tự động và Phân role truy cập hệ thống tại <code>thietlapnhanvien.html</code>
+                    ngăn chặn rò rỉ dữ liệu ngoài ý muốn.</p>
+                <div class="media-wrap">
+                    <img src="/assets/docs/thietlapnhanvien_verification_1776238858376.png" alt="Phân Quyền">
+                    <div class="caption">Thiết lập cấp bực Nhân sự & Vai Trò (Giới hạn truy cập).</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+                this.classList.add('active');
+                document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,701 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hướng dẫn sử dụng - HASU POS</title>
+    <meta name="description"
+        content="Hướng dẫn sử dụng chi tiết phần mềm bán hàng HASU POS với hình ảnh và video minh họa">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #F0F4F8;
+            color: #333;
+            line-height: 1.7
+        }
+
+        .top-bar {
+            background: linear-gradient(135deg, #0078D4, #005A9E);
+            color: #fff;
+            padding: 16px 32px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15)
+        }
+
+        .top-bar h1 {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.3px
+        }
+
+        .top-bar .subtitle {
+            font-size: 12px;
+            opacity: 0.8;
+            margin-top: 2px
+        }
+
+        .top-bar .logo {
+            width: 40px;
+            height: 40px;
+            background: #fff;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 800;
+            color: #0078D4
+        }
+
+        .layout {
+            display: flex;
+            min-height: calc(100vh - 72px)
+        }
+
+        .sidebar {
+            width: 280px;
+            background: #fff;
+            border-right: 1px solid #E2E8F0;
+            position: sticky;
+            top: 72px;
+            height: calc(100vh - 72px);
+            overflow-y: auto;
+            padding: 16px 0;
+            flex-shrink: 0
+        }
+
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            color: #555;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            border-left: 3px solid transparent;
+            transition: all 0.2s
+        }
+
+        .sidebar a:hover {
+            background: #F0F7FF;
+            color: #0078D4;
+            border-left-color: #0078D4
+        }
+
+        .sidebar a.active {
+            background: #E8F0FE;
+            color: #0078D4;
+            border-left-color: #0078D4;
+            font-weight: 600
+        }
+
+        .sidebar a i {
+            width: 18px;
+            text-align: center;
+            font-size: 14px;
+            color: #999
+        }
+
+        .sidebar a:hover i,
+        .sidebar a.active i {
+            color: #0078D4
+        }
+
+        .sidebar .sep {
+            height: 1px;
+            background: #E8ECF0;
+            margin: 8px 20px
+        }
+
+        .main {
+            flex: 1;
+            padding: 32px 40px;
+            max-width: 960px
+        }
+
+        .section {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+            margin-bottom: 28px;
+            overflow: hidden;
+            scroll-margin-top: 80px
+        }
+
+        .section-header {
+            padding: 24px 28px 16px;
+            border-bottom: 1px solid #F0F0F0
+        }
+
+        .section-header h2 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1A1A1A;
+            display: flex;
+            align-items: center;
+            gap: 10px
+        }
+
+        .section-header h2 i {
+            color: #0078D4;
+            font-size: 18px
+        }
+
+        .section-header p {
+            color: #666;
+            font-size: 13px;
+            margin-top: 6px;
+            line-height: 1.6
+        }
+
+        .section-img {
+            padding: 20px 28px;
+            text-align: center;
+            background: #FAFBFC
+        }
+
+        .section-img img {
+            max-width: 100%;
+            border-radius: 8px;
+            border: 1px solid #E0E0E0;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+            cursor: pointer;
+            transition: transform 0.3s
+        }
+
+        .section-img img:hover {
+            transform: scale(1.02)
+        }
+
+        .section-steps {
+            padding: 20px 28px 24px
+        }
+
+        .section-steps h3 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #0078D4;
+            margin-bottom: 12px
+        }
+
+        .section-steps ol {
+            padding-left: 20px
+        }
+
+        .section-steps ol li {
+            padding: 6px 0;
+            font-size: 13px;
+            color: #444;
+            line-height: 1.7
+        }
+
+        .section-steps ol li b {
+            color: #0078D4
+        }
+
+        .section-steps ol li kbd {
+            background: #F0F0F0;
+            border: 1px solid #D0D0D0;
+            border-radius: 3px;
+            padding: 1px 6px;
+            font-family: monospace;
+            font-size: 12px
+        }
+
+        .video-section {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+            margin-bottom: 28px;
+            overflow: hidden;
+            padding: 28px
+        }
+
+        .video-section h2 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px
+        }
+
+        .video-section h2 i {
+            color: #E53E3E
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px
+        }
+
+        .video-card {
+            border: 1px solid #E8ECF0;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: box-shadow 0.2s
+        }
+
+        .video-card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1)
+        }
+
+        .video-card img {
+            width: 100%;
+            display: block;
+            cursor: pointer
+        }
+
+        .video-card .caption {
+            padding: 10px 12px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #333;
+            background: #FAFBFC;
+            border-top: 1px solid #F0F0F0
+        }
+
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            cursor: zoom-out
+        }
+
+        .lightbox.show {
+            display: flex
+        }
+
+        .lightbox img {
+            max-width: 95%;
+            max-height: 95%;
+            border-radius: 8px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3)
+        }
+
+        @media(max-width:768px) {
+            .sidebar {
+                display: none
+            }
+
+            .main {
+                padding: 16px
+            }
+
+            .video-grid {
+                grid-template-columns: 1fr
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="top-bar">
+        <div class="logo">H</div>
+        <div>
+            <h1>Hướng dẫn sử dụng HASU POS</h1>
+            <div class="subtitle">Phần mềm quản lý bán hàng — Cập nhật: 15/03/2026</div>
+        </div>
+    </div>
+    <div class="layout">
+        <nav class="sidebar">
+            <a href="#tong-quan"><i class="fas fa-home"></i>Tổng quan giao diện</a>
+            <a href="#tim-san-pham"><i class="fas fa-search"></i>Tìm sản phẩm</a>
+            <a href="#gio-hang"><i class="fas fa-shopping-cart"></i>Giỏ hàng</a>
+            <a href="#giam-gia-sp"><i class="fas fa-tag"></i>Giảm giá từng sản phẩm</a>
+            <a href="#khach-hang"><i class="fas fa-user"></i>Khách hàng</a>
+            <a href="#thanh-toan"><i class="fas fa-credit-card"></i>Thanh toán</a>
+            <a href="#da-phuong-thuc"><i class="fas fa-divide"></i>Thanh toán đa phương thức</a>
+            <a href="#menu-chuc-nang"><i class="fas fa-bars"></i>Menu chức năng (☰)</a>
+            <a href="#dat-hang"><i class="fas fa-cart-plus"></i>Đặt hàng</a>
+            <a href="#quan-ly-dat-hang"><i class="fas fa-box-open"></i>Quản lý đơn đặt hàng</a>
+            <a href="#thiet-lap-in"><i class="fas fa-print"></i>Thiết lập in</a>
+            <a href="#tuy-chon-hien-thi"><i class="fas fa-sliders-h"></i>Tùy chọn hiển thị</a>
+            <a href="#nhan-vien"><i class="fas fa-user-tie"></i>Chọn nhân viên & Kênh bán</a>
+            <a href="#phim-tat"><i class="fas fa-keyboard"></i>Phím tắt</a>
+            <div class="sep"></div>
+            <a href="#video-huong-dan"><i class="fas fa-video"></i>Video minh họa</a>
+            <div class="sep"></div>
+            <a href="sale.html"><i class="fas fa-cash-register"></i>Mở POS</a>
+            <a href="management.html"><i class="fas fa-th-large"></i>Quản lý</a>
+        </nav>
+        <main class="main">
+
+            <div class="section" id="tong-quan">
+                <div class="section-header">
+                    <h2><i class="fas fa-home"></i>Tổng quan giao diện</h2>
+                    <p>Giao diện chính của phần mềm bán hàng HASU POS, bao gồm thanh công cụ, lưới sản phẩm, giỏ hàng và
+                        bảng thanh toán.</p>
+                </div>
+                <div class="section-img"><img src="guide/guide_main_screen.png" alt="Tổng quan giao diện"
+                        onclick="openLightbox(this.src)" loading="lazy"></div>
+                <div class="section-steps">
+                    <h3><i class="fas fa-list-ol" style="margin-right:6px"></i>Hướng dẫn chi tiết</h3>
+                    <ol>
+                        <li>Thanh công cụ phía trên: chứa các nút chức năng, chọn nhân viên, kênh bán, menu ☰</li>
+                        <li>Ô tìm kiếm (F3): tìm sản phẩm theo tên, mã, barcode</li>
+                        <li>Lưới sản phẩm: hiển thị hình ảnh, giá, số tồn kho (xanh/vàng/đỏ)</li>
+                        <li>Tab đơn hàng: hỗ trợ mở nhiều đơn cùng lúc</li>
+                        <li>Bảng thanh toán bên phải: tổng tiền, giảm giá, phương thức thanh toán</li>
+                        <li>Chân trang: chuyển chế độ Bán nhanh / Bán thường / Bán giao hàng</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="section" id="tim-san-pham">
+                <div class="section-header">
+                    <h2><i class="fas fa-search"></i>Tìm sản phẩm</h2>
+                    <p>Tìm kiếm sản phẩm bằng tên, mã hàng hoặc quét barcode. Nhấn F3 để focus nhanh vào ô tìm kiếm.</p>
+                </div>
+                <div class="section-img"><img src="guide/guide_search_product.png" alt="Tìm sản phẩm"
+                        onclick="openLightbox(this.src)" loading="lazy"></div>
+                <div class="section-steps">
+                    <h3><i class="fas fa-list-ol" style="margin-right:6px"></i>Hướng dẫn chi tiết</h3>
+                    <ol>
+                        <li>Nhấn <kbd>F3</kbd> hoặc click vào ô "Tìm hàng hóa" ở góc trên trái</li>
+                        <li>Gõ tên, mã hàng hoặc barcode — kết quả hiện ngay bên dưới</li>
+                        <li>Click vào sản phẩm trong dropdown để thêm vào giỏ hàng</li>
+                        <li>Nếu dùng máy quét barcode, sản phẩm sẽ được thêm tự động</li>
+                        <li>Mã barcode được giữ lại trên thanh tìm kiếm sau khi quét</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="section" id="gio-hang">
+                <div class="section-header">
+                    <h2><i class="fas fa-shopping-cart"></i>Giỏ hàng</h2>
+                    <p>Quản lý sản phẩm trong giỏ hàng: thêm, sửa số lượng, đổi giá, chọn đơn vị tính, xóa sản phẩm.</p>
+                </div>
+                <div class="section-img"><img src="guide/guide_cart_features.png" alt="Giỏ hàng"
+                        onclick="openLightbox(this.src)" loading="lazy"></div>
+                <div class="section-steps">
+                    <h3><i class="fas fa-list-ol" style="margin-right:6px"></i>Hướng dẫn chi tiết</h3>
+                    <ol>
+                        <li>Click sản phẩm trên lưới hoặc từ kết quả tìm kiếm để thêm vào giỏ</li>
+                        <li>Mỗi dòng hiển thị: STT, Tên hàng, ĐVT (đơn vị tính), Số lượng, Đơn giá, Thành tiền</li>
+                        <li>Thay đổi số lượng: sửa trực tiếp ô SL hoặc nhấn nút <b>+</b></li>
+                        <li>Thay đổi giá: click vào ô Đơn giá, nhập giá mới rồi nhấn Enter</li>
+                        <li>Chọn đơn vị tính: click dropdown ĐVT (Cái, Hộp, Can...)</li>
+                        <li>Xóa sản phẩm: nhấn nút <i class="fas fa-trash-alt"></i> bên trái</li>
+                        <li>Thanh <b>"Tổng SL"</b> phía dưới giỏ hàng hiện tổng số lượng và tổng tiền hàng</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="section" id="giam-gia-sp">
+                <div class="section-header">
+                    <h2><i class="fas fa-tag"></i>Giảm giá từng sản phẩm</h2>
+                    <p>Áp dụng chiết khấu riêng cho từng sản phẩm trong giỏ hàng, theo % hoặc số tiền cố định.</p>
+                </div>
+                <div class="section-img"><img src="guide/guide_item_discount.png" alt="Giảm giá từng sản phẩm"
+                        onclick="openLightbox(this.src)" loading="lazy"></div>
+                <div class="section-steps">
+                    <h3><i class="fas fa-list-ol" style="margin-right:6px"></i>Hướng dẫn chi tiết</h3>
+                    <ol>
+                        <li>Nhấn nút <b>⋮</b> (3 chấm) ở cuối dòng sản phẩm trong giỏ hàng</li>
+                        <li>Popup giảm giá hiện ra với 2 chế độ: <b>%</b> hoặc <b>VNĐ</b></li>
+                        <li>Chọn loại giảm giá, nhập số tiền/phần trăm</li>
+                        <li>Nhấn <b>"Áp dụng"</b> — thành tiền được cập nhật ngay (hiện màu đỏ)</li>
+                        <li>Nhấn <b>"Bỏ giảm giá"</b> để hủy chiết khấu đã áp dụng</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="section" id="khach-hang">
+                <div class="section-header">
+                    <h2><i class="fas fa-user"></i>Khách hàng</h2>
+                    <p>Tìm kiếm, chọn khách hàng và xem thông tin chi tiết: SĐT, công nợ, điểm tích lũy.</p>
+                </div>
+                <div class="section-img"><img src="guide/guide_customer_search.png" alt="Khách hàng"
+                        onclick="openLightbox(this.src)" loading="lazy"></div>
+                <div class="section-steps">
+                    <h3><i class="fas fa-list-ol" style="margin-right:6px"></i>Hướng dẫn chi tiết</h3>
+                    <ol>
+                        <li>Nhấn <kbd>F4</kbd> hoặc click ô "Tìm khách hàng" ở panel bên phải</li>
+                        <li>Gõ tên hoặc SĐT — danh sách khách hàng hiện ra</li>
+                        <li>Chọn khách hàng: badge thông tin hiển thị <b>SĐT, Nợ, Điểm</b></li>
+                        <li>Nhấn nút <b>+</b> bên cạnh ô tìm kiếm để thêm khách hàng mới</li>
+                        <li>Form thêm KH mới gồm: Tên, SĐT, Địa chỉ, Email, Giới tính</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="section" id="thanh-toan">
+                <div class="section-header">
+                    <h2><i class="fas fa-credit-card"></i>Thanh toán</h2>
+                    <p>Thanh toán đơn hàng bằng tiền mặt, chuyển khoản, thẻ hoặc kết hợp nhiều phương thức.</p>
+                </div>
+                <div class="section-img"><img src="guide/guide_payment_panel.png" alt="Thanh toán"
+                        onclick="openLightbox(this.src)" loading="lazy"></div>
+                <div class="section-steps">
+                    <h3><i class="fas fa-list-ol" style="margin-right:6px"></i>Hướng dẫn chi tiết</h3>
+                    <ol>
+                        <li>Panel thanh toán bên phải hiện: Tổng tiền hàng, Giảm giá, Mã coupon, Thu khác, Khách cần trả
+                        </li>
+                        <li>Giảm giá đơn hàng: nhập số tiền hoặc chuyển sang chế độ % bằng nút VND</li>
+                        <li>Chọn phương thức: <b>Tiền mặt</b> (mặc định), <b>Chuyển khoản</b>, hoặc <b>Thẻ</b></li>
+                        <li>Tiền mặt: chọn mệnh giá nhanh (10K, 20K, 50K...) hoặc nhấn <b>"Đủ tiền"</b></li>
+                        <li>Chuyển khoản: mã QR tự động sinh với số tiền chính xác</li>
+                        <li>Nhấn <b>"THANH TOÁN"</b> để hoàn thành — hóa đơn in tự động</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="section" id="da-phuong-thuc">
+                <div class="section-header">
+                    <h2><i class="fas fa-divide"></i>Thanh toán đa phương thức</h2>
+                    <p>Chia thanh toán giữa nhiều phương thức: một phần tiền mặt, một phần chuyển khoản.</p>
+                </div>
+                <div class="section-img"><img src="guide/guide_multi_payment.png" alt="Thanh toán đa phương thức"
+                        onclick="openLightbox(this.src)" loading="lazy"></div>
+                <div class="section-steps">
+                    <h3><i class="fas fa-list-ol" style="margin-right:6px"></i>Hướng dẫn chi tiết</h3>
+                    <ol>
+                        <li>Click đồng thời cả <b>"Tiền mặt"</b> và <b>"Chuyển khoản"</b> (cả 2 đều sáng xanh)</li>
+                        <li>Khung <b>"Chia thanh toán"</b> hiện ra với ô nhập riêng cho từng phương thức</li>
+                        <li>Nhập số tiền cho mỗi phương thức — tổng sẽ tự cộng vào "Tiền khách trả"</li>
+                        <li>Mã QR chuyển khoản hiện bên dưới để khách quét</li>
+                        <li>Click lại nút phương thức để bỏ chọn (phải giữ ít nhất 1)</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="section" id="menu-chuc-nang">
+                <div class="section-header">
+                    <h2><i class="fas fa-bars"></i>Menu chức năng (☰)</h2>
+                    <p>Truy cập tất cả chức năng mở rộng từ menu hamburger ở góc trên phải.</p>
+                </div>
+                <div class="section-img"><img src="guide/guide_hamburger_menu.png" alt="Menu chức năng (☰)"
+                        onclick="openLightbox(this.src)" loading="lazy"></div>
+                <div class="section-steps">
+                    <h3><i class="fas fa-list-ol" style="margin-right:6px"></i>Hướng dẫn chi tiết</h3>
+                    <ol>
+                        <li>Click nút <b>☰</b> ở góc trên phải thanh công cụ</li>
+                        <li>Menu gồm: Xem báo cáo cuối ngày, Quản lý đặt hàng, Trả hàng, Tạo đơn đặt hàng</li>
+                        <li>Lập phiếu thu, Import file, Thiết lập in, Tùy chọn hiển thị</li>
+                        <li>Phím tắt, Quản lý (chuyển sang trang quản lý), Đăng xuất</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="section" id="dat-hang">
+                <div class="section-header">
+                    <h2><i class="fas fa-cart-plus"></i>Đặt hàng</h2>
+                    <p>Tạo đơn đặt hàng cho khách gọi điện đặt trước, theo dõi và quản lý trạng thái.</p>
+                </div>
+                <div class="section-img"><img src="guide/guide_order_booking.png" alt="Đặt hàng"
+                        onclick="openLightbox(this.src)" loading="lazy"></div>
+                <div class="section-steps">
+                    <h3><i class="fas fa-list-ol" style="margin-right:6px"></i>Hướng dẫn chi tiết</h3>
+                    <ol>
+                        <li>Menu ☰ → <b>"Tạo đơn đặt hàng"</b></li>
+                        <li>Nhập thông tin: Khách hàng, SĐT, Ngày giao dự kiến, Ghi chú</li>
+                        <li>Sản phẩm từ giỏ hàng hiện tại sẽ tự động được đưa vào đơn</li>
+                        <li>Nhấn <b>"Lưu đơn đặt hàng"</b> — đơn được lưu với mã DH...</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="section" id="quan-ly-dat-hang">
+                <div class="section-header">
+                    <h2><i class="fas fa-box-open"></i>Quản lý đơn đặt hàng</h2>
+                    <p>Xem danh sách, theo dõi trạng thái và cập nhật đơn đặt hàng.</p>
+                </div>
+                <div class="section-img"><img src="guide/guide_order_management.png" alt="Quản lý đơn đặt hàng"
+                        onclick="openLightbox(this.src)" loading="lazy"></div>
+                <div class="section-steps">
+                    <h3><i class="fas fa-list-ol" style="margin-right:6px"></i>Hướng dẫn chi tiết</h3>
+                    <ol>
+                        <li>Menu ☰ → <b>"Quản lý đặt hàng"</b></li>
+                        <li>Bảng hiện: Mã đơn, Khách hàng, SĐT, Ngày giao, Tổng tiền, Trạng thái</li>
+                        <li>Cập nhật trạng thái: 📦 Đang giao, ✓ Hoàn thành, ✗ Đã hủy</li>
+                        <li>Nhấn <b>"Tạo đơn mới"</b> để thêm đơn đặt hàng</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="section" id="thiet-lap-in">
+                <div class="section-header">
+                    <h2><i class="fas fa-print"></i>Thiết lập in</h2>
+                    <p>Cấu hình khổ giấy, thông tin cửa hàng, và tùy chọn in hóa đơn.</p>
+                </div>
+                <div class="section-img"><img src="guide/guide_print_settings.png" alt="Thiết lập in"
+                        onclick="openLightbox(this.src)" loading="lazy"></div>
+                <div class="section-steps">
+                    <h3><i class="fas fa-list-ol" style="margin-right:6px"></i>Hướng dẫn chi tiết</h3>
+                    <ol>
+                        <li>Menu ☰ → <b>"Thiết lập in"</b></li>
+                        <li>Chọn khổ giấy: K80 (80mm), K57 (57mm), A4, A5</li>
+                        <li>Nhập thông tin cửa hàng: Tên, SĐT, Địa chỉ, Chân trang hóa đơn</li>
+                        <li>Tùy chọn: Tự động in sau thanh toán, Hiện logo, In mã QR, In mã vạch</li>
+                        <li>Nhấn <b>"Lưu cấu hình"</b> — cài đặt được lưu tự động cho lần sau</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="section" id="tuy-chon-hien-thi">
+                <div class="section-header">
+                    <h2><i class="fas fa-sliders-h"></i>Tùy chọn hiển thị</h2>
+                    <p>Tùy chỉnh các cột hiển thị trên bảng hàng và các cài đặt giao diện.</p>
+                </div>
+                <div class="section-img"><img src="guide/guide_display_options.png" alt="Tùy chọn hiển thị"
+                        onclick="openLightbox(this.src)" loading="lazy"></div>
+                <div class="section-steps">
+                    <h3><i class="fas fa-list-ol" style="margin-right:6px"></i>Hướng dẫn chi tiết</h3>
+                    <ol>
+                        <li>Menu ☰ → <b>"Tùy chọn hiển thị"</b></li>
+                        <li>Bật/tắt cột: STT, Hình ảnh, Tên hàng, ĐVT, Số lượng, Tồn kho, Đơn giá, Thành tiền, Giá vốn,
+                            Chiết khấu</li>
+                        <li>Cài đặt khác: In hóa đơn tự động, Phím tắt, Bán âm kho, Hiện giá vốn, Hiện giá trên lưới
+                        </li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="section" id="nhan-vien">
+                <div class="section-header">
+                    <h2><i class="fas fa-user-tie"></i>Chọn nhân viên & Kênh bán</h2>
+                    <p>Chọn nhân viên bán hàng và kênh bán (Zalo, TikTok, Facebook).</p>
+                </div>
+                <div class="section-img"><img src="guide/guide_staff_dropdown.png" alt="Chọn nhân viên & Kênh bán"
+                        onclick="openLightbox(this.src)" loading="lazy"></div>
+                <div class="section-steps">
+                    <h3><i class="fas fa-list-ol" style="margin-right:6px"></i>Hướng dẫn chi tiết</h3>
+                    <ol>
+                        <li>Click vào tên nhân viên <b>"Tester ▼"</b> ở panel phải hoặc thanh công cụ</li>
+                        <li>Dropdown hiện danh sách nhân viên với vai trò (Thu ngân, Quản lý...)</li>
+                        <li>Click vào icon <b>🚶</b> để chọn kênh bán: Bán trực tiếp, Zalo, TikTok, Facebook</li>
+                        <li>Kênh bán được ghi nhận trên hóa đơn để thống kê doanh thu</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="section" id="phim-tat">
+                <div class="section-header">
+                    <h2><i class="fas fa-keyboard"></i>Phím tắt</h2>
+                    <p>Sử dụng phím tắt để thao tác nhanh hơn.</p>
+                </div>
+                <div class="section-img"><img src="guide/guide_hotkeys.png" alt="Phím tắt"
+                        onclick="openLightbox(this.src)" loading="lazy"></div>
+                <div class="section-steps">
+                    <h3><i class="fas fa-list-ol" style="margin-right:6px"></i>Hướng dẫn chi tiết</h3>
+                    <ol>
+                        <li><kbd>F2</kbd> — Tạo hóa đơn mới</li>
+                        <li><kbd>F3</kbd> — Tìm hàng hóa</li>
+                        <li><kbd>F4</kbd> — Tìm khách hàng</li>
+                        <li><kbd>F9</kbd> — Thanh toán / Đặt hàng</li>
+                        <li><kbd>Esc</kbd> — Đóng popup / Hủy</li>
+                        <li><kbd>Ctrl+F</kbd> — Tìm kiếm nhanh</li>
+                        <li><kbd>Enter</kbd> — Chọn / Xác nhận</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="video-section" id="video-huong-dan">
+                <h2><i class="fas fa-video"></i>Video minh họa quy trình</h2>
+                <div class="video-grid">
+                    <div class="video-card"><img src="guide/video_pos_workflow.webp" alt="Quy trình bán hàng"
+                            onclick="openLightbox(this.src)" loading="lazy">
+                        <div class="caption">🛒 Quy trình bán hàng: tìm SP → thêm giỏ → thanh toán</div>
+                    </div>
+                    <div class="video-card"><img src="guide/video_features_demo.webp" alt="Các tính năng"
+                            onclick="openLightbox(this.src)" loading="lazy">
+                        <div class="caption">⚙️ Các tính năng: menu, thiết lập in, đặt hàng, phím tắt</div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+    <div class="lightbox" id="lightbox" onclick="this.classList.remove('show')"><img id="lightboxImg" src="" alt="">
+    </div>
+    <script>
+        function openLightbox(src) { document.getElementById('lightboxImg').src = src; document.getElementById('lightbox').classList.add('show') }
+        // Active sidebar on scroll
+        const sections = document.querySelectorAll('.section');
+        const links = document.querySelectorAll('.sidebar a');
+        window.addEventListener('scroll', () => { let cur = ''; sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) cur = s.id }); links.forEach(a => { a.classList.toggle('active', a.getAttribute('href') === '#' + cur) }) });
+    </script>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var uName = localStorage.getItem('hasu_userName');
+    var uEmail = localStorage.getItem('hasu_userEmail');
+    if (!uName) {
+        window.location.href = 'login.html';
+        return;
+    }
+
+    var isAdmin = (uEmail === 'admin@hasu.vn' || uEmail === 'tester@hasu.vn');
+
+    function applyReplacements() {
+        var walk = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+            acceptNode: function(node) {
+                if (['SCRIPT', 'STYLE', 'NOSCRIPT'].includes(node.parentNode.nodeName)) return NodeFilter.FILTER_REJECT;
+                return NodeFilter.FILTER_ACCEPT;
+            }
+        }, false);
+        var n;
+        while(n = walk.nextNode()) {
+            if (n.nodeValue.includes('Tester')) {
+                n.nodeValue = n.nodeValue.replace(/Tester/g, uName);
+            }
+            if (uEmail && n.nodeValue.includes('tester@hasu.vn')) {
+                n.nodeValue = n.nodeValue.replace(/tester@hasu\.vn/g, uEmail);
+            }
+        }
+        
+        document.querySelectorAll('input').forEach(function(inp) {
+            if (inp.value === 'Tester') inp.value = uName;
+        });
+
+        // Hide mock history explicitly for newly created non-admin users
+        if (!isAdmin) {
+            document.querySelectorAll('.activity-item, .tl-history-row, tr').forEach(function(el) {
+                var txt = el.textContent;
+                // If it contains hardcoded deep mock past dates in the frontend UI
+                if (txt.includes('ngày trước') || txt.includes('14/03') || txt.includes('23 ngày trước')) {
+                    el.style.display = 'none';
+                }
+            });
+            // If the activity list becomes visually empty, show empty state
+            var aList = document.getElementById('activityList');
+            if (aList && Array.from(aList.children).filter(function(x){ return x.style.display !== 'none'; }).length === 0) {
+                aList.innerHTML = '<div style="padding:30px;text-align:center;color:#bbb">Chưa có hoạt động nào</div>';
+            }
+        }
+    }
+
+    applyReplacements();
+    setTimeout(applyReplacements, 150);
+    setTimeout(applyReplacements, 500);
+});
+</script>
+</body>
+</html>
+

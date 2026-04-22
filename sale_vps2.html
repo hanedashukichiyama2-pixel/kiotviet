@@ -1,0 +1,378 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KiotViet - Bán hàng</title>
+    <meta name="referrer" content="no-referrer">
+    <link rel="stylesheet" href="css/sale.css?v=20260312v">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body class="mode-ban-nhanh">
+
+    <!-- ===== TOP TOOLBAR ===== -->
+    <div class="sale-toolbar">
+        <div class="toolbar-left">
+            <div class="search-wrapper">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" placeholder="Tìm hàng hóa (F3)">
+                <button class="search-inner-btn" title="Hình ảnh"><i class="far fa-images"></i></button>
+            </div>
+            <button class="toolbar-btn-scan" title="Quét mã"><i class="fas fa-barcode"></i></button>
+            <div class="order-tabs">
+                <div class="order-tab active" id="orderTab1">
+                    <span class="tab-icon"><i class="fas fa-exchange-alt"></i></span>
+                    <span class="tab-label" id="orderTabLabel">Hóa đơn 1</span>
+                    <span class="tab-close">&times;</span>
+                </div>
+            </div>
+            <div class="btn-add-order-group" style="display:inline-flex;align-items:stretch">
+                <button class="btn-add-order" onclick="addNewTab()" title="Thêm hóa đơn mới (F2)"
+                    style="border-radius:50% 0 0 50%;padding:0 8px;border-right:1px solid rgba(255,255,255,0.3)"><i
+                        class="fas fa-plus-circle"></i></button>
+                <button class="btn-add-order" onclick="document.querySelector('.mode-tab[data-mode=\'ban-giao-hang\']')?.click()"  title="Tạo đặt hàng mới"
+                    style="border-radius:0 50% 50% 0;padding:0 7px"><i class="fas fa-caret-down"
+                        style="font-size:11px"></i></button>
+            </div>
+        </div>
+        <div class="toolbar-right">
+            <button class="toolbar-icon-btn"><i class="fas fa-bag-shopping"
+                    style="color:#fff;font-size:18px"></i></button>
+            <button class="toolbar-icon-btn"><i class="fas fa-reply" style="color:#fff;font-size:18px"></i></button>
+            <button class="toolbar-icon-btn"><i class="fas fa-arrows-rotate"
+                    style="color:#fff;font-size:18px"></i></button>
+            <button class="toolbar-icon-btn"><i class="fas fa-print"></i></button>
+            <span class="toolbar-username">Tester</span>
+            <button class="toolbar-icon-btn"><i class="fas fa-bars"></i></button>
+        </div>
+    </div>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <div class="sale-main">
+
+        <!-- LEFT: ORDER AREA -->
+        <div class="order-area">
+            <div class="cart-section" id="cartSection"></div>
+
+            <!-- Product Grid (Bán nhanh only, when cart empty) -->
+            <div class="product-grid-wrapper" id="productGridWrapper">
+                <div class="product-grid" id="productGrid"></div>
+            </div>
+
+            <!-- Note Input -->
+            <div class="note-input-wrapper">
+                <i class="fas fa-pencil-alt note-icon"></i>
+                <input type="text" placeholder="Ghi chú đơn hàng">
+            </div>
+
+            <!-- Bottom Summary (Bán thường) -->
+            <div class="bottom-summary" id="bottomSummary">
+                <span class="summary-label">Tổng tiền hàng</span>
+                <span class="summary-count" id="summaryCount">0</span>
+                <span class="summary-total" id="summaryTotal">0</span>
+            </div>
+
+            <!-- Compact Bottom (Bán giao hàng) - note + summary on same row -->
+            <div class="bottom-price-breakdown" id="bottomPriceBreakdown">
+                <div class="bp-compact-row">
+                    <div class="bp-note-col">
+                        <i class="fas fa-pencil-alt" style="color:#999;font-size:12px"></i>
+                        <span style="color:#999;font-size:13px">Ghi chú đơn hàng</span>
+                    </div>
+                    <div class="bp-summary-col">
+                        <div class="bp-row"><span>Tổng tiền hàng</span><span class="bp-count" id="bpCount">0</span><span
+                                class="bp-val" id="bpSubtotal">0</span></div>
+                        <div class="bp-row"><span>Giảm giá</span><span class="bp-val">0</span></div>
+                        <div class="bp-row"><span>Mã coupon</span><span class="bp-coupon-wrap"><input
+                                    class="bp-coupon-input" placeholder="Nhập mã"></span><span class="bp-val">0</span>
+                        </div>
+                        <div class="bp-row"><span>Phí ship / Thu khác</span><span class="bp-val">0</span></div>
+                        <div class="bp-row bp-total"><span>Khách cần trả</span><span class="bp-val bp-total-val"
+                                id="bpTotal">0</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- RIGHT: PAYMENT PANEL (Bán nhanh) -->
+        <div class="payment-panel" id="paymentPanel">
+            <div class="payment-header">
+                <div class="payment-user"><span class="user-badge">Tester <i class="fas fa-caret-down"
+                            style="font-size:10px;color:#999"></i></span> <i class="fas fa-walking"
+                        style="color:#999"></i> <i class="fas fa-caret-down" style="font-size:10px;color:#999"></i>
+                </div>
+                <div class="payment-datetime" id="paymentDatetime">11/03/2026 10:27</div>
+            </div>
+            <div class="customer-search">
+                <div class="search-input">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" placeholder="Tìm khách hàng (F4)">
+                    <button class="btn-add-customer-inline">+</button>
+                </div>
+                <select class="price-list-select">
+                    <option>Bảng giá chung</option>
+                </select>
+            </div>
+            <div class="price-breakdown">
+                <div class="price-row"><span class="label">Tổng tiền hàng</span><span class="count"
+                        id="totalCount">0</span><span class="value" id="subtotalValue">0</span></div>
+                <div class="price-row"><span class="label">Giảm giá</span><span class="flex-spacer"></span><input
+                        class="price-input" id="discountInput" value="0"></div>
+                <div class="price-row coupon-row"><span class="label">Mã coupon</span><span
+                        class="coupon-input-wrap"><input class="coupon-input" placeholder="Nhập mã"></span><span
+                        class="value">0</span></div>
+                <div class="price-row"><span class="label">Phí ship / Thu khác</span><span
+                        class="flex-spacer"></span><input class="price-input" id="otherInput" value="0"></div>
+                <div class="price-row total"><span class="label">Khách cần trả</span><span class="total-value"
+                        id="grandTotal">0</span></div>
+                <div class="price-row"><span class="label">Tiền thừa trả khách</span><span
+                        class="flex-spacer"></span><span class="change-value" id="changeValue">0</span></div>
+            </div>
+            <div class="sidebar-buttons">
+                <button class="btn-print" id="btnPrint" onclick="printInvoice()">IN</button>
+                <button class="btn-order" id="btnOrder">THANH TOÁN</button>
+            </div>
+        </div>
+
+        <!-- RIGHT: BÁN THƯỜNG PANEL -->
+        <div class="right-panel-thuong" id="thuongPanel">
+            <div class="thuong-header">
+                <div class="search-input">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" placeholder="Tìm khách hàng (F4)">
+                </div>
+                <button class="btn-add-customer">+</button>
+                <select class="price-list-select">
+                    <option>Bảng giá chung</option>
+                </select>
+                <div class="thuong-view-icons">
+                    <button class="view-btn"><i class="fas fa-list"></i></button>
+                    <button class="view-btn"><i class="fas fa-filter"></i></button>
+                    <button class="view-btn"><i class="far fa-image"></i></button>
+                </div>
+            </div>
+            <div class="thuong-product-grid" id="thuongProductGrid"></div>
+            <div class="thuong-bottom">
+                <div class="thuong-pagination">
+                    <button class="page-btn"><i class="fas fa-chevron-left"></i></button>
+                    <span class="page-info">1/626</span>
+                    <button class="page-btn"><i class="fas fa-chevron-right"></i></button>
+                </div>
+                <div class="thuong-actions">
+                    <button class="btn-print" onclick="printInvoice()">IN</button>
+                    <button class="btn-order">THANH TOÁN</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- MIDDLE: DELIVERY FORM (Bán giao hàng) -->
+        <div class="delivery-form-panel" id="deliveryFormPanel">
+            <div class="delivery-header-row">
+                <div class="delivery-user">Tester <i class="fas fa-caret-down" style="font-size:10px;color:#999"></i> <i
+                        class="fas fa-thumbtack" style="color:#FF6B35"></i> <i class="fas fa-caret-down"
+                        style="font-size:10px;color:#999"></i></div>
+                <div class="delivery-datetime" id="deliveryDatetime">11/03/2026 01:26</div>
+            </div>
+            <div class="delivery-customer-search">
+                <div class="search-input">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" placeholder="Tìm khách hàng (F4)">
+                </div>
+                <button class="btn-add-customer">+</button>
+                <select class="price-list-select">
+                    <option>Bảng giá chung</option>
+                </select>
+            </div>
+            <div class="delivery-address-section">
+                <div class="address-row">
+                    <span class="dot blue"></span>
+                    <span class="address-text">Bình Than Bắc Ninh, Phường Võ Cường, Thành p...</span>
+                    <i class="fas fa-caret-down" style="color:#999"></i>
+                </div>
+                <div class="address-fields">
+                    <span class="dot green"></span>
+                    <input type="text" placeholder="Tên người nhận">
+                    <input type="text" placeholder="Số điện thoại">
+                </div>
+                <input class="full-width" type="text" placeholder="Địa chỉ chi tiết (Số nhà, ngõ, đường)">
+                <div class="collapse-btn"><i class="fas fa-angle-double-right"></i></div>
+                <input class="full-width" type="text" placeholder="Khu vực">
+                <input class="full-width" type="text" placeholder="Phường/Xã">
+            </div>
+            <div class="delivery-package">
+                <div class="package-row"><i class="fas fa-box package-icon"></i> <span>1 kiện</span> <i
+                        class="fas fa-pen" style="color:#999;font-size:11px;margin-left:auto;cursor:pointer"></i></div>
+                <div class="package-dims">
+                    <input type="number" class="dim-input" value="500" style="width:50px">
+                    <select>
+                        <option>gram</option>
+                    </select> <span class="dim-sep">▼</span>
+                    <input type="number" class="dim-input" value="10" style="width:36px"> <span>×</span>
+                    <input type="number" class="dim-input" value="10" style="width:36px"> <span>×</span>
+                    <input type="number" class="dim-input" value="10" style="width:36px">
+                    <select>
+                        <option>cm</option>
+                    </select> <span class="dim-sep">▼</span>
+                </div>
+            </div>
+            <div class="delivery-note-carrier">
+                <i class="fas fa-pencil-alt" style="color:#999;font-size:12px"></i>
+                <input type="text" placeholder="Ghi chú cho bưu tá"
+                    style="flex:1;border:none;outline:none;font-size:13px;background:transparent">
+            </div>
+            <div class="delivery-cod-section">
+                <span>Thu hộ tiền (COD)</span>
+                <label class="cod-switch">
+                    <input type="checkbox" id="codToggle" checked>
+                    <span class="cod-slider"></span>
+                </label>
+                <span class="dp-val dp-cod-val" id="codValue">0</span>
+            </div>
+            <div class="delivery-buttons">
+                <button class="btn-delivery-print" id="btnDeliveryPrint">IN</button>
+                <button class="btn-delivery-order" id="btnDeliveryPay">THANH TOÁN</button>
+            </div>
+        </div>
+
+        <!-- RIGHT: DELIVERY PANEL (Bán giao hàng) -->
+        <div class="delivery-panel" id="deliveryPanel">
+            <div class="delivery-tabs">
+                <button class="delivery-tab active"><i class="fas fa-truck"></i> Cổng KiotViet</button>
+                <button class="delivery-tab"><i class="fas fa-motorcycle"></i> Tự giao hàng</button>
+            </div>
+            <div class="delivery-notice">
+                <i class="fas fa-info-circle"></i>
+                <span>Nhập đầy đủ địa chỉ lấy và giao (cùng loại cũ/mới) để tra cước và tạo vận đơn.</span>
+                <i class="fas fa-cog delivery-settings"></i>
+            </div>
+            <div class="delivery-banner">
+                <img src="https://cdn-kvweb.kiotviet.vn/kiotviet-media/ban-hang/ahamove-poster.png" alt="Ahamove promo"
+                    onerror="this.style.display='none'">
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ===== BOTTOM BAR ===== -->
+    <div class="sale-bottom">
+        <div class="mode-tabs">
+            <button class="mode-tab active" data-mode="ban-nhanh">
+                <span class="mode-icon"><i class="fas fa-bolt"></i></span>
+                <span>Bán nhanh</span>
+            </button>
+            <button class="mode-tab" data-mode="ban-thuong">
+                <span class="mode-icon"><i class="far fa-clock"></i></span>
+                <span>Bán thường</span>
+            </button>
+            <button class="mode-tab" data-mode="ban-giao-hang">
+                <span class="mode-icon"><i class="fas fa-truck"></i></span>
+                <span>Bán giao hàng</span>
+            </button>
+            <div class="bottom-right-info">
+                <span
+                    style="display:inline-flex;align-items:center;gap:6px;background:#cce2fd;border-radius:8px;padding:4px 12px">
+                    <i class="fas fa-comment-dots" style="color:#0070f4;font-size:20px"></i>
+                    <span class="phone-number">1900 6522</span>
+                </span>
+                <i class="fas fa-question-circle" style="color:#0090DA;font-size:22px"></i>
+                <span
+                    style="display:inline-flex;align-items:center;justify-content:center;background:#FFC107;color:#FFF;border-radius:50%;width:24px;height:24px"><i
+                        class="fas fa-pencil-alt" style="font-size:11px"></i></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== UNIT SELECTION MODAL ===== -->
+    <div class="unit-modal-overlay" id="unitModal">
+        <div class="unit-modal">
+            <div class="unit-modal-header">
+                <h3 id="unitModalTitle">Tên sản phẩm</h3>
+                <div class="unit-modal-pagination">
+                    <button class="page-nav" id="unitPrev"><i class="fas fa-chevron-left"></i></button>
+                    <span id="unitPageInfo">1/1</span>
+                    <button class="page-nav" id="unitNext"><i class="fas fa-chevron-right"></i></button>
+                </div>
+                <button class="unit-modal-close" id="unitModalClose">&times;</button>
+            </div>
+            <div class="unit-modal-body" id="unitModalBody">
+                <!-- Unit cards generated by JS -->
+            </div>
+            <div class="unit-modal-footer">
+                <button class="btn-skip" id="unitSkip">Bỏ qua</button>
+                <button class="btn-confirm" id="unitConfirm">Xong</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== OVERLAYS ===== -->
+    <div class="payment-success-overlay" id="successOverlay">
+        <div class="success-content">
+            <div class="success-icon"><i class="fas fa-check"></i></div>
+            <div class="success-text">Thanh toán thành công!</div>
+        </div>
+    </div>
+    <div class="toast-notification" id="toast"></div>
+
+    <script src="js/products.js?v=20260409c"></script>
+    <script src="js/sale.js?v=20260407d"></script>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var uName = localStorage.getItem('hasu_userName');
+    var uEmail = localStorage.getItem('hasu_userEmail');
+    if (!uName) {
+        window.location.href = 'login.html';
+        return;
+    }
+
+    var isAdmin = (uEmail === 'admin@hasu.vn' || uEmail === 'tester@hasu.vn');
+
+    function applyReplacements() {
+        var walk = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+            acceptNode: function(node) {
+                if (['SCRIPT', 'STYLE', 'NOSCRIPT'].includes(node.parentNode.nodeName)) return NodeFilter.FILTER_REJECT;
+                return NodeFilter.FILTER_ACCEPT;
+            }
+        }, false);
+        var n;
+        while(n = walk.nextNode()) {
+            if (n.nodeValue.includes('Tester')) {
+                n.nodeValue = n.nodeValue.replace(/Tester/g, uName);
+            }
+            if (uEmail && n.nodeValue.includes('tester@hasu.vn')) {
+                n.nodeValue = n.nodeValue.replace(/tester@hasu\.vn/g, uEmail);
+            }
+        }
+        
+        document.querySelectorAll('input').forEach(function(inp) {
+            if (inp.value === 'Tester') inp.value = uName;
+        });
+
+        // Hide mock history explicitly for newly created non-admin users
+        if (!isAdmin) {
+            document.querySelectorAll('.activity-item, .tl-history-row, tr').forEach(function(el) {
+                var txt = el.textContent;
+                // If it contains hardcoded deep mock past dates in the frontend UI
+                if (txt.includes('ngày trước') || txt.includes('14/03') || txt.includes('23 ngày trước')) {
+                    el.style.display = 'none';
+                }
+            });
+            // If the activity list becomes visually empty, show empty state
+            var aList = document.getElementById('activityList');
+            if (aList && Array.from(aList.children).filter(function(x){ return x.style.display !== 'none'; }).length === 0) {
+                aList.innerHTML = '<div style="padding:30px;text-align:center;color:#bbb">Chưa có hoạt động nào</div>';
+            }
+        }
+    }
+
+    applyReplacements();
+    setTimeout(applyReplacements, 150);
+    setTimeout(applyReplacements, 500);
+});
+</script>
+</body>
+</html>
+

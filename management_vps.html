@@ -1,0 +1,465 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hasu - Quản lý</title>
+    <link rel="stylesheet" href="management_vps.css?v=8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body class="kv-body">
+
+    <!-- ========== TOP HEADER ========== -->
+    <header class="kv-header" id="kvHeader">
+        <div class="kv-header-left">
+            <div class="kv-logo">
+                <svg width="30" height="30" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="10" y="25" width="22" height="65" rx="4" fill="#3B6DC6" />
+                    <rect x="10" y="8" width="18" height="18" rx="5" fill="#3B6DC6" />
+                    <rect x="68" y="25" width="22" height="65" rx="4" fill="#3B6DC6" />
+                    <rect x="72" y="8" width="18" height="18" rx="5" fill="#3B6DC6" />
+                    <path d="M22 55 Q22 85 50 85 Q78 85 78 55" stroke="#F5C518" stroke-width="14" stroke-linecap="round"
+                        fill="none" />
+                </svg>
+                <span class="kv-logo-text"><strong>Hasu</strong></span>
+            </div>
+        </div>
+        <div class="kv-header-right">
+            <!-- Giao hàng -->
+            <div class="kv-hdr-dropdown-wrap" id="giaohangWrap">
+                <a class="kv-header-link" href="javascript:void(0)" id="giaohangBtn">
+                    <i class="fas fa-truck"></i>
+                    <span>Giao hàng</span>
+                    <span class="kv-dot-red">●</span>
+                </a>
+                <div class="kv-hdr-panel kv-panel-giaohang" id="giaohangPanel">
+                    <div class="gh-banner"
+                        style="background:linear-gradient(135deg,#f5e6d0,#e8d5c0);border-radius:10px 10px 0 0;padding:24px;text-align:center;">
+                        <i class="fas fa-box-open" style="font-size:40px;color:#c49a6c;"></i>
+                    </div>
+                    <div style="padding:16px;">
+                        <h3 style="margin:0 0 10px;font-size:15px;color:#333;">An tâm giao vận, đẩy bật kinh doanh</h3>
+                        <div style="font-size:13px;color:#555;line-height:1.8;">
+                            <div><i class="fas fa-check-circle" style="color:#4CAF50;margin-right:6px;"></i>Cước phí tốt
+                            </div>
+                            <div><i class="fas fa-check-circle" style="color:#4CAF50;margin-right:6px;"></i>Đa dạng đối
+                                tác vận chuyển</div>
+                            <div><i class="fas fa-check-circle" style="color:#4CAF50;margin-right:6px;"></i>Hơn 10.000
+                                chủ gian hàng tin dùng</div>
+                            <div><i class="fas fa-check-circle" style="color:#4CAF50;margin-right:6px;"></i>Tặng 50K cho
+                                tài khoản mới</div>
+                        </div>
+                        <button
+                            style="width:100%;padding:10px;background:#4661D0;color:#fff;border:none;border-radius:6px;font-size:14px;cursor:pointer;margin-top:14px;">Tạo
+                            đơn giao với KiotViet</button>
+                        <button
+                            style="width:100%;padding:10px;background:#fff;color:#333;border:1px solid #ddd;border-radius:6px;font-size:14px;cursor:pointer;margin-top:8px;">Tôi
+                            muốn nhận tư vấn</button>
+                    </div>
+                </div>
+            </div>
+
+            <a class="kv-header-link" href="#">
+                <i class="fas fa-palette"></i>
+                <span>Chủ đề</span>
+            </a>
+            <a class="kv-header-link" href="#">
+                <i class="fas fa-headset"></i>
+                <span>Hỗ trợ</span>
+            </a>
+            <span class="kv-header-sep"></span>
+            <span class="kv-header-lang">
+                <span>🇻🇳</span>
+                <span>Tiếng Việt</span>
+                <i class="fas fa-caret-down"></i>
+            </span>
+
+            <!-- Branch Selector -->
+            <div class="kv-hdr-dropdown-wrap" id="branchWrap">
+                <span class="kv-header-branch" id="branchBtn">
+                    BHS Binh Than
+                    <i class="fas fa-caret-down"></i>
+                </span>
+                <div class="kv-hdr-panel kv-panel-branch" id="branchPanel">
+                    <div style="padding:10px 12px;">
+                        <div
+                            style="display:flex;align-items:center;border:1px solid #ddd;border-radius:4px;padding:6px 10px;">
+                            <i class="fas fa-search" style="color:#999;margin-right:8px;"></i>
+                            <input type="text" placeholder="Tìm chi nhánh..."
+                                style="border:none;outline:none;font-size:13px;width:100%;">
+                        </div>
+                    </div>
+                    <div style="padding:4px 0;border-top:1px solid #f0f0f0;">
+                        <div
+                            style="display:flex;align-items:center;justify-content:space-between;padding:10px 16px;cursor:pointer;background:#f8f9ff;">
+                            <span style="font-size:13px;color:#333;">BHS Binh Than</span>
+                            <i class="fas fa-check" style="color:#4661D0;font-size:13px;"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="kv-header-actions">
+                <!-- Notification Bell -->
+                <div class="kv-hdr-dropdown-wrap" id="notifWrap">
+                    <button class="kv-icon-btn" id="notifBtn">
+                        <i class="far fa-bell"></i>
+                        <span class="kv-badge"></span>
+                    </button>
+                    <div class="kv-hdr-panel kv-panel-notif" id="notifPanel">
+                        <div style="padding:16px 18px 0;font-size:18px;font-weight:600;color:#333;">Hộp thư đến</div>
+                        <div style="display:flex;gap:0;border-bottom:1px solid #eee;padding:0 18px;margin-top:12px;">
+                            <button class="notif-tab active" data-tab="all">Tất cả <span
+                                    class="notif-dot">●</span></button>
+                            <button class="notif-tab" data-tab="promo">Ưu đãi</button>
+                            <button class="notif-tab" data-tab="update">Cập nhật <span
+                                    class="notif-dot">●</span></button>
+                        </div>
+                        <div class="notif-list" id="notifList">
+                            <div class="notif-item unread">
+                                <i class="far fa-bell notif-icon"></i>
+                                <div>
+                                    <div class="notif-text">Thông báo hệ thống Cơ quan Thuế đã hoạt động trở lại</div>
+                                    <div class="notif-time">9:59 07/03/2026</div>
+                                </div>
+                                <span class="notif-unread-dot">●</span>
+                            </div>
+                            <div class="notif-item unread">
+                                <i class="far fa-bell notif-icon"></i>
+                                <div>
+                                    <div class="notif-text">Thông báo bảo trì hệ thống Cơ quan Thuế</div>
+                                    <div class="notif-time">18:34 06/03/2026</div>
+                                </div>
+                                <span class="notif-unread-dot">●</span>
+                            </div>
+                            <div class="notif-item unread">
+                                <i class="far fa-bell notif-icon"></i>
+                                <div>
+                                    <div class="notif-text">Bắt buộc xác thực 2 lớp cho tài khoản Chủ cửa hàng</div>
+                                    <div class="notif-time">10:05 05/03/2026</div>
+                                </div>
+                                <span class="notif-unread-dot">●</span>
+                            </div>
+                            <div class="notif-item">
+                                <i class="far fa-bell notif-icon"></i>
+                                <div>
+                                    <div class="notif-text">Giao Vận KiotViet – Lịch nghỉ Tết Nguyên Đán 2026</div>
+                                    <div class="notif-time">17:33 09/02/2026</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Settings Gear -->
+                <div class="kv-hdr-dropdown-wrap" id="settingsWrap">
+                    <button class="kv-icon-btn" id="settingsBtn">
+                        <i class="fas fa-cog"></i>
+                    </button>
+                    <div class="kv-hdr-panel kv-panel-settings" id="settingsPanel">
+                        <div style="padding:8px 0;">
+                            <!-- Hàng hóa -->
+                            <a href="javascript:void(0)" class="kv-settings-row"
+                                style="display:flex;align-items:center;gap:14px;padding:14px 20px;text-decoration:none;color:inherit;border-bottom:1px solid #f5f5f5;transition:background .15s;"
+                                onmouseenter="this.style.background='#f8f9ff'" onmouseleave="this.style.background=''"
+                                onclick="navigate('thietlap','hanghoa');document.getElementById('settingsPanel').classList.remove('open')">
+                                <i class="fas fa-globe"
+                                    style="font-size:20px;color:#4661D0;width:24px;text-align:center;"></i>
+                                <div>
+                                    <div style="font-size:14px;font-weight:600;color:#333;">Hàng hóa</div>
+                                    <div style="font-size:12px;color:#888;">Thông tin, Nhập hàng, Nhà cung cấp</div>
+                                </div>
+                            </a>
+                            <!-- Đơn hàng -->
+                            <a href="javascript:void(0)" class="kv-settings-row"
+                                style="display:flex;align-items:center;gap:14px;padding:14px 20px;text-decoration:none;color:inherit;border-bottom:1px solid #f5f5f5;transition:background .15s;"
+                                onmouseenter="this.style.background='#f8f9ff'" onmouseleave="this.style.background=''"
+                                onclick="navigate('thietlap','donhang');document.getElementById('settingsPanel').classList.remove('open')">
+                                <i class="fas fa-exchange-alt"
+                                    style="font-size:18px;color:#4661D0;width:24px;text-align:center;"></i>
+                                <div>
+                                    <div style="font-size:14px;font-weight:600;color:#333;">Đơn hàng</div>
+                                    <div style="font-size:12px;color:#888;">Đặt hàng, Bán hàng, Trả hàng</div>
+                                </div>
+                            </a>
+                            <!-- Tiện ích -->
+                            <a href="javascript:void(0)" class="kv-settings-row"
+                                style="display:flex;align-items:center;gap:14px;padding:14px 20px;text-decoration:none;color:inherit;border-bottom:1px solid #f5f5f5;transition:background .15s;"
+                                onmouseenter="this.style.background='#f8f9ff'" onmouseleave="this.style.background=''"
+                                onclick="navigate('thietlap','tienich');document.getElementById('settingsPanel').classList.remove('open')">
+                                <i class="fas fa-truck"
+                                    style="font-size:18px;color:#4661D0;width:24px;text-align:center;"></i>
+                                <div>
+                                    <div style="font-size:14px;font-weight:600;color:#333;">Tiện ích</div>
+                                    <div style="font-size:12px;color:#888;">Giao hàng, Thanh toán</div>
+                                </div>
+                            </a>
+                            <!-- Cửa hàng -->
+                            <a href="javascript:void(0)" class="kv-settings-row"
+                                style="display:flex;align-items:center;gap:14px;padding:14px 20px;text-decoration:none;color:inherit;border-bottom:1px solid #f5f5f5;transition:background .15s;"
+                                onmouseenter="this.style.background='#f8f9ff'" onmouseleave="this.style.background=''"
+                                onclick="navigate('thietlap','cuahang');document.getElementById('settingsPanel').classList.remove('open')">
+                                <i class="fas fa-store"
+                                    style="font-size:18px;color:#4661D0;width:24px;text-align:center;"></i>
+                                <div>
+                                    <div style="font-size:14px;font-weight:600;color:#333;">Cửa hàng</div>
+                                    <div style="font-size:12px;color:#888;">Thông tin, Người dùng, Chi nhánh, Bảo mật
+                                    </div>
+                                </div>
+                            </a>
+                            <!-- Dữ liệu và Lịch sử thao tác -->
+                            <a href="javascript:void(0)" class="kv-settings-row"
+                                style="display:flex;align-items:center;gap:14px;padding:14px 20px;text-decoration:none;color:inherit;transition:background .15s;"
+                                onmouseenter="this.style.background='#f8f9ff'" onmouseleave="this.style.background=''"
+                                onclick="navigate('thietlap','dulieu');document.getElementById('settingsPanel').classList.remove('open')">
+                                <i class="fas fa-shield-alt"
+                                    style="font-size:18px;color:#4661D0;width:24px;text-align:center;"></i>
+                                <div>
+                                    <div style="font-size:14px;font-weight:600;color:#333;">Dữ liệu và Lịch sử thao tác
+                                    </div>
+                                    <div style="font-size:12px;color:#888;">Khoá sổ, Lịch sử thao tác, Xoá dữ liệu</div>
+                                </div>
+                            </a>
+                        </div>
+                        <div style="padding:10px 18px 16px;border-top:1px solid #eee;">
+                            <button
+                                onclick="navigate('thietlap','hanghoa');document.getElementById('settingsPanel').classList.remove('open')"
+                                style="width:100%;padding:10px;background:#fff;color:#4661D0;border:1px solid #4661D0;border-radius:6px;font-size:13px;cursor:pointer;font-weight:500;">Xem
+                                tất cả thiết lập</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User Avatar -->
+                <div class="kv-hdr-dropdown-wrap" id="userWrap">
+                    <div class="kv-avatar" id="userBtn"><i class="fas fa-user"></i></div>
+                    <div class="kv-hdr-panel kv-panel-user" id="userPanel">
+                        <div
+                            style="display:flex;align-items:center;gap:12px;padding:16px 18px;border-bottom:1px solid #f0f0f0;">
+                            <div
+                                style="width:40px;height:40px;border-radius:50%;background:#4661D0;display:flex;align-items:center;justify-content:center;">
+                                <i class="fas fa-user" style="color:#fff;font-size:16px;"></i>
+                            </div>
+                            <div style="flex:1;">
+                                <div style="font-size:14px;font-weight:600;color:#333;">Tester</div>
+                            </div>
+                            <i class="fas fa-chevron-right" style="color:#ccc;font-size:12px;"></i>
+                        </div>
+                        <div style="padding:12px 18px;border-bottom:1px solid #f0f0f0;">
+                            <a href="javascript:void(0)"
+                                style="color:#333;font-size:14px;text-decoration:none;display:block;">Đăng xuất</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ========== NAVIGATION BAR ========== -->
+    <nav class="kv-nav" id="kvNav">
+        <div class="kv-nav-tabs">
+            <button class="kv-nav-tab active" data-page="tongquan">Tổng quan</button>
+
+            <div class="kv-nav-wrapper">
+                <a class="kv-nav-tab" href="hanghoa.html">Hàng hóa</a>
+                <div class="kv-dropdown kv-dropdown-3col">
+                    <div class="kv-dropdown-col">
+                        <div class="kv-dropdown-title">Hàng hóa</div>
+                        <a class="kv-dropdown-item" href="hanghoa.html">Danh sách hàng hóa</a>
+                        <a class="kv-dropdown-item" href="thietlapgia.html">Thiết lập giá</a>
+                    </div>
+                    <div class="kv-dropdown-col">
+                        <div class="kv-dropdown-title">Kho hàng</div>
+                        <a class="kv-dropdown-item" href="chuyenhang.html">Chuyển hàng</a>
+                        <a class="kv-dropdown-item" href="kiemkho.html">Kiểm kho</a>
+                        <a class="kv-dropdown-item" href="xuathuy.html">Xuất hủy</a>
+                        <a class="kv-dropdown-item" href="hanghoa.html">Xuất dùng nội bộ <span class="kv-badge-new">Mới</span></a>
+                    </div>
+                    <div class="kv-dropdown-col">
+                        <div class="kv-dropdown-title">Nhập hàng</div>
+                        <a class="kv-dropdown-item" href="nhaphang.html">Hóa đơn đầu vào <span class="kv-badge-new">Mới</span></a>
+                        <a class="kv-dropdown-item" href="nhacungcap.html">Nhà cung cấp</a>
+                        <a class="kv-dropdown-item" href="dathangnhap.html">Đặt hàng nhập</a>
+                        <a class="kv-dropdown-item" href="nhaphang.html">Nhập hàng</a>
+                        <a class="kv-dropdown-item" href="trahangnhap.html">Trả hàng nhập</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="kv-nav-wrapper">
+                <a class="kv-nav-tab" href="donhang.html">Đơn hàng</a>
+                <div class="kv-dropdown">
+                    <a class="kv-dropdown-item" href="donhang.html">Đặt hàng</a>
+                    <a class="kv-dropdown-item" href="hoadon.html">Hóa đơn</a>
+                    <a class="kv-dropdown-item" href="trahang.html">Trả hàng</a>
+                    <a class="kv-dropdown-item" href="doitacgiaohang.html">Đối tác giao hàng</a>
+                    <a class="kv-dropdown-item" href="vandon.html">Vận đơn</a>
+                </div>
+            </div>
+
+            <div class="kv-nav-wrapper">
+                <a class="kv-nav-tab" href="khachhang.html">Khách hàng</a>
+                <div class="kv-dropdown">
+                    <a class="kv-dropdown-item" href="khachhang.html">Khách hàng</a>
+                    <a class="kv-dropdown-item" href="khuyenmai.html">Khuyến mãi</a>
+                    <a class="kv-dropdown-item" href="voucher.html">Voucher</a>
+                    <a class="kv-dropdown-item" href="coupon.html">Coupon</a>
+                </div>
+            </div>
+
+            <div class="kv-nav-wrapper">
+                <button class="kv-nav-tab" data-page="nhanvien">Nhân viên</button>
+                <div class="kv-dropdown">
+                    <a class="kv-dropdown-item" data-page="nhanvien" data-sub="danhsachnv">Danh sách nhân viên</a>
+                    <a class="kv-dropdown-item" data-page="nhanvien" data-sub="lichlv">Lịch làm việc</a>
+                    <a class="kv-dropdown-item" data-page="nhanvien" data-sub="chamcong">Bảng chấm công</a>
+                    <a class="kv-dropdown-item" data-page="nhanvien" data-sub="luong">Bảng lương</a>
+                    <a class="kv-dropdown-item" data-page="nhanvien" data-sub="hoahong">Bảng hoa hồng</a>
+                    <a class="kv-dropdown-item" data-page="nhanvien" data-sub="thietlapnv">Thiết lập nhân viên</a>
+                </div>
+            </div>
+
+            <a class="kv-nav-tab" href="cashflow.html">Sổ quỹ</a>
+
+            <div class="kv-nav-wrapper">
+                <a class="kv-nav-tab" href="baocao.html">Phân tích</a>
+                <div class="kv-dropdown kv-dropdown-2col">
+                    <div class="kv-dropdown-col">
+                        <div class="kv-dropdown-title">Phân tích</div>
+                        <a class="kv-dropdown-item" href="baocao.html">Kinh doanh</a>
+                        <a class="kv-dropdown-item" href="baocao.html">Hàng hóa</a>
+                        <a class="kv-dropdown-item" href="baocao.html">Khách hàng</a>
+                        <a class="kv-dropdown-item" href="baocao.html">Hiệu quả</a>
+                        <a class="kv-dropdown-item" href="baocao.html">Cuối ngày</a>
+                    </div>
+                    <div class="kv-dropdown-col">
+                        <div class="kv-dropdown-title">&nbsp;</div>
+                        <a class="kv-dropdown-item" href="baocao.html">Bán hàng</a>
+                        <a class="kv-dropdown-item" href="baocao.html">Đặt hàng</a>
+                        <a class="kv-dropdown-item" href="baocao.html">Nhà cung cấp</a>
+                        <a class="kv-dropdown-item" href="baocao.html">Nhân viên</a>
+                        <a class="kv-dropdown-item" href="baocao.html">Kênh bán hàng</a>
+                        <a class="kv-dropdown-item" href="baocao.html">Tài chính</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="kv-nav-wrapper">
+                <a class="kv-nav-tab" href="banonline.html">Bán online</a>
+                <div class="kv-dropdown">
+                    <a class="kv-dropdown-item" href="banonline.html">Bán online</a>
+                    <a class="kv-dropdown-item" href="banonline.html">Website bán hàng</a>
+                </div>
+            </div>
+
+            <button class="kv-nav-tab" data-page="thuekeToan">Thuế &amp; Kế toán <span class="kv-badge-new">Mới</span></button>
+        </div>
+        <div class="kv-nav-right">
+            <a class="kv-btn-sale" href="sale.html">
+                <i class="fas fa-shopping-cart"></i>
+                <span>Bán hàng</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- ========== PAGE CONTENT ========== -->
+    <div class="kv-page-content" id="pageContent">
+        <!-- Content injected by JS -->
+    </div>
+
+    <div id="modal-overlay"
+        style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:10000;align-items:flex-start;justify-content:center;padding-top:60px">
+    </div>
+
+    <script src="products.js"></script>
+    <script>
+        // Modal utilities for management page
+        function openModal(title, content, width) {
+            var ov = document.getElementById('modal-overlay');
+            ov.style.display = 'flex';
+            ov.innerHTML = '<div style="background:#fff;border-radius:8px;width:' + (width || '480px') + ';max-width:95%;box-shadow:0 8px 40px rgba(0,0,0,0.25);overflow:hidden">' +
+                '<div style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid #E8E8E8">' +
+                '<h3 style="margin:0;font-size:16px;font-weight:600;color:#333">' + title + '</h3>' +
+                '<button onclick="closeModal()" style="background:none;border:none;font-size:22px;cursor:pointer;color:#999;padding:0 4px;line-height:1">&times;</button></div>' +
+                '<div style="padding:20px">' + content + '</div></div>';
+            ov.onclick = function (e) { if (e.target === ov) closeModal(); };
+        }
+        function closeModal() { var ov = document.getElementById('modal-overlay'); if (ov) { ov.style.display = 'none'; ov.innerHTML = ''; } }
+        function showToast(msg, type) {
+            var t = document.createElement('div');
+            t.style.cssText = 'position:fixed;top:20px;right:20px;z-index:99999;padding:12px 24px;border-radius:8px;color:#fff;font-size:14px;font-weight:500;box-shadow:0 4px 12px rgba(0,0,0,0.2);' + (type === 'success' ? 'background:#43A047' : 'background:#E53935');
+            t.textContent = msg;
+            document.body.appendChild(t);
+            setTimeout(function () { t.remove(); }, 3000);
+        }
+        function saveLocalDB() {
+            localStorage.setItem('hasu_products', JSON.stringify(products.map(function (p) { return { code: p.code, barcode: p.barcode, name: p.name, price: p.price, stock: p.stock, unit: p.unit, img: p.img }; })));
+        }
+        function initAfterRender() {
+            // Re-init dropdown behavior after re-render
+            if (typeof initDropdowns === 'function') initDropdowns();
+        }
+    </script>
+    <script src="management_vps.js?v=4"></script>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var uName = localStorage.getItem('hasu_userName');
+    var uEmail = localStorage.getItem('hasu_userEmail');
+    if (!uName) {
+        window.location.href = 'login.html';
+        return;
+    }
+
+    var isAdmin = (uEmail === 'admin@hasu.vn' || uEmail === 'tester@hasu.vn');
+
+    function applyReplacements() {
+        var walk = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+            acceptNode: function(node) {
+                if (['SCRIPT', 'STYLE', 'NOSCRIPT'].includes(node.parentNode.nodeName)) return NodeFilter.FILTER_REJECT;
+                return NodeFilter.FILTER_ACCEPT;
+            }
+        }, false);
+        var n;
+        while(n = walk.nextNode()) {
+            if (n.nodeValue.includes('Tester')) {
+                n.nodeValue = n.nodeValue.replace(/Tester/g, uName);
+            }
+            if (uEmail && n.nodeValue.includes('tester@hasu.vn')) {
+                n.nodeValue = n.nodeValue.replace(/tester@hasu\.vn/g, uEmail);
+            }
+        }
+        
+        document.querySelectorAll('input').forEach(function(inp) {
+            if (inp.value === 'Tester') inp.value = uName;
+        });
+
+        // Hide mock history explicitly for newly created non-admin users
+        if (!isAdmin) {
+            document.querySelectorAll('.activity-item, .tl-history-row, tr').forEach(function(el) {
+                var txt = el.textContent;
+                // If it contains hardcoded deep mock past dates in the frontend UI
+                if (txt.includes('ngày trước') || txt.includes('14/03') || txt.includes('23 ngày trước')) {
+                    el.style.display = 'none';
+                }
+            });
+            // If the activity list becomes visually empty, show empty state
+            var aList = document.getElementById('activityList');
+            if (aList && Array.from(aList.children).filter(function(x){ return x.style.display !== 'none'; }).length === 0) {
+                aList.innerHTML = '<div style="padding:30px;text-align:center;color:#bbb">Chưa có hoạt động nào</div>';
+            }
+        }
+    }
+
+    applyReplacements();
+    setTimeout(applyReplacements, 150);
+    setTimeout(applyReplacements, 500);
+});
+</script>
+</body>
+</html>
+

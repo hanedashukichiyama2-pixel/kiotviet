@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HASU - Mạng lưới Đa năng (SuperAdmin)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --blue: #004aad;
+            --blue-dark: #002d6e;
+            --blue-light: #e8f0fb;
+            --sidebar-bg: #0f172a;
+            --sidebar-hover: #1e293b;
+            --sidebar-color: #94a3b8;
+            --bg: #f8fafc;
+            --surface: #ffffff;
+            --text-main: #1e293b;
+            --text-sub: #64748b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 260px;
+            background: var(--sidebar-bg);
+            color: var(--sidebar-color);
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .sb-header {
+            height: 70px;
+            display: flex;
+            align-items: center;
+            padding: 0 24px;
+            gap: 12px;
+            background: rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .sb-header img {
+            height: 32px;
+            filter: brightness(0) invert(1);
+        }
+
+        .sb-header span {
+            color: #fff;
+            font-weight: 700;
+            font-size: 18px;
+            letter-spacing: -0.5px;
+        }
+
+        .sb-menu {
+            padding: 24px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .sb-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .sb-item:hover {
+            background: var(--sidebar-hover);
+            color: #fff;
+        }
+
+        .sb-item.active {
+            background: var(--blue);
+            color: #fff;
+        }
+
+        .sb-item i {
+            width: 20px;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .sb-footer {
+            padding: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .sb-user {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .sb-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #cbd5e1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--sidebar-bg);
+            font-weight: 700;
+        }
+
+        .sb-user-info .u-name {
+            color: #fff;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .sb-user-info .u-role {
+            font-size: 11px;
+            margin-top: 2px;
+        }
+
+        /* MAIN CONTENT */
+        .main-col {
+            flex: 1;
+            margin-left: 260px;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .topbar {
+            height: 70px;
+            background: var(--surface);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 32px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .tb-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .tb-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .tb-icon {
+            color: var(--text-sub);
+            font-size: 20px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .tb-icon:hover {
+            color: var(--blue);
+        }
+
+        .tb-badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            width: 8px;
+            height: 8px;
+            background: #ef4444;
+            border-radius: 50%;
+        }
+
+        .content-area {
+            padding: 32px;
+            flex: 1;
+        }
+
+        /* STATS */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .stat-card {
+            background: var(--surface);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+            border: 1px solid #f1f5f9;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+        }
+
+        .stat-card:nth-child(1)::after {
+            background: var(--blue);
+        }
+
+        .stat-card:nth-child(2)::after {
+            background: #10b981;
+        }
+
+        .stat-card:nth-child(3)::after {
+            background: #f59e0b;
+        }
+
+        .stat-card:nth-child(4)::after {
+            background: #8b5cf6;
+        }
+
+        .sc-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .sc-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-sub);
+        }
+
+        .sc-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .sc-val {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .sc-trend {
+            font-size: 13px;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            border-radius: 20px;
+            padding: 2px 8px;
+            margin-top: 8px;
+        }
+
+        .sc-trend.up {
+            color: #059669;
+            background: #d1fae5;
+        }
+
+        .sc-trend.down {
+            color: #dc2626;
+            background: #fee2e2;
+        }
+
+        /* TAB VIEWS */
+        .view-panel {
+            display: none;
+        }
+
+        .view-panel.active {
+            display: block;
+        }
+
+        /* TABLE */
+        .table-panel {
+            background: var(--surface);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+            border: 1px solid #f1f5f9;
+            overflow: hidden;
+        }
+
+        .table-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .table-title {
+            font-size: 16px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .table-title .badge {
+            background: var(--blue-light);
+            color: var(--blue);
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+
+        .table-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-outline {
+            padding: 8px 16px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            background: #fff;
+            color: var(--text-main);
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-outline:hover {
+            background: #f8fafc;
+            border-color: #94a3b8;
+        }
+
+        .btn-primary {
+            background: var(--blue);
+            color: #fff;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: var(--blue-dark);
+            color: #fff;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th {
+            background: #f8fafc;
+            padding: 14px 24px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-sub);
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        td {
+            padding: 16px 24px;
+            font-size: 14px;
+            border-bottom: 1px solid #e2e8f0;
+            color: var(--text-main);
+        }
+
+        tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        .shop-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .shop-badge.trial {
+            background: #fef3c7;
+            color: #b45309;
+        }
+
+        .shop-badge.pro {
+            background: #e0e7ff;
+            color: #4338ca;
+        }
+
+        .shop-badge.blocked {
+            background: #fee2e2;
+            color: #b91c1c;
+        }
+
+        .td-sub {
+            color: var(--text-sub);
+            font-size: 13px;
+            margin-top: 4px;
+        }
+
+        .actions-cell i {
+            color: #94a3b8;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 0 6px;
+            transition: 0.2s;
+        }
+
+        .actions-cell i:hover {
+            color: var(--blue);
+        }
+
+        /* MODAL */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(4px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-box {
+            background: #fff;
+            border-radius: 16px;
+            width: 800px;
+            max-width: 90vw;
+            height: 80vh;
+            max-height: 800px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f8fafc;
+        }
+
+        .modal-tabs {
+            display: flex;
+            gap: 20px;
+            padding: 0 24px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .m-tab {
+            padding: 16px 0;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-sub);
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+        }
+
+        .m-tab.active {
+            color: var(--blue);
+            border-bottom-color: var(--blue);
+        }
+
+        .modal-body {
+            padding: 24px;
+            flex: 1;
+            overflow-y: auto;
+            background: #f8fafc;
+        }
+
+        .data-grid {
+            display: grid;
+            gap: 12px;
+        }
+
+        .data-card {
+            background: #fff;
+            padding: 16px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #e2e8f0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="sb-header">
+            <img src="logo.png" alt="HASU">
+            <span>HASU Cloud</span>
+        </div>
+        <div class="sb-menu">
+            <div class="sb-item active" onclick="switchTab('dashboard', 'Tổng quan Toàn Hệ thống')"><i
+                    class="fa-solid fa-chart-pie"></i> Tổng quan</div>
+            <div class="sb-item" onclick="switchTab('tenants', 'Quản lý Gian hàng')"><i class="fa-solid fa-store"></i>
+                Quản lý Gian hàng</div>
+            <div class="sb-item" onclick="switchTab('products', 'Hàng hóa Toàn tuyến')"><i
+                    class="fa-solid fa-boxes-stacked"></i> Hàng hóa Toàn tuyến</div>
+            <div class="sb-item" onclick="switchTab('customers', 'Khách hàng Toàn tuyến')"><i
+                    class="fa-solid fa-users"></i> Khách hàng Toàn tuyến</div>
+            <div class="sb-item" onclick="switchTab('revenue', 'Báo cáo Doanh thu Tổng')"><i
+                    class="fa-solid fa-sack-dollar"></i> Biểu đồ Doanh thu</div>
+            <div style="height: 1px; background: rgba(255,255,255,0.05); margin: 8px 0;"></div>
+            <div class="sb-item" onclick="switchTab('settings', 'Cài đặt Hệ thống')"><i class="fa-solid fa-cog"></i> Cài
+                đặt lõi</div>
+        </div>
+        <div class="sb-footer">
+            <div class="sb-user">
+                <div class="sb-avatar">S</div>
+                <div class="sb-user-info">
+                    <div class="u-name">Root Admin</div>
+                    <div class="u-role">admin@hasu.vn</div>
+                </div>
+                <i class="fa-solid fa-right-from-bracket" style="margin-left:auto; cursor:pointer;"
+                    onclick="window.location='login.html'"></i>
+            </div>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTEXT -->
+    <main class="main-col">
+        <header class="topbar">
+            <div class="tb-title" id="pageTitle">Tổng quan Toàn Hệ Thống</div>
+            <div class="tb-actions">
+                <div class="tb-icon"><i class="fa-solid fa-envelope"></i>
+                    <div class="tb-badge"></div>
+                </div>
+                <div class="tb-icon"><i class="fa-solid fa-bell"></i>
+                    <div class="tb-badge"></div>
+                </div>
+                <a href="tongquan.html" class="btn-outline btn-primary" style="text-decoration:none;"><i
+                        class="fa-solid fa-desktop" style="margin-right:6px"></i> Trải nghiệm POS</a>
+            </div>
+        </header>
+
+        <div class="content-area">
+
+            <!-- VIEW: DASHBOARD -->
+            <div id="view-dashboard" class="view-panel active">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="sc-top">
+                            <div class="sc-label">Tổng Gian Hàng</div>
+                            <div class="sc-icon" style="background:#e0e7ff; color:#4f46e5;"><i
+                                    class="fa-solid fa-store"></i></div>
+                        </div>
+                        <div class="sc-val" id="totalShopsVal">...</div>
+                        <div class="sc-trend up"><i class="fa-solid fa-arrow-trend-up"></i> +2.5%</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="sc-top">
+                            <div class="sc-label">GMV Nền Tảng (30d)</div>
+                            <div class="sc-icon" style="background:#dcfce7; color:#10b981;"><i
+                                    class="fa-solid fa-chart-line"></i></div>
+                        </div>
+                        <div class="sc-val">128.5B</div>
+                        <div class="sc-trend up"><i class="fa-solid fa-arrow-trend-up"></i> +14.2%</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="sc-top">
+                            <div class="sc-label">Doanh thu Thuê bao</div>
+                            <div class="sc-icon" style="background:#fef3c7; color:#f59e0b;"><i
+                                    class="fa-solid fa-sack-dollar"></i></div>
+                        </div>
+                        <div class="sc-val">2.1B</div>
+                        <div class="sc-trend up"><i class="fa-solid fa-arrow-trend-up"></i> +5.8%</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="sc-top">
+                            <div class="sc-label">Ticket Cần Xử Lý</div>
+                            <div class="sc-icon" style="background:#f3e8ff; color:#9333ea;"><i
+                                    class="fa-solid fa-ticket"></i></div>
+                        </div>
+                        <div class="sc-val">14</div>
+                        <div class="sc-trend down"><i class="fa-solid fa-arrow-trend-down"></i> -8%</div>
+                    </div>
+                </div>
+
+                <div style="display:flex; gap: 24px;">
+                    <div class="table-panel" style="flex:2;">
+                        <div class="table-header">
+                            <div class="table-title">Gian hàng mới đăng ký <span class="badge" id="recentBadge">0</span>
+                            </div>
+                            <div class="table-actions">
+                                <button class="btn-outline" onclick="switchTab('tenants')">Xem tất cả</button>
+                            </div>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Cửa hàng</th>
+                                    <th>Chủ quản</th>
+                                    <th>Gói cước</th>
+                                    <th>Trạng thái</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dashTableBody">
+                                <!-- JS Injected -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-panel" style="flex:1;">
+                        <div class="table-header">
+                            <div class="table-title">Cảnh báo hệ thống</div>
+                        </div>
+                        <div
+                            style="padding:20px; color:var(--text-sub); display:flex; flex-direction:column; gap:16px;">
+                            <div style="display:flex; gap:12px; align-items:flex-start;">
+                                <i class="fa-solid fa-circle-check" style="color:#10b981; margin-top:2px;"></i>
+                                <div>
+                                    <div style="color:var(--text-main); font-weight:600; font-size:13px;">Cụm Server 1
+                                        (Hà Nội)</div>
+                                    <div style="font-size:12px;">Đang hoạt động ổn định (Tải 12%)</div>
+                                </div>
+                            </div>
+                            <div style="display:flex; gap:12px; align-items:flex-start;">
+                                <i class="fa-solid fa-circle-check" style="color:#10b981; margin-top:2px;"></i>
+                                <div>
+                                    <div style="color:var(--text-main); font-weight:600; font-size:13px;">Cụm Server 2
+                                        (Hồ Chí Minh)</div>
+                                    <div style="font-size:12px;">Đang hoạt động ổn định (Tải 18%)</div>
+                                </div>
+                            </div>
+                            <div style="display:flex; gap:12px; align-items:flex-start;">
+                                <i class="fa-solid fa-triangle-exclamation" style="color:#f59e0b; margin-top:2px;"></i>
+                                <div>
+                                    <div style="color:var(--text-main); font-weight:600; font-size:13px;">Cảnh báo băng
+                                        thông</div>
+                                    <div style="font-size:12px;">Lưu lượng SFTP tăng đột biến trong khu vực Admin test.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW: TENANTS -->
+            <div id="view-tenants" class="view-panel">
+                <div class="table-panel">
+                    <div class="table-header">
+                        <div class="table-title">Sổ cái Tenant <span class="badge" id="totalBadge">0</span></div>
+                        <div class="table-actions">
+                            <button class="btn-outline"><i class="fa-solid fa-filter"></i> Bộ lọc</button>
+                            <button class="btn-outline btn-primary"><i class="fa-solid fa-plus"></i> Khởi tạo Tenant thủ
+                                công</button>
+                        </div>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Client ID / Tenant Name</th>
+                                <th>Chủ sở hữu</th>
+                                <th>Tổng Doanh Thu (GMV)</th>
+                                <th>Ngày kích hoạt</th>
+                                <th>Gói cước</th>
+                                <th>Tác vụ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="fullTableBody">
+                            <tr>
+                                <td colspan="6" style="text-align:center; padding: 40px;"><i
+                                        class="fa-solid fa-spinner fa-spin"></i> Đang tải mạng lưới...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="view-settings" class="view-panel">
+                <div class="table-panel" style="padding: 100px; text-align:center; color: var(--text-sub);">
+                    <i class="fa-solid fa-sliders" style="font-size:64px; color:#e2e8f0; margin-bottom: 24px;"></i>
+                    <h2>Cài đặt Lõi API</h2>
+                    <p style="margin-top:12px;">Cấu hình Database, Webhooks, Secret Keys và giới hạn AWS/S3 CDN storage
+                        cho nền tảng.</p>
+                </div>
+            </div>
+
+            <!-- GLOBAL PRODUCTS -->
+            <div id="view-products" class="view-panel">
+                <div class="table-panel">
+                    <div class="table-header">
+                        <div class="table-title">Kho Hàng Toàn Mạng Lưới</div>
+                        <div class="table-actions" style="display:flex; gap:12px; align-items:center;">
+                            <input type="text" id="searchProducts" onkeyup="filterGlobalProducts()"
+                                placeholder="🔍 Tìm kiếm sản phẩm..."
+                                style="padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 13px; width: 250px; outline:none;">
+                            <button class="btn-outline"><i class="fa-solid fa-filter"></i> Lọc danh mục</button>
+                        </div>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nguồn Gian Hàng</th>
+                                <th>Sản phẩm</th>
+                                <th>Mã hàng</th>
+                                <th>Tồn kho</th>
+                                <th>Giá bán</th>
+                            </tr>
+                        </thead>
+                        <tbody id="globalProductsBody">
+                            <tr>
+                                <td colspan="5" style="text-align:center; padding:40px;"><i
+                                        class="fa-solid fa-spinner fa-spin"></i> Đang tổng hợp dữ liệu toàn tuyến...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- GLOBAL CUSTOMERS -->
+            <div id="view-customers" class="view-panel">
+                <div class="table-panel">
+                    <div class="table-header">
+                        <div class="table-title">Cơ sở dữ liệu Khách hàng Toàn Hệ thống</div>
+                        <div class="table-actions">
+                            <input type="text" id="searchCustomers" onkeyup="filterGlobalCustomers()"
+                                placeholder="🔍 Tìm kiếm khách hàng..."
+                                style="padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 13px; width: 250px; outline:none;">
+                        </div>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nguồn Gian Hàng</th>
+                                <th>Tên Khách Hàng</th>
+                                <th>Số điện thoại</th>
+                                <th>Tổng định giá mua</th>
+                                <th>Công Nợ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="globalCustomersBody">
+                            <tr>
+                                <td colspan="5" style="text-align:center; padding:40px;"><i
+                                        class="fa-solid fa-spinner fa-spin"></i> Đang tổng hợp dữ liệu toàn tuyến...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- GLOBAL REVENUE -->
+            <div id="view-revenue" class="view-panel">
+                <div style="display:flex; gap: 24px;">
+                    <div class="table-panel" style="flex:2; padding: 24px;">
+                        <h2 style="font-size: 16px; color: var(--text-main); margin-bottom: 24px;">Tỷ trọng Doanh thu
+                            (GMV) Theo Gian Hàng</h2>
+                        <canvas id="gmvChart" style="width:100%; height:300px;"></canvas>
+                    </div>
+                    <div class="table-panel"
+                        style="flex:1; padding: 40px 24px; text-align:center; display:flex; flex-direction:column; justify-content:center;">
+                        <i class="fa-solid fa-sack-dollar"
+                            style="font-size:48px; color:#10b981; margin-bottom: 16px;"></i>
+                        <div style="font-size:14px; color:var(--text-sub); margin-bottom:4px;">Tổng GMV Hệ Thống</div>
+                        <h2 style="font-size: 28px; color: var(--blue-dark); margin-bottom: 16px;" id="masterGMV">0 đ
+                        </h2>
+                        <p style="font-size:13px; color:var(--text-sub); line-height:1.5;">Dữ liệu tính gộp doanh thu
+                            trọn đời hoặc theo biến động (Real-time) từ các gian hàng đang kích hoạt.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- GOD MODE MODAL -->
+    <div class="modal-overlay" id="dataModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <div>
+                    <h2 style="font-size: 18px; color: var(--blue-dark); display: flex; align-items: center; gap: 8px;">
+                        <i class="fa-solid fa-database" style="color:var(--blue)"></i> Database Lookup: <span
+                            id="modalShopName"></span>
+                    </h2>
+                    <div style="font-size: 13px; color: var(--text-sub); margin-top:4px;" id="modalEmail"></div>
+                </div>
+                <i class="fa-solid fa-xmark" style="font-size: 20px; cursor:pointer; color:#94a3b8"
+                    onclick="closeModal()"></i>
+            </div>
+            <div class="modal-tabs">
+                <div class="m-tab active" onclick="switchModalTab('products')" id="mt-products"><i
+                        class="fa-solid fa-boxes-stacked"></i> Danh mục Hàng hóa</div>
+                <div class="m-tab" onclick="switchModalTab('customers')" id="mt-customers"><i
+                        class="fa-solid fa-users"></i> Khách hàng</div>
+            </div>
+            <div class="modal-body">
+                <div id="mb-products" class="data-grid"></div>
+                <div id="mb-customers" class="data-grid" style="display:none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let allShops = [];
+        let globalProducts = [];
+        let globalCustomers = [];
+        let gmvChartInstance = null;
+
+        function switchTab(viewId, title) {
+            document.querySelectorAll('.view-panel').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.sb-item').forEach(el => el.classList.remove('active'));
+
+            document.getElementById('view-' + viewId).classList.add('active');
+            event.currentTarget.classList.add('active');
+
+            if (title) document.getElementById('pageTitle').innerText = title;
+        }
+
+        function formatDateTime(isoString) {
+            if (!isoString) return 'Chưa xác định';
+            const d = new Date(isoString);
+            if (isNaN(d)) return isoString;
+            return d.getDate().toString().padStart(2, '0') + '/' +
+                (d.getMonth() + 1).toString().padStart(2, '0') + '/' +
+                d.getFullYear();
+        }
+
+        function fmtMoney(num) {
+            return new Intl.NumberFormat('vi-VN').format(num) + ' đ';
+        }
+
+        async function fetchShops() {
+            try {
+                const res = await fetch('api_shops.php?' + new Date().getTime());
+                allShops = await res.json();
+
+                document.getElementById('totalShopsVal').innerText = allShops.length;
+                document.getElementById('totalBadge').innerText = allShops.length;
+
+                const recents = allShops.slice(0, 5);
+                document.getElementById('recentBadge').innerText = recents.length;
+
+                let masterGMV = 0;
+
+                // Render Dashboard
+                document.getElementById('dashTableBody').innerHTML = recents.map(s => `
+                    <tr>
+                        <td>
+                            <div style="font-weight:600; color:var(--text-main); font-size:13px">${s.shop || 'Chưa định danh'}</div>
+                            <div class="td-sub">${s.shop}.demo.hasu.vn</div>
+                        </td>
+                        <td>
+                            <div style="font-weight:500; font-size:13px">${s.user}</div>
+                        </td>
+                        <td><span class="shop-badge trial">Dùng thử 14 ngày</span></td>
+                        <td><span style="color:#059669; font-size:13px; font-weight:500"><i class="fa-solid fa-circle" style="font-size:8px; margin-right:4px"></i>Live</span></td>
+                    </tr>
+                `).join('');
+
+                // Render Tenants View
+                document.getElementById('fullTableBody').innerHTML = allShops.map((s, idx) => {
+                    masterGMV += (parseInt(s.gmv) || 0);
+                    return `
+                    <tr>
+                        <td>
+                            <div style="font-weight:600; color:var(--blue-dark); font-size:14px">${s.shop || 'No-Name'}</div>
+                            <div class="td-sub"><i class="fa-solid fa-server" style="margin-right:4px; font-size:10px"></i> node-cluster-0${(idx % 3) + 1}</div>
+                        </td>
+                        <td>
+                            <div style="font-weight:500">${s.user}</div>
+                            <div class="td-sub">${s.email}</div>
+                        </td>
+                        <td><div style="font-weight:700; color:#10b981;">${fmtMoney(s.gmv || 0)}</div></td>
+                        <td><div style="font-size:13px">${formatDateTime(s.timestamp)}</div></td>
+                        <td><span class="shop-badge ${idx % 4 === 0 ? 'pro' : 'trial'}">${idx % 4 === 0 ? 'Pro Plan' : 'Dùng thử 14 ngày'}</span></td>
+                        <td class="actions-cell">
+                            <button onclick="openGodMode('${s.email}', '${s.shop}')" class="btn-outline" style="padding:4px 10px; font-size:12px; color:var(--blue); border-color:var(--blue-light); background:var(--blue-light)"><i class="fa-solid fa-eye"></i> Xem Dữ Liệu</button>
+                        </td>
+                    </tr>
+                `;
+                }).join('');
+
+                document.getElementById('masterGMV').innerText = fmtMoney(masterGMV);
+
+                // Render Symbolic Demo Chart (as requested by User)
+                const labels = ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9', 'T10', 'T11', 'T12'];
+                const demoData = [320, 450, 410, 580, 620, 590, 710, 850, 920, 880, 1050, 1200];
+
+                if (gmvChartInstance) {
+                    gmvChartInstance.destroy();
+                }
+                const ctx = document.getElementById('gmvChart').getContext('2d');
+
+                // Create gradient for the area chart
+                let gradient = ctx.createLinearGradient(0, 0, 0, 300);
+                gradient.addColorStop(0, 'rgba(59, 130, 246, 0.4)');
+                gradient.addColorStop(1, 'rgba(59, 130, 246, 0.0)');
+
+                gmvChartInstance = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Lưu lượng GMV (Symbolic)',
+                            data: demoData,
+                            borderColor: '#3b82f6',
+                            backgroundColor: gradient,
+                            borderWidth: 3,
+                            fill: true,
+                            tension: 0.4,
+                            pointRadius: 4,
+                            pointBackgroundColor: '#ffffff',
+                            pointBorderColor: '#3b82f6',
+                            pointBorderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                backgroundColor: '#1e293b',
+                                padding: 12,
+                                displayColors: false,
+                                callbacks: {
+                                    label: function (context) {
+                                        return context.raw + " triệu VNĐ";
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: { borderDash: [4, 4], color: '#f1f5f9' },
+                                border: { display: false },
+                                ticks: { display: false }
+                            },
+                            x: {
+                                grid: { display: false },
+                                border: { display: false },
+                                ticks: { color: '#64748b', font: { size: 11 } }
+                            }
+                        }
+                    }
+                });
+
+            } catch (err) { }
+
+            try {
+                // Fetch God-Mode Aggregated Data
+                const resAgg = await fetch('api_shops.php?aggregate=1&v=' + Date.now());
+                const agg = await resAgg.json();
+
+                globalProducts = agg.products || [];
+                globalCustomers = agg.customers || [];
+
+                renderGlobalProducts(globalProducts);
+                renderGlobalCustomers(globalCustomers);
+
+            } catch (e) { }
+        }
+
+        function renderGlobalProducts(list) {
+            if (list.length > 0) {
+                document.getElementById('globalProductsBody').innerHTML = list.map(p => `
+                        <tr>
+                            <td><span style="background:#e0e7ff; color:var(--blue-dark); padding:4px 8px; border-radius:4px; font-size:12px; font-weight:600"><i class="fa-solid fa-store" style="font-size:10px; margin-right:4px"></i>${p.tenant_shop}</span></td>
+                            <td style="font-weight:500; display:flex; align-items:center; gap:8px"><img src="${p.img || 'images/default_product.png'}" style="width:32px;height:32px;border-radius:4px;object-fit:cover"> ${p.name}</td>
+                            <td>${p.code || 'N/A'}</td>
+                            <td>${p.stock || 0}</td>
+                            <td style="font-weight:600; color:var(--blue-dark)">${fmtMoney(p.price || 0)}</td>
+                        </tr>
+                    `).join('');
+            } else {
+                document.getElementById('globalProductsBody').innerHTML = '<tr><td colspan="5" style="text-align:center; padding: 40px; color:var(--text-sub)">Chưa có dữ liệu hàng hóa trên mạng lưới</td></tr>';
+            }
+        }
+
+        function renderGlobalCustomers(list) {
+            if (list.length > 0) {
+                document.getElementById('globalCustomersBody').innerHTML = list.map(c => `
+                        <tr>
+                            <td><span style="background:#e0e7ff; color:var(--blue-dark); padding:4px 8px; border-radius:4px; font-size:12px; font-weight:600"><i class="fa-solid fa-store" style="font-size:10px; margin-right:4px"></i>${c.tenant_shop}</span></td>
+                            <td style="font-weight:600">${c.name}</td>
+                            <td>${c.phone || 'N/A'}</td>
+                            <td style="font-weight:600; color:#10b981">${fmtMoney(c.totalBuy || 0)}</td>
+                            <td style="color:#ef4444">${fmtMoney(c.debt || 0)}</td>
+                        </tr>
+                    `).join('');
+            } else {
+                document.getElementById('globalCustomersBody').innerHTML = '<tr><td colspan="5" style="text-align:center; padding: 40px; color:var(--text-sub)">Chưa có dữ liệu khách hàng trên mạng lưới</td></tr>';
+            }
+        }
+
+        function filterGlobalProducts() {
+            const q = (document.getElementById('searchProducts').value || '').toLowerCase();
+            if (!q) return renderGlobalProducts(globalProducts);
+            const filtered = globalProducts.filter(p =>
+                (p.name && p.name.toLowerCase().includes(q)) ||
+                (p.code && p.code.toLowerCase().includes(q)) ||
+                (p.tenant_shop && p.tenant_shop.toLowerCase().includes(q))
+            );
+            renderGlobalProducts(filtered);
+        }
+
+        function filterGlobalCustomers() {
+            const q = (document.getElementById('searchCustomers').value || '').toLowerCase();
+            if (!q) return renderGlobalCustomers(globalCustomers);
+            const filtered = globalCustomers.filter(c =>
+                (c.name && c.name.toLowerCase().includes(q)) ||
+                (c.phone && c.phone.toLowerCase().includes(q)) ||
+                (c.tenant_shop && c.tenant_shop.toLowerCase().includes(q))
+            );
+            renderGlobalCustomers(filtered);
+        }
+
+        async function openGodMode(email, shopName) {
+            document.getElementById('modalShopName').innerText = shopName;
+            document.getElementById('modalEmail').innerText = email;
+            document.getElementById('dataModal').classList.add('active');
+            document.getElementById('mb-products').innerHTML = '<div style="text-align:center; padding: 40px; color:var(--text-sub)"><i class="fa-solid fa-spinner fa-spin fa-2x"></i><br>Đang đồng bộ Deep Data...</div>';
+            document.getElementById('mb-customers').innerHTML = '';
+
+            try {
+                const res = await fetch('api_shops.php?tenant=' + encodeURIComponent(email) + '&v=' + Date.now());
+                const data = await res.json();
+
+                const prods = data.products || [];
+                const custs = data.customers || [];
+
+                if (prods.length === 0) {
+                    document.getElementById('mb-products').innerHTML = '<div style="text-align:center; padding:40px; color:#cbd5e1"><i class="fa-solid fa-folder-open fa-3x"></i><br><br>Shop chưa có dữ liệu Hàng hóa.</div>';
+                } else {
+                    document.getElementById('mb-products').innerHTML = prods.map(p => `
+                        <div class="data-card">
+                            <div style="display:flex; align-items:center; gap:16px;">
+                                <img src="${p.img || 'images/default_product.png'}" style="width:40px; height:40px; border-radius:8px; object-fit:cover; border:1px solid #e2e8f0">
+                                <div>
+                                    <div style="font-weight:600; font-size:14px">${p.name}</div>
+                                    <div style="font-size:12px; color:var(--text-sub)">${p.code} • ${p.group || 'Chưa phân nhóm'}</div>
+                                </div>
+                            </div>
+                            <div style="text-align:right">
+                                <div style="font-weight:700; color:var(--blue-dark)">${fmtMoney(p.price)}</div>
+                                <div style="font-size:12px; color:#10b981">Tồn kho: ${p.stock || 0} ${p.unit || 'Cái'}</div>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+
+                if (custs.length === 0) {
+                    document.getElementById('mb-customers').innerHTML = '<div style="text-align:center; padding:40px; color:#cbd5e1"><i class="fa-solid fa-folder-open fa-3x"></i><br><br>Shop chưa có dữ liệu Khách hàng.</div>';
+                } else {
+                    document.getElementById('mb-customers').innerHTML = custs.map(c => `
+                        <div class="data-card">
+                            <div style="display:flex; align-items:center; gap:16px;">
+                                <div style="width:40px; height:40px; border-radius:50%; background:#e0e7ff; color:var(--blue); display:flex; align-items:center; justify-content:center; font-weight:700">${c.name.charAt(0)}</div>
+                                <div>
+                                    <div style="font-weight:600; font-size:14px">${c.name}</div>
+                                    <div style="font-size:12px; color:var(--text-sub)">${c.phone || 'Chưa cung cấp SĐT'}</div>
+                                </div>
+                            </div>
+                            <div style="text-align:right">
+                                <div style="font-weight:600; font-size:13px; color:var(--text-main)">Tổng mua: ${fmtMoney(c.totalBuy || 0)}</div>
+                                <div style="font-size:12px; color:#ef4444">Nợ: ${fmtMoney(c.debt || 0)}</div>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+
+            } catch (err) {
+                document.getElementById('mb-products').innerHTML = '<div style="color:#ef4444; padding:20px;">Lỗi đồng bộ dữ liệu.</div>';
+            }
+        }
+
+        function switchModalTab(tab) {
+            document.querySelectorAll('.m-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.modal-body .data-grid').forEach(b => b.style.display = 'none');
+
+            document.getElementById('mt-' + tab).classList.add('active');
+            document.getElementById('mb-' + tab).style.display = 'grid';
+        }
+
+        function closeModal() {
+            document.getElementById('dataModal').classList.remove('active');
+        }
+
+        fetchShops();
+        setInterval(fetchShops, 15000);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,1587 @@
+﻿<!DOCTYPE html>
+
+<html lang="vi">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1.0" name="viewport"/>
+<title>Hasu - Bán online</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+        :root {
+            --blue: #004aad;
+            --blue-dark: #003a8c;
+            --yellow: #ffca08;
+            --yellow-dark: #e6b600;
+            --blue-light: #e8f0fb
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            font-size: 13px;
+            background: #f5f5f5;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column
+        }
+
+        .kv-header {
+            background: #fff;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            border-bottom: 3px solid var(--yellow);
+            justify-content: space-between;
+            flex-shrink: 0
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 8px
+        }
+
+        .kv-logo {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            color: #333
+        }
+
+        .kv-logo img {
+            width: 42px;
+            height: 42px;
+            object-fit: contain
+        }
+
+        .kv-logo span {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--blue);
+            letter-spacing: .3px
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 14px
+        }
+
+        .hdr-icon {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #555;
+            font-size: 13px;
+            cursor: pointer;
+            text-decoration: none
+        }
+
+        .hdr-icon:hover {
+            color: var(--blue)
+        }
+
+        .hdr-divider {
+            width: 1px;
+            height: 20px;
+            background: #ddd
+        }
+
+        .lang-btn,
+        .shop-btn {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #444;
+            font-size: 13px;
+            cursor: pointer
+        }
+
+        .shop-btn {
+            font-weight: 500
+        }
+
+        .kv-navbar {
+            background: var(--blue);
+            height: 44px;
+            display: flex;
+            align-items: center;
+            padding: 0 0 0 8px;
+            flex-shrink: 0
+        }
+
+        .nav-tabs {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            height: 44px
+        }
+
+        .nav-item {
+            position: relative;
+            height: 44px;
+            display: flex;
+            align-items: center
+        }
+
+        .nav-tab {
+            height: 44px;
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            color: rgba(255, 255, 255, .9);
+            font-size: 13.5px;
+            cursor: pointer;
+            text-decoration: none;
+            white-space: nowrap;
+            transition: background .15s;
+            border: none;
+            background: transparent;
+            font-family: inherit
+        }
+
+        .nav-tab:hover {
+            background: rgba(0, 0, 0, .15)
+        }
+
+        .nav-tab.active {
+            background: var(--blue-dark);
+            color: #fff;
+            font-weight: 500
+        }
+
+        .nav-dropdown {
+            position: absolute;
+            top: 44px;
+            left: 0;
+            background: #fff;
+            border-radius: 0 0 6px 6px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, .15);
+            z-index: 600;
+            display: none;
+            padding: 14px 0;
+            min-width: 180px
+        }
+
+        .nav-item:hover .nav-dropdown {
+            display: flex
+        }
+
+        .nav-dd-col {
+            padding: 0 18px;
+            min-width: 160px
+        }
+
+        .nav-dd-col+.nav-dd-col {
+            border-left: 1px solid #f0f0f0
+        }
+
+        .nav-dd-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: #333;
+            padding: 0 0 8px;
+            margin-bottom: 2px
+        }
+
+        .nav-dd-link {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 0;
+            font-size: 13px;
+            color: #555;
+            text-decoration: none;
+            white-space: nowrap;
+            cursor: pointer
+        }
+
+        .nav-dd-link:hover {
+            color: var(--blue)
+        }
+
+        .nav-dd-badge {
+            font-size: 10px;
+            background: #ff7043;
+            color: #fff;
+            border-radius: 8px;
+            padding: 1px 6px;
+            font-weight: 500
+        }
+
+        .btn-go-sale {
+            background: var(--yellow);
+            border: none;
+            padding: 0 20px;
+            height: 44px;
+            font-weight: 700;
+            color: #333;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-family: inherit
+        }
+
+        .btn-go-sale:hover {
+            background: var(--yellow-dark)
+        }
+
+        .sub-tabs {
+            display: flex;
+            background: #fff;
+            border-bottom: 2px solid #e0e0e0;
+            padding: 0 16px;
+            flex-shrink: 0;
+            overflow-x: auto
+        }
+
+        .sub-tab {
+            padding: 10px 18px;
+            font-size: 13px;
+            color: #777;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+            font-weight: 500;
+            white-space: nowrap
+        }
+
+        .sub-tab:hover {
+            color: var(--blue)
+        }
+
+        .sub-tab.active {
+            color: var(--blue);
+            border-bottom-color: var(--blue)
+        }
+
+        .page-body {
+            flex: 1;
+            overflow: auto;
+            padding: 20px 24px
+        }
+
+        .stat-row {
+            display: flex;
+            gap: 14px;
+            margin-bottom: 18px;
+            flex-wrap: wrap
+        }
+
+        .stat-card {
+            flex: 1;
+            min-width: 160px;
+            background: #fff;
+            border-radius: 8px;
+            padding: 16px 18px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, .06);
+            border-left: 4px solid var(--blue)
+        }
+
+        .stat-card.green {
+            border-left-color: #43a047
+        }
+
+        .stat-card.red {
+            border-left-color: #e53935
+        }
+
+        .stat-card.orange {
+            border-left-color: #f57c00
+        }
+
+        .stat-card.purple {
+            border-left-color: #7b1fa2
+        }
+
+        .sc-label {
+            font-size: 11.5px;
+            color: #888;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: .2px
+        }
+
+        .sc-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: #333
+        }
+
+        .sc-value.blue {
+            color: var(--blue)
+        }
+
+        .sc-value.green {
+            color: #43a047
+        }
+
+        .sc-value.red {
+            color: #e53935
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 8px;
+            padding: 18px 20px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, .06);
+            margin-bottom: 18px
+        }
+
+        .card-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px
+        }
+
+        .channel-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 14px
+        }
+
+        .ch-card {
+            border: 1px solid #e8e8e8;
+            border-radius: 8px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all .2s;
+            position: relative
+        }
+
+        .ch-card:hover {
+            border-color: var(--blue);
+            box-shadow: 0 4px 12px rgba(0, 74, 173, .12)
+        }
+
+        .ch-logo {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px
+        }
+
+        .ch-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: #333
+        }
+
+        .ch-desc {
+            font-size: 11.5px;
+            color: #888;
+            text-align: center
+        }
+
+        .ch-status {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            font-size: 10px;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-weight: 500
+        }
+
+        .ch-status.connected {
+            background: #e8f5e9;
+            color: #2e7d32
+        }
+
+        .ch-status.pending {
+            background: #fff3e0;
+            color: #e65100
+        }
+
+        .order-tbl {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12.5px;
+            margin-top: 10px
+        }
+
+        .order-tbl th {
+            background: #f5f7fa;
+            padding: 8px 12px;
+            text-align: left;
+            font-weight: 600;
+            color: #555;
+            border-bottom: 2px solid #e0e0e0;
+            white-space: nowrap
+        }
+
+        .order-tbl td {
+            padding: 8px 12px;
+            border-bottom: 1px solid #eee;
+            color: #444
+        }
+
+        .order-tbl tr:hover {
+            background: #f8fafd
+        }
+
+        .right {
+            text-align: right
+        }
+
+        .center {
+            text-align: center
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 500
+        }
+
+        .badge-success {
+            background: #e8f5e9;
+            color: #2e7d32
+        }
+
+        .badge-warning {
+            background: #fff3e0;
+            color: #e65100
+        }
+
+        .badge-info {
+            background: #e3f2fd;
+            color: #1565c0
+        }
+
+        .badge-danger {
+            background: #fce4ec;
+            color: #c62828
+        }
+
+        .tbl-code {
+            color: var(--blue);
+            font-weight: 500;
+            cursor: pointer
+        }
+
+        .tbl-code:hover {
+            text-decoration: underline
+        }
+
+        .chat-container {
+            display: flex;
+            border: 1px solid #e8e8e8;
+            border-radius: 8px;
+            overflow: hidden;
+            height: 420px
+        }
+
+        .chat-sidebar {
+            width: 260px;
+            border-right: 1px solid #e8e8e8;
+            overflow-y: auto;
+            background: #fafafa
+        }
+
+        .chat-sidebar .cs-hdr {
+            padding: 10px 12px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 8px
+        }
+
+        .chat-sidebar .cs-hdr input {
+            flex: 1;
+            border: 1px solid #ddd;
+            border-radius: 16px;
+            padding: 6px 12px;
+            font-size: 12px;
+            outline: none
+        }
+
+        .chat-item {
+            display: flex;
+            gap: 10px;
+            padding: 10px 12px;
+            cursor: pointer;
+            border-bottom: 1px solid #f5f5f5
+        }
+
+        .chat-item:hover,
+        .chat-item.active {
+            background: #e8f0fb
+        }
+
+        .chat-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            color: #fff;
+            flex-shrink: 0
+        }
+
+        .chat-info {
+            flex: 1;
+            min-width: 0
+        }
+
+        .chat-name {
+            font-size: 12.5px;
+            font-weight: 600;
+            color: #333;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis
+        }
+
+        .chat-preview {
+            font-size: 11.5px;
+            color: #999;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis
+        }
+
+        .chat-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column
+        }
+
+        .chat-main .cm-hdr {
+            padding: 10px 16px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            justify-content: space-between
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 14px 16px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px
+        }
+
+        .msg {
+            max-width: 70%;
+            padding: 8px 12px;
+            border-radius: 12px;
+            font-size: 12.5px;
+            line-height: 1.5
+        }
+
+        .msg.in {
+            background: #e8f0fb;
+            color: #333;
+            align-self: flex-start;
+            border-bottom-left-radius: 4px
+        }
+
+        .msg.out {
+            background: var(--blue);
+            color: #fff;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px
+        }
+
+        .chat-input {
+            display: flex;
+            gap: 8px;
+            padding: 10px 16px;
+            border-top: 1px solid #eee
+        }
+
+        .chat-input input {
+            flex: 1;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            padding: 8px 14px;
+            font-size: 12.5px;
+            outline: none
+        }
+
+        .chat-input button {
+            background: var(--blue);
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            padding: 0 16px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 13px
+        }
+
+        .web-preview {
+            border: 1px solid #e8e8e8;
+            border-radius: 8px;
+            overflow: hidden
+        }
+
+        .web-header {
+            background: var(--blue);
+            color: #fff;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between
+        }
+
+        .web-body {
+            padding: 16px;
+            display: flex;
+            gap: 16px
+        }
+
+        .web-product {
+            flex: 1;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center
+        }
+
+        .web-product .wp-img {
+            width: 100%;
+            height: 100px;
+            background: #f5f5f5;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ccc;
+            font-size: 24px;
+            margin-bottom: 8px
+        }
+
+        .web-product .wp-name {
+            font-size: 12px;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 4px
+        }
+
+        .web-product .wp-price {
+            font-size: 13px;
+            font-weight: 700;
+            color: #e53935
+        }
+
+        .ship-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 12px
+        }
+
+        .ship-card {
+            border: 1px solid #e8e8e8;
+            border-radius: 8px;
+            padding: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: all .2s
+        }
+
+        .ship-card:hover {
+            border-color: var(--blue)
+        }
+
+        .ship-logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: 700
+        }
+
+        .ship-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: #333
+        }
+
+        .ship-desc {
+            font-size: 11px;
+            color: #888
+        }
+
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f0f0f0
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 3px
+        }
+    
+        /* ICON SIDEBAR */
+        .isb-icon {
+            width: 36px; height: 36px; border-radius: 6px;
+            display: flex; align-items: center; justify-content: center;
+            color: #666; cursor: pointer; transition: all .15s;
+            position: relative;
+        }
+        .isb-icon:hover { background: #e8f0fb; color: var(--blue); }
+        .isb-icon.active { background: var(--blue); color: #fff; }
+
+        .platform-card {
+            display: inline-flex; align-items: center; gap: 8px;
+            border: 1px solid #e0e0e0; border-radius: 6px;
+            padding: 10px 18px; font-size: 13px; font-weight: 500;
+            color: #333; cursor: pointer; transition: all .15s;
+            background: #fff;
+        }
+        .platform-card:hover { border-color: var(--blue); box-shadow: 0 2px 8px rgba(0,74,173,.1); }
+        .platform-card img { width: 20px; height: 20px; border-radius: 4px; object-fit: contain; }
+
+        /* DELIVERY DROPDOWN */
+        .hdr-delivery-wrap { position: relative }
+        .hdr-delivery-btn {
+            display: flex; align-items: center; gap: 5px;
+            color: #555; font-size: 13px; cursor: pointer;
+            text-decoration: none; padding: 4px 10px;
+            background: #eef2ff; border-radius: 20px;
+            position: relative; user-select: none;
+            transition: background .15s
+        }
+        .hdr-delivery-btn:hover { background: #dde6ff; color: #1a56db }
+        .hdr-delivery-dot {
+            width: 8px; height: 8px; background: #1a56db;
+            border-radius: 50%; position: absolute; top: 1px; right: 1px;
+            border: 2px solid #fff
+        }
+        .delivery-dropdown {
+            display: none; position: absolute;
+            top: calc(100% + 10px); left: -10px;
+            width: 310px; background: #fff;
+            border-radius: 14px;
+            box-shadow: 0 10px 40px rgba(0,0,0,.18);
+            z-index: 2000; overflow: hidden
+        }
+        .delivery-dropdown.show { display: block }
+        .dd-banner {
+            background: linear-gradient(135deg, #1e4db7, #0d3580);
+            min-height: 150px; display: flex; align-items: center;
+            justify-content: center; position: relative; overflow: hidden
+        }
+        .dd-banner-art {
+            display: flex; align-items: center; justify-content: center;
+            gap: 12px; padding: 20px; position: relative; z-index: 1
+        }
+        .dd-truck-icon {
+            font-size: 64px; color: #fff; opacity: .95;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,.3))
+        }
+        .dd-pkg-icons {
+            display: flex; flex-direction: column; gap: 6px
+        }
+        .dd-pkg-icons i {
+            font-size: 22px; color: rgba(255,255,255,.8);
+            transform: rotate(-10deg)
+        }
+        .dd-banner-badge {
+            position: absolute; bottom: 14px; left: 14px;
+            background: rgba(0,10,40,.85); border-radius: 10px;
+            padding: 6px 10px; color: #fff; z-index: 2;
+            min-width: 80px; text-align: left
+        }
+        .dd-badge-top {
+            font-size: 10px; font-weight: 600;
+            letter-spacing: .5px; opacity: .85
+        }
+        .dd-badge-val {
+            font-size: 26px; font-weight: 900; line-height: 1;
+            display: flex; align-items: flex-start; gap: 1px
+        }
+        .dd-badge-val sup {
+            font-size: 14px; margin-top: 2px; font-weight: 700
+        }
+        .dd-content { padding: 18px 18px 16px }
+        .dd-title {
+            font-size: 15px; font-weight: 700; color: #1a1a2e;
+            margin-bottom: 14px; line-height: 1.4
+        }
+        .dd-benefits {
+            list-style: none; padding: 0; margin: 0 0 14px;
+            display: flex; flex-direction: column; gap: 9px
+        }
+        .dd-benefits li {
+            display: flex; align-items: center; gap: 9px;
+            font-size: 13.5px; color: #444
+        }
+        .dd-benefits li i {
+            color: #1a56db; font-size: 16px; flex-shrink: 0
+        }
+        .dd-slide-dots {
+            display: flex; justify-content: center;
+            gap: 5px; margin-bottom: 16px
+        }
+        .dd-slide-dot {
+            width: 7px; height: 7px; border-radius: 50%;
+            background: #1a56db; transition: all .2s
+        }
+        .dd-slide-dot.off { background: #ddd; width: 7px }
+        .dd-btn-primary {
+            width: 100%; background: #1a56db; color: #fff;
+            border: none; border-radius: 10px; padding: 13px;
+            font-size: 14px; font-weight: 600; cursor: pointer;
+            margin-bottom: 9px; font-family: inherit;
+            transition: background .15s
+        }
+        .dd-btn-primary:hover { background: #1348c0 }
+        .dd-btn-outline {
+            width: 100%; background: #fff; color: #333;
+            border: 1.5px solid #ddd; border-radius: 10px;
+            padding: 12px; font-size: 14px; font-weight: 500;
+            cursor: pointer; font-family: inherit; transition: all .15s
+        }
+        .dd-btn-outline:hover { border-color: #1a56db; color: #1a56db }
+
+        
+        /* COLOR PALETTE PICKER */
+        .hdr-palette-wrap { position: relative }
+        .hdr-palette-btn {
+            width: 34px; height: 34px; border: none;
+            background: #f0f0f0; border-radius: 50%;
+            cursor: pointer; display: flex;
+            align-items: center; justify-content: center;
+            font-size: 16px; color: #555;
+            transition: background .15s; flex-shrink: 0
+        }
+        .hdr-palette-btn:hover { background: #e0e0e0; color: #333 }
+        .palette-dropdown {
+            display: none; position: absolute;
+            top: calc(100% + 10px); left: 50%;
+            transform: translateX(-50%);
+            background: #fff; border-radius: 14px;
+            box-shadow: 0 10px 40px rgba(0,0,0,.2);
+            z-index: 2000; padding: 16px; width: 176px
+        }
+        .palette-dropdown.show { display: block }
+        .palette-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px
+        }
+        .palette-color {
+            width: 48px; height: 48px;
+            border-radius: 10px; cursor: pointer;
+            display: flex; align-items: center;
+            justify-content: center; border: none;
+            transition: transform .15s; outline: none
+        }
+        .palette-color:hover { transform: scale(1.1) }
+        .palette-color.active::after {
+            content: "\2713"; font-size: 22px;
+            font-weight: 900; color: #fff
+        }
+
+        
+        /* ===== HEADER DROPDOWNS ===== */
+        .hdr-icon-wrap { position: relative; display: flex; align-items: center }
+        .hdr-icon-btn {
+            width: 32px; height: 32px; background: transparent;
+            border: none; border-radius: 50%; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 16px; color: #666; transition: background .15s; flex-shrink: 0
+        }
+        .hdr-icon-btn:hover { background: #f0f0f0; color: #333 }
+
+        /* Shared dropdown panel */
+        .hdr-dd-panel {
+            display: none; position: absolute;
+            top: calc(100% + 10px); right: 0;
+            background: #fff; border-radius: 10px;
+            box-shadow: 0 8px 32px rgba(0,0,0,.16);
+            z-index: 3000; min-width: 220px; overflow: hidden
+        }
+        .hdr-dd-panel.show { display: block }
+        .hdr-dd-panel.arrow-center { left: 50%; transform: translateX(-50%) }
+        .hdr-dd-head {
+            padding: 12px 16px 8px; font-size: 12px;
+            font-weight: 600; color: #999; text-transform: uppercase;
+            letter-spacing: .5px; border-bottom: 1px solid #f0f0f0
+        }
+        .hdr-dd-item {
+            display: flex; align-items: center; gap: 10px;
+            padding: 10px 16px; font-size: 13px; color: #333;
+            cursor: pointer; transition: background .12s
+        }
+        .hdr-dd-item:hover { background: #f5f7ff }
+        .hdr-dd-item i { width: 18px; text-align: center; color: #888; font-size: 14px }
+        .hdr-dd-item.hdr-dd-highlight { color: var(--blue, #004aad) }
+        .hdr-dd-item.hdr-dd-highlight i { color: var(--blue, #004aad) }
+        .hdr-dd-item.hdr-dd-active i.check-icon { color: var(--blue, #004aad) }
+        .hdr-dd-sep { height: 1px; background: #f0f0f0; margin: 4px 0 }
+        .hdr-dd-item .dd-item-sub {
+            font-size: 11px; color: #999; display: block; margin-top: 1px
+        }
+        .hdr-dd-item .dd-item-right { margin-left: auto; font-size: 11px; color: #aaa }
+
+        /* Lang wrap */
+        .hdr-lang-wrap { position: relative; display: flex; align-items: center }
+        .lang-btn { cursor: pointer; display: flex; align-items: center;
+            gap: 5px; font-size: 13px; color: #333; padding: 4px 6px;
+            border-radius: 6px; transition: background .15s }
+        .lang-btn:hover { background: #f0f0f0 }
+
+        /* Shop wrap */
+        .hdr-shop-wrap { position: relative; display: flex; align-items: center }
+        .shop-btn { cursor: pointer; display: flex; align-items: center;
+            gap: 5px; font-size: 13px; color: #333; font-weight: 500;
+            padding: 4px 6px; border-radius: 6px; transition: background .15s }
+        .shop-btn:hover { background: #f0f0f0 }
+
+        /* Bell wrap */
+        .hdr-bell-wrap { position: relative; display: flex; align-items: center }
+        .hdr-bell-btn {
+            width: 32px; height: 32px; background: transparent; border: none;
+            border-radius: 50%; cursor: pointer; display: flex;
+            align-items: center; justify-content: center;
+            font-size: 17px; color: #666; position: relative; transition: background .15s
+        }
+        .hdr-bell-btn:hover { background: #f0f0f0 }
+        .hdr-bell-dot {
+            position: absolute; top: 5px; right: 5px;
+            width: 8px; height: 8px; background: #e53935;
+            border-radius: 50%; border: 2px solid #fff
+        }
+
+        /* Gear wrap */
+        .hdr-gear-wrap { position: relative; display: flex; align-items: center }
+        .hdr-gear-btn {
+            width: 32px; height: 32px; background: transparent; border: none;
+            border-radius: 50%; cursor: pointer; display: flex;
+            align-items: center; justify-content: center;
+            font-size: 16px; color: #666; transition: background .15s
+        }
+        .hdr-gear-btn:hover { background: #f0f0f0 }
+
+        /* Avatar wrap */
+        .hdr-avatar-wrap { position: relative; display: flex; align-items: center }
+        .hdr-avatar-btn {
+            width: 30px; height: 30px; border-radius: 50%;
+            background: #e3f2fd; border: none; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--blue, #004aad); font-size: 15px; transition: opacity .15s
+        }
+        .hdr-avatar-btn:hover { opacity: .8 }
+
+        /* Notif panel */
+        .notif-panel { min-width: 300px }
+        .notif-panel .hdr-dd-head { display: flex; justify-content: space-between; align-items: center }
+        .notif-panel .hdr-dd-head a { font-size: 11px; color: var(--blue,#004aad); font-weight: 400; text-transform: none }
+        .notif-empty { padding: 32px 16px; text-align: center; color: #aaa; font-size: 13px }
+        .notif-empty i { font-size: 32px; display: block; margin-bottom: 10px; color: #ddd }
+
+        /* Branch panel */
+        .branch-panel { min-width: 260px }
+        .branch-search { padding: 8px 12px; border-bottom: 1px solid #f0f0f0 }
+        .branch-search input {
+            width: 100%; padding: 6px 10px; border: 1px solid #e0e0e0;
+            border-radius: 6px; font-size: 12px; outline: none; box-sizing: border-box
+        }
+        .branch-item {
+            display: flex; align-items: center; gap: 10px;
+            padding: 10px 16px; font-size: 13px; color: #333; cursor: pointer
+        }
+        .branch-item:hover { background: #f5f7ff }
+        .branch-item i { color: var(--blue,#004aad); font-size: 14px }
+        .branch-item .bi-name { flex: 1 }
+        .branch-item .bi-active { width: 8px; height: 8px; background: #4caf50; border-radius: 50%; flex-shrink: 0 }
+        .branch-add {
+            display: flex; align-items: center; gap: 8px;
+            padding: 10px 16px; font-size: 13px; color: var(--blue,#004aad);
+            cursor: pointer; border-top: 1px solid #f0f0f0
+        }
+        .branch-add:hover { background: #f5f7ff }
+
+        /* Chat panel */
+        .chat-panel { min-width: 280px }
+        .chat-panel-body { padding: 16px }
+        .chat-contact-item {
+            display: flex; align-items: center; gap: 10px;
+            padding: 10px 16px; cursor: pointer; border-radius: 8px; transition: background .12s
+        }
+        .chat-contact-item:hover { background: #f5f7ff }
+        .chat-icon-circle {
+            width: 36px; height: 36px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 16px; flex-shrink: 0
+        }
+        .chat-contact-item .ci-name { font-size: 13px; font-weight: 500; color: #333 }
+        .chat-contact-item .ci-sub { font-size: 11px; color: #999 }
+
+        </style>
+</head>
+<body>
+<header class="kv-header">
+<div class="header-left"><a class="kv-logo" href="tongquan.html"><img alt="Hasu" src="logo.png"/><span>Hasu</span></a></div>
+<div class="header-right">
+<div class="hdr-delivery-wrap">
+<div class="hdr-delivery-btn" onclick="toggleDelivery(event)">
+<i class="fa-solid fa-motorcycle"></i>
+<span>Giao hàng</span>
+<span class="hdr-delivery-dot"></span>
+</div>
+<div class="delivery-dropdown" id="deliveryDropdown">
+<div class="dd-banner">
+<div class="dd-banner-art">
+<i class="fa-solid fa-truck-fast dd-truck-icon"></i>
+<div class="dd-pkg-icons">
+<i class="fa-solid fa-box"></i>
+<i class="fa-solid fa-box-open"></i>
+<i class="fa-solid fa-cube"></i>
+</div>
+</div>
+<div class="dd-banner-badge">
+<div class="dd-badge-top">TẶNG BẠN</div>
+<div class="dd-badge-val">50<sup>K</sup></div>
+</div>
+</div>
+<div class="dd-content">
+<div class="dd-title">An tâm giao vận, đẩy bật kinh doanh</div>
+<ul class="dd-benefits">
+<li><i class="fa-regular fa-circle-check"></i> Cước phí tốt</li>
+<li><i class="fa-regular fa-circle-check"></i> Đa dạng đối tác vận chuyển</li>
+<li><i class="fa-regular fa-circle-check"></i> Hơn 10.000 chủ gian hàng tin dùng</li>
+<li><i class="fa-regular fa-circle-check"></i> Tặng 50K cho tài khoản mới</li>
+</ul>
+<div class="dd-slide-dots">
+<div class="dd-slide-dot"></div>
+<div class="dd-slide-dot off"></div>
+<div class="dd-slide-dot off"></div>
+</div>
+<button class="dd-btn-primary" onclick="alert('Tạo đơn giao hàng')">Tạo đơn giao với Hasu</button>
+<button class="dd-btn-outline" onclick="alert('Tư vấn giao hàng')">Tôi muốn nhận tư vấn</button>
+</div>
+</div>
+</div>
+<div class="hdr-palette-wrap">
+<button class="hdr-palette-btn" onclick="togglePalette(event)" title="Doi mau giao dien">
+<i class="fa-solid fa-palette"></i>
+</button>
+<div class="palette-dropdown" id="paletteDropdown">
+<div class="palette-grid" id="paletteGrid"></div>
+</div>
+</div>
+<div class="hdr-icon-wrap" id="helpWrap">
+<button class="hdr-icon-btn" onclick="toggleHdrDD('helpPanel','helpWrap',event)" title="Tro giup">
+<i class="fa-regular fa-circle-question"></i>
+</button>
+<div class="hdr-dd-panel" id="helpPanel">
+<div class="hdr-dd-head">Hỗ trợ &amp; Hướng dẫn</div>
+<div class="hdr-dd-item" onclick="alert('Hướng dẫn sử dụng')"><i class="fa-regular fa-book-open"></i> Hướng dẫn sử dụng</div>
+<div class="hdr-dd-item" onclick="alert('Phím tắt')"><i class="fa-regular fa-keyboard"></i> Phím tắt <span class="dd-item-right">Ctrl+?</span></div>
+<div class="hdr-dd-item" onclick="alert('Câu hỏi thường gặp')"><i class="fa-regular fa-circle-question"></i> Câu hỏi thường gặp</div>
+<div class="hdr-dd-item" onclick="alert('Cộng đồng')"><i class="fa-regular fa-comments"></i> Cộng đồng Hasu</div>
+<div class="hdr-dd-sep"></div>
+<div class="hdr-dd-item hdr-dd-highlight" onclick="alert('Liên hệ hỗ trợ')"><i class="fa-solid fa-headset"></i> Liên hệ hỗ trợ</div>
+</div>
+</div>
+<div class="hdr-icon-wrap" id="chatWrap">
+<button class="hdr-icon-btn" onclick="toggleHdrDD('chatPanel','chatWrap',event)" title="Ho tro truc tuyen">
+<i class="fa-regular fa-comment-dots"></i>
+</button>
+<div class="hdr-dd-panel chat-panel" id="chatPanel">
+<div class="hdr-dd-head">Hỗ trợ trực tuyến</div>
+<div class="chat-contact-item" onclick="alert('Chat hỗ trợ kỹ thuật')">
+<div class="chat-icon-circle" style="background:#e3f2fd;color:#1976d2"><i class="fa-solid fa-headset"></i></div>
+<div><div class="ci-name">Hỗ trợ kỹ thuật</div><div class="ci-sub">Thời gian 8:00 - 22:00</div></div>
+</div>
+<div class="chat-contact-item" onclick="alert('Tư vấn kinh doanh')">
+<div class="chat-icon-circle" style="background:#e8f5e9;color:#388e3c"><i class="fa-solid fa-chart-line"></i></div>
+<div><div class="ci-name">Tư vấn kinh doanh</div><div class="ci-sub">Thứ 2 - Thứ 6</div></div>
+</div>
+<div class="hdr-dd-sep"></div>
+<div class="hdr-dd-item hdr-dd-highlight" onclick="alert('Hotline: 1900 6522')"><i class="fa-solid fa-phone"></i> Hotline: 1900 6522</div>
+</div>
+</div>
+<div class="hdr-divider"></div>
+<div class="hdr-lang-wrap" id="langWrap">
+<div class="lang-btn" onclick="toggleHdrDD('langPanel','langWrap',event)"><img alt="VN" src="https://flagcdn.com/16x12/vn.png"/> Tiếng Việt <i class="fa-solid fa-chevron-down" style="font-size:9px;color:#aaa;margin-left:3px"></i></div>
+<div class="hdr-dd-panel" id="langPanel" style="min-width:180px">
+<div class="hdr-dd-item hdr-dd-active" id="langVN" onclick="selectLang('vi')">
+<img alt="VN" src="https://flagcdn.com/16x12/vn.png"/>
+            Tiếng Việt
+            <i class="fa-solid fa-check check-icon" style="margin-left:auto;color:var(--blue,#004aad)"></i>
+</div>
+<div class="hdr-dd-item" id="langEN" onclick="selectLang('en')">
+<img alt="EN" src="https://flagcdn.com/16x12/gb.png"/>
+            English
+            <i class="fa-solid fa-check check-icon" style="margin-left:auto;display:none"></i>
+</div>
+</div>
+</div>
+<div class="hdr-divider"></div>
+<div class="hdr-shop-wrap" id="shopWrap">
+<div class="shop-btn" onclick="toggleHdrDD('shopPanel','shopWrap',event)">BHS Bình Than <i class="fa-solid fa-chevron-down" style="font-size:9px;color:#aaa;margin-left:3px"></i></div>
+<div class="hdr-dd-panel branch-panel" id="shopPanel">
+<div class="branch-search"><input oninput="filterBranch(this.value)" placeholder="Tìm chi nhánh..." type="text"/></div>
+<div id="branchList">
+<div class="branch-item" onclick="selectBranch('BHS Bình Than',this)">
+<i class="fa-solid fa-store"></i>
+<span class="bi-name">BHS Bình Than</span>
+<span class="bi-active"></span>
+</div>
+<div class="branch-item" onclick="selectBranch('BHS Đà Nẵng',this)">
+<i class="fa-regular fa-store"></i>
+<span class="bi-name">BHS Đà Nẵng</span>
+</div>
+<div class="branch-item" onclick="selectBranch('BHS Hà Nội',this)">
+<i class="fa-regular fa-store"></i>
+<span class="bi-name">BHS Hà Nội</span>
+</div>
+</div>
+<div class="hdr-dd-sep"></div>
+<div class="branch-add" onclick="alert('Thêm chi nhánh mới')">
+<i class="fa-solid fa-plus"></i> Thêm chi nhánh mới
+        </div>
+</div>
+</div>
+<div class="hdr-divider"></div>
+<div class="hdr-bell-wrap" id="bellWrap">
+<button class="hdr-bell-btn" onclick="toggleHdrDD('bellPanel','bellWrap',event)">
+<i class="fa-regular fa-bell"></i>
+<span class="hdr-bell-dot"></span>
+</button>
+<div class="hdr-dd-panel notif-panel" id="bellPanel">
+<div class="hdr-dd-head">Thông báo <a href="#" onclick="return false">Đánh dấu đã đọc</a></div>
+<div class="notif-empty">
+<i class="fa-regular fa-bell-slash"></i>
+            Chưa có thông báo mới
+        </div>
+</div>
+</div>
+<div class="hdr-gear-wrap" id="gearWrap">
+<button class="hdr-gear-btn" onclick="toggleHdrDD('gearPanel','gearWrap',event)">
+<i class="fa-solid fa-gear"></i>
+</button>
+<div class="hdr-dd-panel" id="gearPanel">
+<div class="hdr-dd-head">Cài đặt</div>
+<div class="hdr-dd-item" onclick="alert('Cài đặt chung')"><i class="fa-solid fa-sliders"></i> Cài đặt chung</div>
+<div class="hdr-dd-item" onclick="alert('Quản lý người dùng')"><i class="fa-solid fa-users-gear"></i> Quản lý người dùng</div>
+<div class="hdr-dd-item" onclick="alert('Phân quyền')"><i class="fa-solid fa-shield-halved"></i> Phân quyền</div>
+<div class="hdr-dd-sep"></div>
+<div class="hdr-dd-item" onclick="alert('Mẫu in')"><i class="fa-solid fa-print"></i> Mẫu in</div>
+</div>
+</div>
+<div class="hdr-avatar-wrap" id="avatarWrap">
+<button class="hdr-avatar-btn" onclick="toggleHdrDD('avatarPanel','avatarWrap',event)">
+<i class="fa-regular fa-circle-user"></i>
+</button>
+<div class="hdr-dd-panel" id="avatarPanel">
+<div style="padding:14px 16px;border-bottom:1px solid #f0f0f0">
+<div style="font-weight:600;font-size:14px;color:#222">Tester</div>
+<div style="font-size:12px;color:#888;margin-top:2px">tester@hasu.vn</div>
+</div>
+<div class="hdr-dd-item" onclick="alert('Thông tin tài khoản')"><i class="fa-regular fa-user"></i> Thông tin tài khoản</div>
+<div class="hdr-dd-item" onclick="alert('Đổi mật khẩu')"><i class="fa-solid fa-key"></i> Đổi mật khẩu</div>
+<div class="hdr-dd-sep"></div>
+<div class="hdr-dd-item" onclick="window.location='login.html'" style="color:#e53935"><i class="fa-solid fa-right-from-bracket" style="color:#e53935"></i> Đăng xuất</div>
+</div>
+</div>
+</div>
+</header>
+<nav class="kv-navbar">
+<div class="nav-tabs">
+<div class="nav-item"><a class="nav-tab" href="tongquan.html">Tổng quan</a></div>
+<div class="nav-item">
+<a class="nav-tab" href="hanghoa.html">Hàng hóa</a>
+<div class="nav-dropdown">
+<div class="nav-dd-col">
+<div class="nav-dd-title">Hàng hóa</div>
+<a class="nav-dd-link" href="hanghoa.html">Danh sách hàng hóa</a>
+<a class="nav-dd-link" href="thietlapgia.html">Thiết lập giá</a>
+</div>
+<div class="nav-dd-col">
+<div class="nav-dd-title">Kho hàng</div>
+<a class="nav-dd-link" href="chuyenhang.html">Chuyển hàng</a>
+<a class="nav-dd-link" href="kiemkho.html">Kiểm kho</a>
+<a class="nav-dd-link" href="xuathuy.html">Xuất hủy</a>
+<a class="nav-dd-link" href="#">Xuất dùng nội bộ <span class="nav-dd-badge">Sắp ra mắt</span></a>
+</div>
+</div>
+</div><div class="nav-item"><a class="nav-tab" href="nhaphang.html">Mua hàng</a><div class="nav-dropdown">
+<div class="nav-dd-col">
+<div class="nav-dd-title">Nhà cung cấp</div>
+<a class="nav-dd-link" href="nhacungcap.html">Nhà cung cấp</a>
+<a class="nav-dd-link" href="#">Hóa đơn đầu vào <span class="nav-dd-badge" style="background:#e53935;color:#fff;font-size:10px;padding:1px 5px;border-radius:8px;margin-left:4px;font-weight:600">Mới</span></a>
+</div>
+<div class="nav-dd-col">
+<div class="nav-dd-title">Mua hàng</div>
+<a class="nav-dd-link" href="dathangnhap.html">Đặt hàng nhập</a>
+<a class="nav-dd-link" href="nhaphang.html">Nhập hàng</a>
+<a class="nav-dd-link" href="trahangnhap.html">Trả hàng nhập</a>
+</div>
+</div></div>
+<div class="nav-item">
+<a class="nav-tab" href="donhang.html">Đơn hàng</a>
+<div class="nav-dropdown">
+<div class="nav-dd-col">
+<a class="nav-dd-link" href="donhang.html">Đặt hàng</a>
+<a class="nav-dd-link" href="hoadon.html">Hóa đơn</a>
+<a class="nav-dd-link" href="trahang.html">Trả hàng</a>
+<div style="height: 1px; background: #f0f0f0; margin: 6px 0;"></div>
+<a class="nav-dd-link" href="doitacgiaohang.html">Đối tác giao hàng</a>
+<a class="nav-dd-link" href="vandon.html">Vận đơn</a>
+</div>
+</div>
+</div>
+<div class="nav-item">
+<a class="nav-tab" href="khachhang.html">Khách hàng</a>
+<div class="nav-dropdown">
+<div class="nav-dd-col">
+<a class="nav-dd-link" href="khachhang.html">Khách hàng</a>
+<a class="nav-dd-link" href="khuyenmai.html">Khuyến mãi</a>
+<a class="nav-dd-link" href="voucher.html">Voucher</a>
+<a class="nav-dd-link" href="coupon.html">Coupon</a>
+</div>
+</div>
+</div>
+<div class="nav-item">
+<a class="nav-tab" href="nhanvien.html">Nhân viên</a>
+<div class="nav-dropdown">
+<div class="nav-dd-col">
+<a class="nav-dd-link" href="nhanvien.html">Danh sách nhân viên</a>
+<a class="nav-dd-link" href="lichlamviec.html">Lịch làm việc</a>
+<a class="nav-dd-link" href="bangchamcong.html">Bảng chấm công</a>
+<a class="nav-dd-link" href="bangluong.html">Bảng lương</a>
+<a class="nav-dd-link" href="banghoahong.html">Bảng hoa hồng</a>
+<a class="nav-dd-link" href="thietlapnhanvien.html">Thiết lập nhân viên</a>
+</div>
+</div>
+</div>
+<div class="nav-item"><a class="nav-tab" href="cashflow.html">Sổ quỹ</a></div>
+<div class="nav-item">
+<a class="nav-tab" href="baocao.html">Phân tích</a>
+<div class="nav-dropdown">
+<div class="nav-dd-col">
+<div class="nav-dd-title">Báo cáo</div>
+<a class="nav-dd-link" href="baocao.html">Cuối ngày</a>
+<a class="nav-dd-link" href="baocao.html">Bán hàng</a>
+<a class="nav-dd-link" href="baocao.html">Đặt hàng</a>
+<a class="nav-dd-link" href="baocao.html">Hàng hóa</a>
+<a class="nav-dd-link" href="baocao.html">Khách hàng</a>
+</div>
+<div class="nav-dd-col" style="padding-top:24px">
+<a class="nav-dd-link" href="baocao.html">Nhà cung cấp</a>
+<a class="nav-dd-link" href="baocao.html">Nhân viên</a>
+<a class="nav-dd-link" href="baocao.html">Kênh bán hàng</a>
+<a class="nav-dd-link" href="baocao.html">Tài chính</a>
+</div>
+</div>
+</div>
+<div class="nav-item">
+<a class="nav-tab active" href="banonline.html">Bán online</a>
+<div class="nav-dropdown">
+<div class="nav-dd-col">
+<a class="nav-dd-link" href="banonline.html">Bán online</a>
+<a class="nav-dd-link" href="websitebanhang.html">Website bán hàng</a>
+</div>
+</div>
+</div>
+<div class="nav-item"><a class="nav-tab" href="thueketoan.html">Thuế &amp; Kế toán <span style="background: #e53935; color: #fff; font-size: 10px; padding: 1px 5px; border-radius: 8px; margin-left: 6px; font-weight: 600; vertical-align: middle;">Mới</span></a></div>
+</div>
+<button class="btn-go-sale" onclick="window.location.href='sale.html'"><i class="fa-solid fa-cart-shopping"></i> <strong>Bán hàng</strong></button>
+</nav>
+<div style="display:flex;flex:1;overflow:hidden;">
+<!-- LEFT ICON SIDEBAR -->
+<div id="iconSidebar" style="width:48px;min-width:48px;background:#fff;border-right:1px solid #e8e8e8;display:flex;flex-direction:column;align-items:center;padding:10px 0;gap:2px;overflow-y:auto;">
+<div class="isb-icon active" onclick="switchSection('overview')" title="Tổng quan"><i class="fa-solid fa-chart-line" style="font-size:16px;"></i></div>
+<div class="isb-icon" onclick="switchSection('connect')" style="position:relative;" title="Kết nối">
+<i class="fa-solid fa-link" style="font-size:16px;"></i>
+<span style="position:absolute;top:0;right:2px;width:8px;height:8px;background:#e53935;border-radius:50;border:1.5px solid #fff;"></span>
+</div>
+<div style="font-size:9px;color:#888;padding:8px 0 4px;text-transform:uppercase;font-weight:600;letter-spacing:.3px;">TMDT</div>
+<div class="isb-icon" onclick="switchSection('shopee')" title="Shopee"><i class="fa-solid fa-store" style="font-size:14px;"></i></div>
+<div class="isb-icon" onclick="switchSection('orders')" title="Đơn hàng"><i class="fa-solid fa-clipboard-list" style="font-size:14px;"></i></div>
+<div class="isb-icon" onclick="switchSection('products')" title="Sản phẩm"><i class="fa-solid fa-boxes-stacked" style="font-size:14px;"></i></div>
+<div class="isb-icon" onclick="switchSection('settings')" title="Cài đặt"><i class="fa-solid fa-gear" style="font-size:14px;"></i></div>
+<div style="font-size:9px;color:#888;padding:8px 0 4px;text-transform:uppercase;font-weight:600;letter-spacing:.3px;">MXH</div>
+<div class="isb-icon" onclick="switchSection('facebook')" title="Facebook"><i class="fa-brands fa-facebook" style="font-size:14px;"></i></div>
+<div class="isb-icon" onclick="switchSection('chat')" title="Chat"><i class="fa-solid fa-comments" style="font-size:14px;"></i></div>
+<div class="isb-icon" onclick="switchSection('marketing')" title="Marketing"><i class="fa-solid fa-bullhorn" style="font-size:14px;"></i></div>
+<div style="flex:1;"></div>
+<div class="isb-icon" onclick="switchSection('stats')" title="Thống kê"><i class="fa-solid fa-chart-bar" style="font-size:14px;"></i></div>
+<div class="isb-icon" onclick="switchSection('shipsetup')" title="Giao vận"><i class="fa-solid fa-truck" style="font-size:14px;"></i></div>
+<div class="isb-icon" onclick="switchSection('config')" title="Thiết lập"><i class="fa-solid fa-sliders" style="font-size:14px;"></i></div>
+</div>
+<!-- MAIN CONTENT -->
+<div id="sectionContent" style="flex:1;overflow:auto;padding:24px 30px;">
+</div>
+</div>
+<script>
+        let curSection = 'connect';
+
+        function switchSection(id) {
+            curSection = id;
+            document.querySelectorAll('.isb-icon').forEach(function(el) { el.classList.remove('active'); });
+            if (event && event.currentTarget) event.currentTarget.classList.add('active');
+            renderSection();
+        }
+
+        function renderSection() {
+            var el = document.getElementById('sectionContent');
+            if (!el) return;
+            if (curSection === 'connect' || curSection === 'shopee' || curSection === 'facebook') {
+                el.innerHTML = renderConnect();
+            } else {
+                el.innerHTML = renderOverview();
+            }
+        }
+
+        function renderConnect() {
+            return '<h2 style="font-size:16px;font-weight:700;color:#333;margin-bottom:24px;">B\u00e1n h\u00e0ng \u0111a k\u00eanh - Qu\u1ea3n l\u00fd nh\u00e3n h\u00e0ng c\u00f9ng Hasu</h2>'
+            + '<div style="margin-bottom:28px;">'
+            + '<h3 style="font-size:14px;font-weight:600;color:#333;margin-bottom:6px;">K\u1ebft n\u1ed1i s\u00e0n th\u01b0\u01a1ng m\u1ea1i \u0111i\u1ec7n t\u1eed</h3>'
+            + '<p style="font-size:13px;color:#777;margin-bottom:16px;">Qu\u1ea3n l\u00fd h\u00e0ng ho\u00e1 t\u1eadp trung, x\u1eed l\u00fd \u0111\u01a1n h\u00e0ng nhanh ch\u00f3ng, ki\u1ec3m so\u00e1t ch\u00ednh x\u00e1c hi\u1ec7u qu\u1ea3 b\u00e1n h\u00e0ng t\u1eeb m\u1ecdi k\u00eanh b\u00e1n.</p>'
+            + '<div style="display:flex;gap:12px;flex-wrap:wrap;">'
+            + '<div class="platform-card" onclick="alert(\'K\u1ebft n\u1ed1i Shopee\')"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Shopee_logo.svg/120px-Shopee_logo.svg.png" alt="Shopee"> Shopee</div>'
+            + '<div class="platform-card" onclick="alert(\'K\u1ebft n\u1ed1i TikTok Shop\')"><img src="https://sf-tb-sg.ibytedtos.com/obj/eden-sg/uhtyvueh7nulogpoguhm/tiktok-icon2.png" alt="TikTok"> Tiktok Shop</div>'
+            + '<div class="platform-card" onclick="alert(\'K\u1ebft n\u1ed1i Lazada\')"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Lazada.svg/120px-Lazada.svg.png" alt="Lazada"> Lazada</div>'
+            + '<div class="platform-card" onclick="alert(\'K\u1ebft n\u1ed1i Tiki\')"><img src="https://salt.tikicdn.com/ts/upload/e4/49/6c/270be9859abd5f5ec5071da65fab0a94.png" alt="Tiki" style="width:18px;height:18px;"> Tiki</div>'
+            + '</div></div>'
+            + '<div>'
+            + '<h3 style="font-size:14px;font-weight:600;color:#333;margin-bottom:6px;">K\u1ebft n\u1ed1i m\u1ea1ng x\u00e3 h\u1ed9i</h3>'
+            + '<p style="font-size:13px;color:#777;margin-bottom:16px;">T\u1ed1i \u01b0u th\u1eddi gian ph\u1ea3n h\u1ed3i v\u00e0 ch\u0103m s\u00f3c kh\u00e1ch h\u00e0ng, l\u00ean \u0111\u01a1n c\u1ef1c nhanh, gi\u00fap t\u0103ng t\u1ef7 l\u1ec7 chuy\u1ec3n \u0111\u1ed5i kh\u00e1ch h\u00e0ng ti\u1ec1m n\u0103ng.</p>'
+            + '<div style="display:flex;gap:12px;flex-wrap:wrap;">'
+            + '<div class="platform-card" onclick="alert(\'K\u1ebft n\u1ed1i Facebook\')"><img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_%282019%29.png" alt="Facebook" style="width:20px;height:20px;"> Facebook</div>'
+            + '<div class="platform-card" onclick="alert(\'K\u1ebft n\u1ed1i Instagram\')"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Instagram_icon.png/120px-Instagram_icon.png" alt="Instagram" style="width:20px;height:20px;"> Instagram</div>'
+            + '</div></div>';
+        }
+
+        function renderOverview() {
+            var fmt = function(n) { return n.toLocaleString('vi-VN'); };
+            return '<div class="stat-row">'
+            + '<div class="stat-card"><div class="sc-label">\u0110\u01a1n online h\u00f4m nay</div><div class="sc-value blue">12</div></div>'
+            + '<div class="stat-card green"><div class="sc-label">Doanh thu online</div><div class="sc-value green">' + fmt(4850000) + '</div></div>'
+            + '<div class="stat-card orange"><div class="sc-label">\u0110ang x\u1eed l\u00fd</div><div class="sc-value" style="color:#f57c00">5</div></div>'
+            + '<div class="stat-card red"><div class="sc-label">Ch\u1edd giao h\u00e0ng</div><div class="sc-value red">3</div></div>'
+            + '</div>';
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var icons = document.querySelectorAll('.isb-icon');
+            icons.forEach(function(ic) { ic.classList.remove('active'); });
+            if (icons[1]) icons[1].classList.add('active');
+            renderSection();
+        });
+    </script>
+<script>
+        function closeAllHdrDD() {
+        document.querySelectorAll('.hdr-dd-panel').forEach(function(p){ p.classList.remove('show'); });
+        var dd1 = document.getElementById('deliveryDropdown'); if (dd1) dd1.classList.remove('show');
+        var dd2 = document.getElementById('paletteDropdown'); if (dd2) dd2.classList.remove('show');
+    }
+    function toggleDelivery(e) {
+        e.stopPropagation();
+        const dd = document.getElementById('deliveryDropdown');
+        const wasOpen = dd && dd.classList.contains('show');
+        closeAllHdrDD();
+        if (dd && !wasOpen) dd.classList.add('show');
+    }
+    document.addEventListener('click', function(e) {
+        const dd = document.getElementById('deliveryDropdown');
+        if (dd && dd.classList.contains('show')) {
+            const wrap = dd.closest('.hdr-delivery-wrap');
+            if (!wrap || !wrap.contains(e.target)) dd.classList.remove('show');
+        }
+    });
+    </script>
+<script>
+    (function(){
+        var COLORS = [
+            '#004aad','#546e7a','#2e7d32',
+            '#7b1fa2','#c62828','#607d8b',
+            '#00796b','#e65100','#ad1457'
+        ];
+        var cur = localStorage.getItem('hasuNavColor') || '#004aad';
+        function shade(hex, pct){
+            var R=parseInt(hex.slice(1,3),16),G=parseInt(hex.slice(3,5),16),B=parseInt(hex.slice(5,7),16);
+            R=Math.min(255,Math.max(0,Math.round(R*(100+pct)/100)));
+            G=Math.min(255,Math.max(0,Math.round(G*(100+pct)/100)));
+            B=Math.min(255,Math.max(0,Math.round(B*(100+pct)/100)));
+            return '#'+R.toString(16).padStart(2,'0')+G.toString(16).padStart(2,'0')+B.toString(16).padStart(2,'0');
+        }
+        function hexRgba(hex,a){
+            return 'rgba('+parseInt(hex.slice(1,3),16)+','+parseInt(hex.slice(3,5),16)+','+parseInt(hex.slice(5,7),16)+','+a+')';
+        }
+        function applyColor(c){
+            var r=document.documentElement;
+            r.style.setProperty('--blue',c);
+            r.style.setProperty('--blue-dark',shade(c,-12));
+            r.style.setProperty('--blue-darker',shade(c,-24));
+            r.style.setProperty('--blue-light',hexRgba(c,0.1));
+            localStorage.setItem('hasuNavColor',c);
+            cur=c;
+        }
+        function renderGrid(){
+            var g=document.getElementById('paletteGrid');
+            if(!g) return;
+            g.innerHTML=COLORS.map(function(c){
+                return '<button class="palette-color'+(c===cur?' active':'')+'" style="background:'+c+'" data-color="'+c+'"></button>';
+            }).join('');
+            g.querySelectorAll('.palette-color').forEach(function(btn){
+                btn.addEventListener('click',function(){ applyColor(this.dataset.color); renderGrid(); });
+            });
+        }
+        window.togglePalette=function(e){
+            e.stopPropagation();
+            var dd=document.getElementById('paletteDropdown');
+            var wasOpen = dd && dd.classList.contains('show');
+            closeAllHdrDD();
+            if(dd && !wasOpen){ renderGrid(); dd.classList.add('show'); }
+        };
+        document.addEventListener('click',function(e){
+            var dd=document.getElementById('paletteDropdown');
+            if(dd&&dd.classList.contains('show')){
+                var w=dd.closest('.hdr-palette-wrap');
+                if(!w||!w.contains(e.target)) dd.classList.remove('show');
+            }
+        });
+        document.addEventListener('DOMContentLoaded',function(){
+            if(cur!=='#004aad') applyColor(cur);
+        });
+    })();
+    </script>
+<script>
+    function toggleHdrDD(panelId, wrapId, e) {
+        if (e) e.stopPropagation();
+        var panel = document.getElementById(panelId);
+        var isOpen = panel && panel.classList.contains('show');
+        closeAllHdrDD();
+        if (!isOpen && panel) panel.classList.add('show');
+    }
+    document.addEventListener('click', function(e) {
+        var isInside = e.target.closest('.hdr-icon-wrap, .hdr-lang-wrap, .hdr-shop-wrap, .hdr-bell-wrap, .hdr-gear-wrap, .hdr-avatar-wrap');
+        if (!isInside) {
+            document.querySelectorAll('.hdr-dd-panel').forEach(function(p){ p.classList.remove('show'); });
+        }
+    });
+    function selectLang(lang) {
+        document.getElementById('langPanel').classList.remove('show');
+        if (lang === 'vi') {
+            document.querySelector('.lang-btn').innerHTML = '<img src="https://flagcdn.com/16x12/vn.png" alt="VN"> Ti\u1ebfng Vi\u1ec7t <i class="fa-solid fa-chevron-down" style="font-size:9px;color:#aaa;margin-left:3px"></i>';
+            document.getElementById('langVN').querySelector('.check-icon').style.display = '';
+            document.getElementById('langEN').querySelector('.check-icon').style.display = 'none';
+        } else {
+            document.querySelector('.lang-btn').innerHTML = '<img src="https://flagcdn.com/16x12/gb.png" alt="EN"> English <i class="fa-solid fa-chevron-down" style="font-size:9px;color:#aaa;margin-left:3px"></i>';
+            document.getElementById('langVN').querySelector('.check-icon').style.display = 'none';
+            document.getElementById('langEN').querySelector('.check-icon').style.display = '';
+        }
+    }
+    function selectBranch(name, el) {
+        document.querySelector('.shop-btn').innerHTML = name + ' <i class="fa-solid fa-chevron-down" style="font-size:9px;color:#aaa;margin-left:3px"></i>';
+        document.querySelectorAll('.branch-item .bi-active').forEach(function(d){ d.remove(); });
+        var dot = document.createElement('span');
+        dot.className = 'bi-active';
+        el.appendChild(dot);
+        document.getElementById('shopPanel').classList.remove('show');
+    }
+    function filterBranch(q) {
+        q = q.toLowerCase();
+        document.querySelectorAll('#branchList .branch-item').forEach(function(item) {
+            var name = item.querySelector('.bi-name').textContent.toLowerCase();
+            item.style.display = name.includes(q) ? '' : 'none';
+        });
+    }
+    </script>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var uName = localStorage.getItem('hasu_userName');
+    var uEmail = localStorage.getItem('hasu_userEmail');
+    if (!uName) {
+        window.location.href = 'login.html';
+        return;
+    }
+
+    var isAdmin = (uEmail === 'admin@hasu.vn' || uEmail === 'tester@hasu.vn');
+
+    function applyReplacements() {
+        var walk = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+            acceptNode: function(node) {
+                if (['SCRIPT', 'STYLE', 'NOSCRIPT'].includes(node.parentNode.nodeName)) return NodeFilter.FILTER_REJECT;
+                return NodeFilter.FILTER_ACCEPT;
+            }
+        }, false);
+        var n;
+        while(n = walk.nextNode()) {
+            if (n.nodeValue.includes('Tester')) {
+                n.nodeValue = n.nodeValue.replace(/Tester/g, uName);
+            }
+            if (uEmail && n.nodeValue.includes('tester@hasu.vn')) {
+                n.nodeValue = n.nodeValue.replace(/tester@hasu\.vn/g, uEmail);
+            }
+        }
+        
+        document.querySelectorAll('input').forEach(function(inp) {
+            if (inp.value === 'Tester') inp.value = uName;
+        });
+
+        // Hide mock history explicitly for newly created non-admin users
+        if (!isAdmin) {
+            document.querySelectorAll('.activity-item, .tl-history-row, tr').forEach(function(el) {
+                var txt = el.textContent;
+                // If it contains hardcoded deep mock past dates in the frontend UI
+                if (txt.includes('ngày trước') || txt.includes('14/03') || txt.includes('23 ngày trước')) {
+                    el.style.display = 'none';
+                }
+            });
+            // If the activity list becomes visually empty, show empty state
+            var aList = document.getElementById('activityList');
+            if (aList && Array.from(aList.children).filter(function(x){ return x.style.display !== 'none'; }).length === 0) {
+                aList.innerHTML = '<div style="padding:30px;text-align:center;color:#bbb">Chưa có hoạt động nào</div>';
+            }
+        }
+    }
+
+    applyReplacements();
+    setTimeout(applyReplacements, 150);
+    setTimeout(applyReplacements, 500);
+});
+</script>
+</body>
+</html>
+

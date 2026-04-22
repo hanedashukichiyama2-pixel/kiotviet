@@ -1,0 +1,507 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Hasu - Website bán hàng</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root{--blue:#004aad;--blue-dark:#003a8c;--yellow:#ffca08;--yellow-dark:#e6b600;--blue-light:#e8f0fb}
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Roboto',Arial,sans-serif;font-size:13px;background:#f5f5f5;color:#333;min-height:100vh;display:flex;flex-direction:column}
+        .kv-header{background:#fff;height:44px;display:flex;align-items:center;padding:0 16px;border-bottom:3px solid var(--yellow);justify-content:space-between;flex-shrink:0}
+        .header-left{display:flex;align-items:center;gap:8px}
+        .kv-logo{display:flex;align-items:center;gap:6px;text-decoration:none;color:#333}
+        .kv-logo img{width:42px;height:42px;object-fit:contain}
+        .kv-logo span{font-size:24px;font-weight:700;color:var(--blue);letter-spacing:.3px}
+        .header-right{display:flex;align-items:center;gap:14px}
+        .hdr-icon{display:flex;align-items:center;gap:5px;color:#555;font-size:13px;cursor:pointer;text-decoration:none}
+        .hdr-icon:hover{color:var(--blue)}
+        .hdr-divider{width:1px;height:20px;background:#ddd}
+        .lang-btn,.shop-btn{display:flex;align-items:center;gap:5px;color:#444;font-size:13px;cursor:pointer}
+        .shop-btn{font-weight:500}
+        .kv-navbar{background:var(--blue);height:44px;display:flex;align-items:center;padding:0 0 0 8px;flex-shrink:0}
+        .nav-tabs{display:flex;align-items:center;flex:1;height:44px}
+        .nav-item{position:relative;height:44px;display:flex;align-items:center}
+        .nav-tab{height:44px;display:flex;align-items:center;padding:0 16px;color:rgba(255,255,255,.9);font-size:13.5px;cursor:pointer;text-decoration:none;white-space:nowrap;transition:background .15s;border:none;background:transparent;font-family:inherit}
+        .nav-tab:hover{background:rgba(0,0,0,.15)}
+        .nav-tab.active{background:var(--blue-dark);color:#fff;font-weight:500}
+        .nav-dropdown{position:absolute;top:44px;left:0;background:#fff;border-radius:0 0 6px 6px;box-shadow:0 6px 20px rgba(0,0,0,.15);z-index:600;display:none;padding:14px 0;min-width:180px}
+        .nav-item:hover .nav-dropdown{display:flex}
+        .nav-dd-col{padding:0 18px;min-width:160px}
+        .nav-dd-col+.nav-dd-col{border-left:1px solid #f0f0f0}
+        .nav-dd-title{font-size:12px;font-weight:600;color:#333;padding:0 0 8px;margin-bottom:2px}
+        .nav-dd-link{display:flex;align-items:center;gap:6px;padding:6px 0;font-size:13px;color:#555;text-decoration:none;white-space:nowrap;cursor:pointer}
+        .nav-dd-link:hover{color:var(--blue)}
+        .nav-dd-badge{font-size:10px;background:#ff7043;color:#fff;border-radius:8px;padding:1px 6px;font-weight:500}
+        .btn-go-sale{background:var(--yellow);border:none;padding:0 20px;height:44px;font-weight:700;color:#333;cursor:pointer;font-size:14px;display:flex;align-items:center;gap:6px;font-family:inherit}
+        .btn-go-sale:hover{background:var(--yellow-dark)}
+
+        /* PAGE LAYOUT */
+        .page-wrap{display:flex;flex:1;overflow:hidden}
+        .sidebar{width:200px;min-width:200px;background:#fff;border-right:1px solid #e8e8e8;overflow-y:auto}
+        .sb-title{font-size:14px;font-weight:700;color:#333;padding:16px 16px 12px}
+        .sb-item{display:flex;align-items:center;gap:10px;padding:10px 16px;font-size:13px;color:#555;cursor:pointer;transition:all .12s}
+        .sb-item:hover{background:#f5f7fa;color:var(--blue)}
+        .sb-item.active{background:var(--blue-light);color:var(--blue);font-weight:500;border-right:3px solid var(--blue)}
+        .sb-item i{width:18px;text-align:center;font-size:14px}
+        .main-content{flex:1;overflow:auto;padding:20px 28px}
+        .page-title{font-size:16px;font-weight:700;color:#333;margin-bottom:18px;display:flex;align-items:center;gap:10px}
+
+        /* TEMPLATE CARDS */
+        .tpl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px}
+        .tpl-card{border:2px solid #e8e8e8;border-radius:10px;overflow:hidden;cursor:pointer;transition:all .2s;position:relative}
+        .tpl-card:hover{border-color:var(--blue);box-shadow:0 4px 16px rgba(0,74,173,.12)}
+        .tpl-card.selected{border-color:var(--blue);box-shadow:0 0 0 3px rgba(0,74,173,.2)}
+        .tpl-card.selected::after{content:'\f058';font-family:'Font Awesome 6 Free';font-weight:900;position:absolute;top:10px;right:10px;font-size:22px;color:var(--blue)}
+        .tpl-preview{height:180px;background:#f5f7fa;display:flex;align-items:center;justify-content:center;overflow:hidden}
+        .tpl-preview img{width:100%;height:100%;object-fit:cover}
+        .tpl-info{padding:14px 16px}
+        .tpl-name{font-size:14px;font-weight:600;color:#333}
+        .tpl-desc{font-size:12px;color:#888;margin-top:4px}
+
+        /* TABLE */
+        table{width:100%;border-collapse:collapse;font-size:12.5px}
+        th{background:#f5f7fa;padding:10px 12px;text-align:left;font-weight:600;color:#555;border-bottom:2px solid #e0e0e0;white-space:nowrap}
+        td{padding:10px 12px;border-bottom:1px solid #eee;color:#444}
+        tr:hover{background:#f8fafd}
+        .right{text-align:right}
+
+        /* BUTTONS */
+        .btn{display:inline-flex;align-items:center;gap:6px;padding:7px 16px;border-radius:4px;font-size:13px;font-weight:500;cursor:pointer;border:none;font-family:inherit;transition:all .15s}
+        .btn-primary{background:var(--blue);color:#fff}
+        .btn-primary:hover{background:var(--blue-dark)}
+        .btn-outline{background:#fff;color:#555;border:1px solid #ddd}
+        .btn-outline:hover{border-color:var(--blue);color:var(--blue)}
+        .btn-success{background:#43a047;color:#fff}
+        .btn-success:hover{background:#388e3c}
+        .btn-danger{background:#e53935;color:#fff}
+        .btn-danger:hover{background:#c62828}
+
+        /* MODAL */
+        .modal-bd{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.45);z-index:1000;align-items:center;justify-content:center}
+        .modal-bd.show{display:flex}
+        .modal{background:#fff;border-radius:10px;width:520px;max-height:85vh;overflow-y:auto;box-shadow:0 10px 40px rgba(0,0,0,.2)}
+        .modal-hd{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid #eee}
+        .modal-hd h3{font-size:15px;font-weight:600}
+        .modal-close{background:none;border:none;font-size:22px;cursor:pointer;color:#888}
+        .modal-close:hover{color:#333}
+        .modal-body{padding:18px 20px}
+        .modal-ft{padding:14px 20px;border-top:1px solid #eee;display:flex;justify-content:flex-end;gap:8px}
+
+        .form-group{margin-bottom:14px}
+        .form-group label{display:block;font-size:12.5px;font-weight:500;color:#555;margin-bottom:5px}
+        .form-group input,.form-group select,.form-group textarea{width:100%;border:1px solid #ddd;border-radius:4px;padding:8px 10px;font-size:13px;font-family:inherit;outline:none}
+        .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--blue)}
+        .form-row{display:flex;gap:14px}
+        .form-row .form-group{flex:1}
+
+        .tbl-code{color:var(--blue);font-weight:500;cursor:pointer}
+        .tbl-code:hover{text-decoration:underline}
+        .badge{display:inline-block;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:500}
+        .badge-active{background:#e8f5e9;color:#2e7d32}
+        .badge-inactive{background:#fce4ec;color:#c62828}
+
+        .img-thumb{width:40px;height:40px;border-radius:6px;object-fit:cover;background:#f5f5f5;border:1px solid #eee}
+
+        .store-link{display:inline-flex;align-items:center;gap:6px;background:#e8f5e9;color:#2e7d32;padding:6px 14px;border-radius:20px;font-size:12.5px;font-weight:500;text-decoration:none;margin-left:auto}
+        .store-link:hover{background:#c8e6c9}
+
+        ::-webkit-scrollbar{width:5px;height:5px}
+        ::-webkit-scrollbar-track{background:#f0f0f0}
+        ::-webkit-scrollbar-thumb{background:#ccc;border-radius:3px}
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="kv-header">
+        <div class="header-left">
+            <a href="tongquan.html" class="kv-logo"><img src="https://i.imgur.com/vaqJGSc.png" alt="logo"><span>Hasu</span></a>
+        </div>
+        <div class="header-right">
+            <div class="hdr-divider"></div>
+            <span class="lang-btn"><img src="https://flagcdn.com/16x12/vn.png" alt="VN"> Tiếng Việt</span>
+            <div class="hdr-divider"></div>
+            <span class="shop-btn">BHS Bình Than <i class="fa-solid fa-chevron-down" style="font-size:9px;color:#aaa"></i></span>
+            <div class="hdr-divider"></div>
+            <i class="fa-regular fa-bell" style="font-size:16px;color:#555;cursor:pointer"></i>
+            <i class="fa-solid fa-gear" style="font-size:16px;color:#555;cursor:pointer"></i>
+            <i class="fa-regular fa-circle-user" style="font-size:20px;color:#555;cursor:pointer"></i>
+        </div>
+    </header>
+
+    <!-- NAVBAR -->
+    <nav class="kv-navbar">
+        <div class="nav-tabs">
+            <div class="nav-item"><a href="tongquan.html" class="nav-tab">Tổng quan</a></div>
+            <div class="nav-item">
+                <a href="hanghoa.html" class="nav-tab">Hàng hóa</a>
+                <div class="nav-dropdown">
+                    <div class="nav-dd-col">
+                        <a href="hanghoa.html" class="nav-dd-link">Danh sách hàng hóa</a>
+                        <a href="thietlapgia.html" class="nav-dd-link">Thiết lập giá</a>
+                    </div>
+                    <div class="nav-dd-col">
+                        <a href="kiemkho.html" class="nav-dd-link">Kiểm kho</a>
+                        <a href="chuyenhang.html" class="nav-dd-link">Chuyển hàng</a>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-item">
+                <a href="donhang.html" class="nav-tab">Đơn hàng</a>
+                <div class="nav-dropdown">
+                    <div class="nav-dd-col">
+                        <a href="donhang.html" class="nav-dd-link">Đặt hàng</a>
+                        <a href="hoadon.html" class="nav-dd-link">Hóa đơn</a>
+                        <a href="trahang.html" class="nav-dd-link">Trả hàng</a>
+                    </div>
+                    <div class="nav-dd-col">
+                        <a href="nhaphang.html" class="nav-dd-link">Nhập hàng</a>
+                        <a href="trahangnhap.html" class="nav-dd-link">Trả hàng nhập</a>
+                        <a href="dathangnhap.html" class="nav-dd-link">Đặt hàng nhập</a>
+                        <a href="xuathuy.html" class="nav-dd-link">Xuất hủy</a>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-item">
+                <a href="khachhang.html" class="nav-tab">Khách hàng</a>
+                <div class="nav-dropdown">
+                    <div class="nav-dd-col">
+                        <a href="khachhang.html" class="nav-dd-link">Khách hàng</a>
+                        <a href="khuyenmai.html" class="nav-dd-link">Khuyến mãi</a>
+                        <a href="voucher.html" class="nav-dd-link">Voucher</a>
+                        <a href="coupon.html" class="nav-dd-link">Coupon</a>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-item">
+                <a href="nhanvien.html" class="nav-tab">Nhân viên</a>
+                <div class="nav-dropdown">
+                    <div class="nav-dd-col">
+                        <a href="nhanvien.html" class="nav-dd-link">Danh sách nhân viên</a>
+                        <a href="lichlamviec.html" class="nav-dd-link">Lịch làm việc</a>
+                        <a href="bangchamcong.html" class="nav-dd-link">Bảng chấm công</a>
+                        <a href="bangluong.html" class="nav-dd-link">Bảng lương</a>
+                        <a href="banghoahong.html" class="nav-dd-link">Bảng hoa hồng</a>
+                        <a href="thietlapnhanvien.html" class="nav-dd-link">Thiết lập nhân viên</a>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-item"><a href="cashflow.html" class="nav-tab">Sổ quỹ</a></div>
+            <div class="nav-item">
+                <a href="baocao.html" class="nav-tab">Phân tích</a>
+                <div class="nav-dropdown">
+                    <div class="nav-dd-col">
+                        <div class="nav-dd-title">Báo cáo</div>
+                        <a href="baocao.html" class="nav-dd-link">Cuối ngày</a>
+                        <a href="baocao.html" class="nav-dd-link">Bán hàng</a>
+                        <a href="baocao.html" class="nav-dd-link">Hàng hóa</a>
+                    </div>
+                    <div class="nav-dd-col" style="padding-top:24px">
+                        <a href="baocao.html" class="nav-dd-link">Nhà cung cấp</a>
+                        <a href="baocao.html" class="nav-dd-link">Tài chính</a>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-item">
+                <a href="banonline.html" class="nav-tab active">Bán online</a>
+                <div class="nav-dropdown">
+                    <div class="nav-dd-col">
+                        <a href="banonline.html" class="nav-dd-link">Bán online</a>
+                        <a href="websitebanhang.html" class="nav-dd-link">Website bán hàng</a>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-item"><a href="thueketoan.html" class="nav-tab">Thuế & Kế toán <span style="background:#e53935;color:#fff;font-size:10px;padding:1px 5px;border-radius:8px;margin-left:6px;font-weight:600">Mới</span></a></div>
+        </div>
+        <button class="btn-go-sale" onclick="window.location.href='sale.html'"><i class="fa-solid fa-cart-shopping"></i> <strong>Bán hàng</strong></button>
+    </nav>
+
+    <!-- BODY -->
+    <div class="page-wrap">
+        <aside class="sidebar">
+            <div class="sb-title">Website bán hàng</div>
+            <div class="sb-item active" onclick="switchTab('templates')"><i class="fa-solid fa-palette"></i> Giao diện</div>
+            <div class="sb-item" onclick="switchTab('categories')"><i class="fa-solid fa-layer-group"></i> Danh mục</div>
+            <div class="sb-item" onclick="switchTab('products')"><i class="fa-solid fa-box-open"></i> Sản phẩm</div>
+            <div class="sb-item" onclick="switchTab('storeconfig')"><i class="fa-solid fa-gear"></i> Cài đặt</div>
+        </aside>
+        <div class="main-content" id="mainContent"></div>
+    </div>
+
+    <!-- MODALS -->
+    <div class="modal-bd" id="catModal">
+        <div class="modal">
+            <div class="modal-hd"><h3 id="catModalTitle">Thêm danh mục</h3><button class="modal-close" onclick="closeCatModal()">&times;</button></div>
+            <div class="modal-body">
+                <div class="form-group"><label>Tên danh mục <span style="color:red">*</span></label><input type="text" id="catName" placeholder="VD: Thực phẩm, Đồ uống..."></div>
+                <div class="form-group"><label>Mô tả</label><textarea id="catDesc" rows="3" placeholder="Mô tả ngắn về danh mục"></textarea></div>
+                <div class="form-group"><label>Trạng thái</label><select id="catStatus"><option value="active">Hiển thị</option><option value="inactive">Ẩn</option></select></div>
+            </div>
+            <div class="modal-ft"><button class="btn btn-outline" onclick="closeCatModal()">Bỏ qua</button><button class="btn btn-primary" onclick="saveCat()">Lưu</button></div>
+        </div>
+    </div>
+
+    <div class="modal-bd" id="prodModal">
+        <div class="modal" style="width:600px">
+            <div class="modal-hd"><h3 id="prodModalTitle">Đăng sản phẩm lên Website</h3><button class="modal-close" onclick="closeProdModal()">&times;</button></div>
+            <div class="modal-body">
+                <div class="form-group"><label>Tên sản phẩm <span style="color:red">*</span></label><input type="text" id="prodName" placeholder="Tên sản phẩm"></div>
+                <div class="form-row">
+                    <div class="form-group"><label>Danh mục</label><select id="prodCat"></select></div>
+                    <div class="form-group"><label>Giá bán <span style="color:red">*</span></label><input type="number" id="prodPrice" placeholder="0"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>Giá gốc (gạch ngang)</label><input type="number" id="prodOrigPrice" placeholder="0"></div>
+                    <div class="form-group"><label>Tồn kho</label><input type="number" id="prodStock" placeholder="0" value="100"></div>
+                </div>
+                <div class="form-group"><label>Hình ảnh (URL)</label><input type="text" id="prodImg" placeholder="https://..."></div>
+                <div class="form-group"><label>Mô tả</label><textarea id="prodDesc" rows="3" placeholder="Mô tả sản phẩm"></textarea></div>
+                <div class="form-group"><label>Trạng thái</label><select id="prodStatus"><option value="active">Đăng bán</option><option value="inactive">Ẩn</option></select></div>
+            </div>
+            <div class="modal-ft"><button class="btn btn-outline" onclick="closeProdModal()">Bỏ qua</button><button class="btn btn-primary" onclick="saveProd()">Đăng sản phẩm</button></div>
+        </div>
+    </div>
+
+    <script>
+    const CATS_KEY = 'hasu_store_categories';
+    const PRODS_KEY = 'hasu_store_products';
+    const TPL_KEY = 'hasu_store_template';
+    const CONFIG_KEY = 'hasu_store_config';
+
+    let categories = JSON.parse(localStorage.getItem(CATS_KEY) || '[]');
+    let products = JSON.parse(localStorage.getItem(PRODS_KEY) || '[]');
+    let selectedTpl = localStorage.getItem(TPL_KEY) || 'modern';
+    let storeConfig = JSON.parse(localStorage.getItem(CONFIG_KEY) || '{"name":"Hasu Store","phone":"0123456789","address":"123 Nguyễn Trãi, Q.1, TP.HCM","color":"#004aad"}');
+    let curTab = 'templates';
+    let editCatIdx = -1;
+    let editProdIdx = -1;
+
+    // Seed sample data if empty
+    if (!categories.length) {
+        categories = [
+            {id:1,name:'Thực phẩm',desc:'Gạo, mì, gia vị, đồ khô',status:'active'},
+            {id:2,name:'Đồ uống',desc:'Nước ngọt, sữa, nước suối',status:'active'},
+            {id:3,name:'Bánh kẹo',desc:'Bánh, kẹo, snack các loại',status:'active'},
+            {id:4,name:'Chăm sóc cá nhân',desc:'Dầu gội, sữa tắm, kem đánh răng',status:'active'}
+        ];
+        localStorage.setItem(CATS_KEY, JSON.stringify(categories));
+    }
+    if (!products.length) {
+        products = [
+            {id:1,name:'Gạo ST25 5kg',cat:1,price:125000,origPrice:145000,stock:50,img:'https://images.unsplash.com/photo-1586201375761-83865001e31c?w=200&h=200&fit=crop',desc:'Gạo ST25 đặc sản Sóc Trăng',status:'active'},
+            {id:2,name:'Sữa Vinamilk 1L',cat:2,price:32000,origPrice:35000,stock:200,img:'https://images.unsplash.com/photo-1563636619-e9143da7973b?w=200&h=200&fit=crop',desc:'Sữa tươi tiệt trùng Vinamilk',status:'active'},
+            {id:3,name:'Mì Hảo Hảo tôm chua cay',cat:1,price:4500,origPrice:5000,stock:500,img:'https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?w=200&h=200&fit=crop',desc:'Mì ăn liền Hảo Hảo',status:'active'},
+            {id:4,name:'Coca Cola 330ml',cat:2,price:10000,origPrice:12000,stock:300,img:'https://images.unsplash.com/photo-1554866585-cd94860890b7?w=200&h=200&fit=crop',desc:'Nước giải khát Coca Cola lon',status:'active'},
+            {id:5,name:'Bánh Oreo socola 133g',cat:3,price:22000,origPrice:25000,stock:150,img:'https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=200&h=200&fit=crop',desc:'Bánh quy Oreo nhân kem socola',status:'active'},
+            {id:6,name:'Dầu gội Clear 650ml',cat:4,price:120000,origPrice:135000,stock:80,img:'https://images.unsplash.com/photo-1585232350437-1aae1c696e41?w=200&h=200&fit=crop',desc:'Dầu gội sạch gàu Clear',status:'active'}
+        ];
+        localStorage.setItem(PRODS_KEY, JSON.stringify(products));
+    }
+
+    const fmt = n => n ? n.toLocaleString('vi-VN') + 'đ' : '0đ';
+    const nextId = arr => (arr.length ? Math.max(...arr.map(x=>x.id)) + 1 : 1);
+
+    function switchTab(tab) {
+        curTab = tab;
+        document.querySelectorAll('.sb-item').forEach((el,i) => {
+            el.classList.toggle('active', ['templates','categories','products','storeconfig'][i] === tab);
+        });
+        render();
+    }
+
+    function render() {
+        const c = document.getElementById('mainContent');
+        switch(curTab) {
+            case 'templates': c.innerHTML = renderTemplates(); break;
+            case 'categories': c.innerHTML = renderCategories(); break;
+            case 'products': c.innerHTML = renderProducts(); break;
+            case 'storeconfig': c.innerHTML = renderConfig(); break;
+        }
+    }
+
+    /* ── TEMPLATES ── */
+    const TEMPLATES = [
+        {id:'modern',name:'Modern Shop',desc:'Giao diện hiện đại, tối giản',color:'#004aad',preview:'linear-gradient(135deg,#667eea,#764ba2)'},
+        {id:'fresh',name:'Fresh Market',desc:'Phong cách tươi mới, sinh động',color:'#43a047',preview:'linear-gradient(135deg,#11998e,#38ef7d)'},
+        {id:'elegant',name:'Elegant Store',desc:'Sang trọng, cao cấp',color:'#333',preview:'linear-gradient(135deg,#2c3e50,#4ca1af)'},
+        {id:'warm',name:'Warm Corner',desc:'Ấm áp, thân thiện',color:'#e65100',preview:'linear-gradient(135deg,#f093fb,#f5576c)'},
+    ];
+
+    function renderTemplates() {
+        return `<div class="page-title"><i class="fa-solid fa-palette" style="color:var(--blue)"></i> Chọn mẫu giao diện
+            <a href="store.html" target="_blank" class="store-link"><i class="fa-solid fa-external-link-alt"></i> Xem gian hàng</a></div>
+        <div class="tpl-grid">${TEMPLATES.map(t => `
+            <div class="tpl-card ${selectedTpl===t.id?'selected':''}" onclick="selectTpl('${t.id}')">
+                <div class="tpl-preview" style="background:${t.preview}">
+                    <div style="background:#fff;border-radius:8px;padding:16px 24px;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,.15)">
+                        <div style="font-size:18px;font-weight:700;color:${t.color};margin-bottom:4px">${storeConfig.name}</div>
+                        <div style="font-size:11px;color:#888">Xem trước giao diện</div>
+                    </div>
+                </div>
+                <div class="tpl-info"><div class="tpl-name">${t.name}</div><div class="tpl-desc">${t.desc}</div></div>
+            </div>`).join('')}</div>`;
+    }
+
+    function selectTpl(id) {
+        selectedTpl = id;
+        localStorage.setItem(TPL_KEY, id);
+        render();
+    }
+
+    /* ── CATEGORIES ── */
+    function renderCategories() {
+        return `<div class="page-title"><i class="fa-solid fa-layer-group" style="color:var(--blue)"></i> Danh mục sản phẩm
+            <button class="btn btn-primary" style="margin-left:auto" onclick="openCatModal()"><i class="fa-solid fa-plus"></i> Thêm danh mục</button></div>
+        <div style="background:#fff;border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,.06)">
+        <table><thead><tr><th style="width:40px">#</th><th>Tên danh mục</th><th>Mô tả</th><th>Số SP</th><th style="width:100px">Trạng thái</th><th style="width:100px"></th></tr></thead>
+        <tbody>${categories.map((c,i) => `<tr>
+            <td>${i+1}</td>
+            <td style="font-weight:500">${c.name}</td>
+            <td style="color:#888">${c.desc||'—'}</td>
+            <td>${products.filter(p=>p.cat===c.id).length}</td>
+            <td><span class="badge ${c.status==='active'?'badge-active':'badge-inactive'}">${c.status==='active'?'Hiển thị':'Ẩn'}</span></td>
+            <td style="white-space:nowrap">
+                <button class="btn btn-outline" style="padding:3px 8px;font-size:11px" onclick="editCat(${i})"><i class="fa-solid fa-pen"></i></button>
+                <button class="btn btn-outline" style="padding:3px 8px;font-size:11px;color:#e53935;border-color:#fcc" onclick="delCat(${i})"><i class="fa-regular fa-trash-can"></i></button>
+            </td></tr>`).join('')}</tbody></table></div>`;
+    }
+
+    function openCatModal(){ editCatIdx=-1; document.getElementById('catModalTitle').textContent='Thêm danh mục'; document.getElementById('catName').value=''; document.getElementById('catDesc').value=''; document.getElementById('catStatus').value='active'; document.getElementById('catModal').classList.add('show'); }
+    function closeCatModal(){ document.getElementById('catModal').classList.remove('show'); }
+    function editCat(i){ editCatIdx=i; const c=categories[i]; document.getElementById('catModalTitle').textContent='Sửa danh mục'; document.getElementById('catName').value=c.name; document.getElementById('catDesc').value=c.desc||''; document.getElementById('catStatus').value=c.status; document.getElementById('catModal').classList.add('show'); }
+    function delCat(i){ if(!confirm('Xóa danh mục "'+categories[i].name+'"?')) return; categories.splice(i,1); localStorage.setItem(CATS_KEY,JSON.stringify(categories)); render(); }
+    function saveCat(){
+        const name=document.getElementById('catName').value.trim();
+        if(!name){alert('Nhập tên danh mục');return;}
+        const obj={id:editCatIdx>=0?categories[editCatIdx].id:nextId(categories),name,desc:document.getElementById('catDesc').value.trim(),status:document.getElementById('catStatus').value};
+        if(editCatIdx>=0) categories[editCatIdx]=obj; else categories.push(obj);
+        localStorage.setItem(CATS_KEY,JSON.stringify(categories)); closeCatModal(); render();
+    }
+
+    /* ── PRODUCTS ── */
+    function renderProducts() {
+        const catName = id => (categories.find(c=>c.id===id)||{}).name||'—';
+        return `<div class="page-title"><i class="fa-solid fa-box-open" style="color:var(--blue)"></i> Sản phẩm trên Website
+            <button class="btn btn-primary" style="margin-left:auto" onclick="openProdModal()"><i class="fa-solid fa-plus"></i> Đăng sản phẩm</button></div>
+        <div style="background:#fff;border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,.06)">
+        <table><thead><tr><th style="width:50px">Ảnh</th><th>Sản phẩm</th><th>Danh mục</th><th class="right">Giá bán</th><th class="right">Giá gốc</th><th class="right">Tồn kho</th><th style="width:90px">Trạng thái</th><th style="width:100px"></th></tr></thead>
+        <tbody>${products.map((p,i) => `<tr>
+            <td><img class="img-thumb" src="${p.img||'https://via.placeholder.com/40'}" alt="${p.name}"></td>
+            <td><span class="tbl-code" onclick="editProd(${i})">${p.name}</span></td>
+            <td>${catName(p.cat)}</td>
+            <td class="right" style="font-weight:600;color:#e53935">${fmt(p.price)}</td>
+            <td class="right" style="text-decoration:line-through;color:#999">${p.origPrice?fmt(p.origPrice):'—'}</td>
+            <td class="right">${p.stock}</td>
+            <td><span class="badge ${p.status==='active'?'badge-active':'badge-inactive'}">${p.status==='active'?'Đang bán':'Ẩn'}</span></td>
+            <td style="white-space:nowrap">
+                <button class="btn btn-outline" style="padding:3px 8px;font-size:11px" onclick="editProd(${i})"><i class="fa-solid fa-pen"></i></button>
+                <button class="btn btn-outline" style="padding:3px 8px;font-size:11px;color:#e53935;border-color:#fcc" onclick="delProd(${i})"><i class="fa-regular fa-trash-can"></i></button>
+            </td></tr>`).join('')}</tbody></table></div>`;
+    }
+
+    function refreshProdCatSelect(){
+        const sel=document.getElementById('prodCat');
+        sel.innerHTML='<option value="">-- Chọn danh mục --</option>'+categories.map(c=>`<option value="${c.id}">${c.name}</option>`).join('');
+    }
+    function openProdModal(){ editProdIdx=-1; document.getElementById('prodModalTitle').textContent='Đăng sản phẩm lên Website'; refreshProdCatSelect(); document.getElementById('prodName').value=''; document.getElementById('prodCat').value=''; document.getElementById('prodPrice').value=''; document.getElementById('prodOrigPrice').value=''; document.getElementById('prodStock').value='100'; document.getElementById('prodImg').value=''; document.getElementById('prodDesc').value=''; document.getElementById('prodStatus').value='active'; document.getElementById('prodModal').classList.add('show'); }
+    function closeProdModal(){ document.getElementById('prodModal').classList.remove('show'); }
+    function editProd(i){ editProdIdx=i; const p=products[i]; document.getElementById('prodModalTitle').textContent='Sửa sản phẩm'; refreshProdCatSelect(); document.getElementById('prodName').value=p.name; document.getElementById('prodCat').value=p.cat||''; document.getElementById('prodPrice').value=p.price; document.getElementById('prodOrigPrice').value=p.origPrice||''; document.getElementById('prodStock').value=p.stock; document.getElementById('prodImg').value=p.img||''; document.getElementById('prodDesc').value=p.desc||''; document.getElementById('prodStatus').value=p.status; document.getElementById('prodModal').classList.add('show'); }
+    function delProd(i){ if(!confirm('Xóa "'+products[i].name+'"?')) return; products.splice(i,1); localStorage.setItem(PRODS_KEY,JSON.stringify(products)); render(); }
+    function saveProd(){
+        const name=document.getElementById('prodName').value.trim();
+        const price=parseInt(document.getElementById('prodPrice').value);
+        if(!name){alert('Nhập tên sản phẩm');return;}
+        if(!price){alert('Nhập giá bán');return;}
+        const obj={id:editProdIdx>=0?products[editProdIdx].id:nextId(products),name,cat:parseInt(document.getElementById('prodCat').value)||0,price,origPrice:parseInt(document.getElementById('prodOrigPrice').value)||0,stock:parseInt(document.getElementById('prodStock').value)||0,img:document.getElementById('prodImg').value.trim(),desc:document.getElementById('prodDesc').value.trim(),status:document.getElementById('prodStatus').value};
+        if(editProdIdx>=0) products[editProdIdx]=obj; else products.push(obj);
+        localStorage.setItem(PRODS_KEY,JSON.stringify(products)); closeProdModal(); render();
+    }
+
+    /* ── CONFIG ── */
+    function renderConfig() {
+        return `<div class="page-title"><i class="fa-solid fa-gear" style="color:var(--blue)"></i> Cài đặt gian hàng</div>
+        <div style="background:#fff;border-radius:8px;padding:24px;box-shadow:0 1px 4px rgba(0,0,0,.06);max-width:600px">
+            <div class="form-group"><label>Tên gian hàng</label><input type="text" id="cfgName" value="${storeConfig.name}"></div>
+            <div class="form-group"><label>Số điện thoại</label><input type="text" id="cfgPhone" value="${storeConfig.phone}"></div>
+            <div class="form-group"><label>Địa chỉ</label><input type="text" id="cfgAddr" value="${storeConfig.address}"></div>
+            <div class="form-group"><label>Màu chủ đạo</label><input type="color" id="cfgColor" value="${storeConfig.color}" style="width:60px;height:36px;padding:2px;cursor:pointer"></div>
+            <div style="margin-top:16px;display:flex;gap:10px">
+                <button class="btn btn-primary" onclick="saveConfig()"><i class="fa-solid fa-floppy-disk"></i> Lưu cài đặt</button>
+                <a href="store.html" target="_blank" class="btn btn-success"><i class="fa-solid fa-external-link-alt"></i> Mở gian hàng</a>
+            </div>
+        </div>`;
+    }
+    function saveConfig(){
+        storeConfig={name:document.getElementById('cfgName').value.trim()||'Hasu Store',phone:document.getElementById('cfgPhone').value.trim(),address:document.getElementById('cfgAddr').value.trim(),color:document.getElementById('cfgColor').value};
+        localStorage.setItem(CONFIG_KEY,JSON.stringify(storeConfig));
+        alert('Đã lưu cài đặt!');
+    }
+
+    // Init
+    document.getElementById('catModal').addEventListener('click',e=>{if(e.target.id==='catModal')closeCatModal()});
+    document.getElementById('prodModal').addEventListener('click',e=>{if(e.target.id==='prodModal')closeProdModal()});
+    document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeCatModal();closeProdModal()}});
+    render();
+    </script>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var uName = localStorage.getItem('hasu_userName');
+    var uEmail = localStorage.getItem('hasu_userEmail');
+    if (!uName) {
+        window.location.href = 'login.html';
+        return;
+    }
+
+    var isAdmin = (uEmail === 'admin@hasu.vn' || uEmail === 'tester@hasu.vn');
+
+    function applyReplacements() {
+        var walk = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+            acceptNode: function(node) {
+                if (['SCRIPT', 'STYLE', 'NOSCRIPT'].includes(node.parentNode.nodeName)) return NodeFilter.FILTER_REJECT;
+                return NodeFilter.FILTER_ACCEPT;
+            }
+        }, false);
+        var n;
+        while(n = walk.nextNode()) {
+            if (n.nodeValue.includes('Tester')) {
+                n.nodeValue = n.nodeValue.replace(/Tester/g, uName);
+            }
+            if (uEmail && n.nodeValue.includes('tester@hasu.vn')) {
+                n.nodeValue = n.nodeValue.replace(/tester@hasu\.vn/g, uEmail);
+            }
+        }
+        
+        document.querySelectorAll('input').forEach(function(inp) {
+            if (inp.value === 'Tester') inp.value = uName;
+        });
+
+        // Hide mock history explicitly for newly created non-admin users
+        if (!isAdmin) {
+            document.querySelectorAll('.activity-item, .tl-history-row, tr').forEach(function(el) {
+                var txt = el.textContent;
+                // If it contains hardcoded deep mock past dates in the frontend UI
+                if (txt.includes('ngày trước') || txt.includes('14/03') || txt.includes('23 ngày trước')) {
+                    el.style.display = 'none';
+                }
+            });
+            // If the activity list becomes visually empty, show empty state
+            var aList = document.getElementById('activityList');
+            if (aList && Array.from(aList.children).filter(function(x){ return x.style.display !== 'none'; }).length === 0) {
+                aList.innerHTML = '<div style="padding:30px;text-align:center;color:#bbb">Chưa có hoạt động nào</div>';
+            }
+        }
+    }
+
+    applyReplacements();
+    setTimeout(applyReplacements, 150);
+    setTimeout(applyReplacements, 500);
+});
+</script>
+</body>
+</html>
+

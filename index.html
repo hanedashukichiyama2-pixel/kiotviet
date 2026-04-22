@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <script>
+        var uName = localStorage.getItem('hasu_userName');
+        if (!uName) {
+            window.location.href = 'login.html';
+        } else {
+            window.location.href = 'tongquan.html';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,527 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập & Đăng ký - Hasu Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #004aad;
+            --primary-hover: #003a8c;
+            --text: #1f2937;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --bg: #f8fafc;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            display: flex;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .auth-container {
+            display: flex;
+            width: 100%;
+            height: 100vh;
+        }
+
+        /* LEFT SIDE - BRANDING */
+        .auth-banner {
+            flex: 1;
+            background: linear-gradient(135deg, #004aad, #1e3a8a);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-banner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 60%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .banner-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            max-width: 480px;
+        }
+
+        .banner-content h1 {
+            font-size: 40px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .banner-content p {
+            font-size: 16px;
+            opacity: 0.9;
+            line-height: 1.6;
+            margin-bottom: 40px;
+        }
+
+        .banner-img {
+            width: 100%;
+            max-width: 360px;
+            filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.2));
+        }
+
+        /* RIGHT SIDE - FORM */
+        .auth-form-wrap {
+            width: 500px;
+            background: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 60px;
+            box-shadow: -10px 0 30px rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+
+        .logo-top {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 40px;
+            font-weight: 800;
+            font-size: 24px;
+            color: var(--primary);
+        }
+
+        .logo-top img {
+            height: 36px;
+            border-radius: 8px;
+        }
+
+        /* FORM TOGGLE */
+        .form-tabs {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .tab-btn {
+            padding: 12px 0;
+            background: none;
+            border: none;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-light);
+            cursor: pointer;
+            position: relative;
+            transition: 0.2s;
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 3px 3px 0 0;
+        }
+
+        /* FORM ELEMENTS */
+        .auth-box {
+            display: none;
+            animation: slideUp 0.3s ease;
+        }
+
+        .auth-box.active {
+            display: block;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .input-icon {
+            position: absolute;
+            bottom: 12px;
+            left: 16px;
+            color: var(--text-light);
+            font-size: 16px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 16px 12px 45px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 15px;
+            outline: none;
+            transition: 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .input-group input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(0, 74, 173, 0.1);
+        }
+
+        .input-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            font-size: 14px;
+        }
+
+        .checkbox {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .input-options a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .input-options a:hover {
+            text-decoration: underline;
+        }
+
+        .btn-submit {
+            width: 100%;
+            background: var(--primary);
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 4px 12px rgba(0, 74, 173, 0.2);
+        }
+
+        .btn-submit:hover {
+            background: var(--primary-hover);
+            transform: translateY(-1px);
+        }
+
+        .separator {
+            text-align: center;
+            margin: 30px 0;
+            position: relative;
+        }
+
+        .separator::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 100%;
+            height: 1px;
+            background: var(--border);
+            z-index: 1;
+        }
+
+        .separator span {
+            background: white;
+            padding: 0 15px;
+            color: var(--text-light);
+            font-size: 14px;
+            position: relative;
+            z-index: 2;
+            font-weight: 500;
+        }
+
+        .btn-social {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-weight: 600;
+            color: var(--text);
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 15px;
+        }
+
+        .btn-social:hover {
+            background: #f1f5f9;
+        }
+
+        .btn-social img {
+            width: 22px;
+        }
+
+        @media (max-width: 900px) {
+            .auth-banner {
+                display: none;
+            }
+
+            .auth-form-wrap {
+                width: 100%;
+                padding: 40px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="auth-container">
+        <div class="auth-banner">
+            <div class="banner-content">
+                <h1>Nền tảng Quản lý Bán lẻ Toàn diện</h1>
+                <p>Khẳng định vị thế kinh doanh của bạn thông qua hệ sinh thái HASU. Kết nối toàn diện từ Online
+                    Storefront đến Admin POS.</p>
+                <img src="logo.png" alt="Hasu Logo" class="banner-img" style="max-width: 250px; border-radius: 20px;">
+            </div>
+        </div>
+
+        <div class="auth-form-wrap">
+            <div class="logo-top">
+                <img src="logo.png" alt="HASU"> HASU PLATFORM
+            </div>
+
+            <div class="form-tabs">
+                <button class="tab-btn active" onclick="switchTab('login')">Đăng nhập</button>
+                <button class="tab-btn" onclick="switchTab('register')">Tạo tài khoản</button>
+            </div>
+
+            <!-- LOGIN FORM -->
+            <div class="auth-box active" id="box-login">
+                <form onsubmit="handleAuth(event)">
+                    <div class="input-group">
+                        <label>Tên gian hàng / Chi nhánh (nếu có)</label>
+                        <i class="fa-solid fa-store input-icon"></i>
+                        <input type="text" id="loginStore" placeholder="Nhập tên gian hàng (banhang, quanly, store)">
+                    </div>
+                    <div class="input-group">
+                        <label>Tên đăng nhập hoặc Email</label>
+                        <i class="fa-regular fa-user input-icon"></i>
+                        <input type="text" id="loginEmail" placeholder="admin@hasu.vn" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Mật khẩu</label>
+                        <i class="fa-solid fa-lock input-icon"></i>
+                        <input type="password" id="loginPwd" placeholder="Nhập mật khẩu" required>
+                    </div>
+
+                    <div class="input-options">
+                        <label class="checkbox">
+                            <input type="checkbox" checked> Ghi nhớ đăng nhập
+                        </label>
+                        <a href="#">Quên mật khẩu?</a>
+                    </div>
+
+                    <button type="submit" class="btn-submit">Đăng nhập ngay</button>
+                </form>
+
+                <div class="separator"><span>Hoặc</span></div>
+
+                <button class="btn-social">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google">
+                    Đăng nhập bằng Google
+                </button>
+            </div>
+
+            <div class="auth-box" id="box-register">
+                <form onsubmit="handleAuth(event)">
+                    <div class="input-group">
+                        <label>Tên Điểm bán / Gian hàng</label>
+                        <i class="fa-solid fa-store input-icon"></i>
+                        <input type="text" id="regStore" placeholder="Ví dụ: Tạp hóa Tâm Anh" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Họ và Tên</label>
+                        <i class="fa-regular fa-id-badge input-icon"></i>
+                        <input type="text" id="regName" placeholder="Nguyễn Văn A" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Số điện thoại</label>
+                        <i class="fa-solid fa-phone input-icon"></i>
+                        <input type="tel" placeholder="0901234567" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Email liên hệ</label>
+                        <i class="fa-regular fa-envelope input-icon"></i>
+                        <input type="email" id="regEmail" placeholder="example@gmail.com" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Tạo Mật khẩu bảo mật</label>
+                        <i class="fa-solid fa-lock input-icon"></i>
+                        <input type="password" id="regPwd" placeholder="Tối thiểu 8 ký tự" required>
+                    </div>
+
+                    <p style="font-size:13px; color:var(--text-light); margin-bottom:24px;">Bằng cách tạo tài khoản, bạn
+                        đồng ý với <a href="#" style="color:var(--primary)">Điều khoản Dịch vụ</a> của chúng tôi.</p>
+
+                    <button type="submit" class="btn-submit">Đăng ký tài khoản</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.auth-box').forEach(box => box.classList.remove('active'));
+
+            if (tab === 'login') {
+                document.querySelectorAll('.tab-btn')[0].classList.add('active');
+                document.getElementById('box-login').classList.add('active');
+            } else {
+                document.querySelectorAll('.tab-btn')[1].classList.add('active');
+                document.getElementById('box-register').classList.add('active');
+            }
+        }
+
+        function handleAuth(e) {
+            e.preventDefault();
+
+            const isLogin = document.getElementById('box-login').classList.contains('active');
+            const storeInput = isLogin
+                ? (document.getElementById('loginStore') ? document.getElementById('loginStore').value.trim().toLowerCase() : '')
+                : (document.getElementById('regStore') ? document.getElementById('regStore').value.trim().toLowerCase() : '');
+
+            let accounts = JSON.parse(localStorage.getItem('hasu_accounts') || '[]');
+
+            if (!isLogin) {
+                const regName = document.getElementById('regName').value.trim();
+                const regEmail = document.getElementById('regEmail').value.trim();
+                const regPwd = document.getElementById('regPwd') ? document.getElementById('regPwd').value : '';
+
+                if (accounts.some(acc => acc.email === regEmail)) {
+                    alert('Email này đã được sử dụng! Vui lòng chọn email khác.');
+                    return;
+                }
+
+                accounts.push({ name: regName, email: regEmail, password: regPwd });
+                localStorage.setItem('hasu_accounts', JSON.stringify(accounts));
+
+                // Force wipe the pseudo-database for the newly registered user
+                localStorage.removeItem('hasu_import_orders');
+                localStorage.removeItem('hasu_orders');
+                localStorage.removeItem('hasu_completedOrders');
+                localStorage.removeItem('hasu_sale_history');
+
+                localStorage.setItem('hasu_userName', regName);
+                localStorage.setItem('hasu_userEmail', regEmail);
+
+                // BACKGROUND SYNC: Report new store creation to the Central SuperAdmin Portal
+                try {
+                    fetch('api_shops.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ shop: storeInput, user: regName, email: regEmail, role: 'Admin' })
+                    }).catch(err => console.log('Offline API Sync: deferred'));
+                } catch (extErr) { }
+            } else {
+                const loginEmail = document.getElementById('loginEmail').value.trim();
+                const loginPwd = document.getElementById('loginPwd') ? document.getElementById('loginPwd').value : '';
+
+                if (loginEmail === 'admin@hasu.vn' && loginPwd === 'admin') {
+                    // special static escape hatch
+                    localStorage.setItem('hasu_userName', 'Admin');
+                    localStorage.setItem('hasu_userEmail', 'admin@hasu.vn');
+                } else {
+                    const acc = accounts.find(a => a.email === loginEmail && a.password === loginPwd);
+                    if (!acc) {
+                        alert('Tài khoản hoặc mật khẩu bạn nhập không chính xác! Vui lòng tạo tài khoản mới.');
+                        return;
+                    }
+                    localStorage.setItem('hasu_userName', acc.name);
+                    localStorage.setItem('hasu_userEmail', acc.email);
+                }
+            }
+
+            let dest = 'tongquan.html'; // default
+            let role = 'admin';
+
+            if (storeInput === 'banhang' || storeInput === 'pos' || storeInput === 'nhanvien') {
+                dest = 'sale.html';
+                role = 'seller';
+            } else if (storeInput === 'storefront' || storeInput === 'store') {
+                dest = 'store.html';
+                role = 'customer';
+            } else if (storeInput === 'quanly' || storeInput === 'admin') {
+                dest = 'tongquan.html';
+                role = 'admin';
+            }
+
+            const btn = e.target.querySelector('.btn-submit');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Đang xử lý...';
+            btn.style.opacity = '0.8';
+
+            setTimeout(() => {
+                localStorage.setItem('hasu_logged_in', 'true');
+                localStorage.setItem('hasu_role', role);
+                window.location.href = dest + '?v=' + new Date().getTime();
+            }, 800);
+        }
+    </script>
+</body>
+
+</html>
